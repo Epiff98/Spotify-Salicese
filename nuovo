@@ -379,7 +379,7 @@ void signup(FILE* file_utenti, utenti utente[], artisti artista[], int i, int sc
 				system("cls");
 				scritta_spotify();
 				scritta_login();
-				menu_utente(file_utenti, utente, artista, i, scelta);
+			login(file_utenti, utente, artista, i, scelta);
 			}
 		}while(tasto_accedi != 0);
 	}
