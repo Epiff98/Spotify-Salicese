@@ -490,6 +490,10 @@ void login(FILE* file_utenti, utenti utente[], artisti artista[], int i, int sce
 
 void visualizza_artisti(FILE* file_utenti, utenti utente[],int i,artisti artista[], int scelta)
 {
+	    printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
+		printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
+		printf("\n\t\t\t\t\t\t\t\t\t  |        VISUALIZZA LISTA ARTISTI       |");
+		printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
 	FILE*file_artisti;
 
 	if((file_artisti =  fopen("Artisti.txt" , "r")) == NULL)
@@ -497,7 +501,7 @@ void visualizza_artisti(FILE* file_utenti, utenti utente[],int i,artisti artista
 
 	else
 	{
-		printf("\n\n\n\t\t\tNOME ARTISTA   |     GENERE MUSICALE|\t NAZIONALITA'    |ANNO INIZIO CARRIERA|  CANZONE POPOLARE  |\n\n");
+		printf("\n\n\n\t\t       NOME ARTISTA   |      GENERE MUSICALE|       NAZIONALITA'|ANNO INIZIO CARRIERA|  CANZONE POPOLARE  |\n\n");
 
 		i=0;
 
