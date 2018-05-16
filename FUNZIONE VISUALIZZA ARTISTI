@@ -1,0 +1,20 @@
+void visualizza_artisti(utenti utente[],int i,artisti artista[])
+{
+	FILE*file_artisti;
+
+		if((file_artisti =  fopen("Artisti.txt" , "r")) == NULL)
+		{
+			printf("Errore nell'apertura!\n");
+		}
+
+		else{
+					printf("\t\t\tNOME ARTISTA   |     GENERE MUSICALE|\t NAZIONALITA'    |ANNO INIZIO CARRIERA|  CANZONE POPOLARE  |\n");
+					while(!feof(file_artisti))
+				{
+					fscanf(file_artisti,"%s %s %s %d %s", artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone );
+
+					printf("\t\t%d) %20s|%20s|%20s|%20d|%20s|  \n", i-1, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
+					i++;
+				}
+			}
+}
