@@ -235,7 +235,7 @@ void menu_utente(FILE* file_utenti, utenti utente[], artisti artista[], int i, i
 
 void signup(FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta)
 {
-	int count_utenti=0;
+	int count_utenti=0; //contatore del n di utenti
 	i=0;
 
 	if((file_utenti =  fopen("Utenti.txt" , "a+")) == NULL)
@@ -252,10 +252,8 @@ void signup(FILE* file_utenti, utenti utente[], artisti artista[], int i, int sc
 
 		printf("\n\n\n> INSERISCI IL NOME:   ");
 		scanf("%s", utente[count_utenti].nome_utente);
-
 		printf("\n\n> INSERISCI IL COGNOME:   ");
 		scanf("%s", utente[count_utenti].cognome_utente);
-
 		printf("\n\nDATA DI NASCITA: ");
 
 		do
@@ -268,18 +266,18 @@ void signup(FILE* file_utenti, utenti utente[], artisti artista[], int i, int sc
 
 		}while(utente[count_utenti].mese_nascita < MESE_MIN || utente[count_utenti].mese_nascita > MESE_MAX);
 
-		if(utente[0].mese_nascita == 2) //mese febbraio
+		if(utente[count_utenti].mese_nascita == 2) //mese febbraio
 		{
 			do
 			{
 				printf("\n\n\t> INSERISCI IL GIORNO DI NASCITA:   ");
-				scanf("%d",&utente[count_utenti].giorno_nascita);
+				scanf("%d",&utente[0].giorno_nascita);
 
 				if(utente[count_utenti].giorno_nascita < 1|| utente[count_utenti].giorno_nascita > 28)
 					printf("\n\t   * GIORNO NON VALIDO! INSERISCI UN VALORE COMPRESO TRA 1 E 28.\n");
 
-			}while(utente[count_utenti].giorno_nascita < 1 || utente[count_utenti].giorno_nascita > 28);
-		}
+				 }while(utente[count_utenti].giorno_nascita < 1 || utente[count_utenti].giorno_nascita > 28);
+			}
 
 
 		else if(utente[count_utenti].mese_nascita == 4 || utente[count_utenti].mese_nascita == 6 || utente[count_utenti].mese_nascita == 9 || utente[count_utenti].mese_nascita == 11)
@@ -303,7 +301,7 @@ void signup(FILE* file_utenti, utenti utente[], artisti artista[], int i, int sc
 				printf("\n\n\t> INSERISCI IL GIORNO DI NASCITA:   ");
 				 scanf("%d",&utente[count_utenti].giorno_nascita);
 
-				if(utente[count_utenti].giorno_nascita<1 || utente[count_utenti].giorno_nascita > 31)
+				if(utente[count_utenti].giorno_nascita < 1 || utente[count_utenti].giorno_nascita > 31)
 				   printf("\n\t   * GIORNO NON VALIDO! INSERISCI UN VALORE COMPRESO TRA 1 E 31\n");
 
 			}while(utente[count_utenti].giorno_nascita < 1 || utente[count_utenti].giorno_nascita > 31);
@@ -334,7 +332,7 @@ void signup(FILE* file_utenti, utenti utente[], artisti artista[], int i, int sc
 
 		printf("\n\n\n- NOTA PASSWORD: Numero caratteri compreso tra 5 e 10, con almeno una maiuscola e almeno un numero\n");
 
-		int lung_password_input=0;
+		int lung_password_in=0;
 		int j=0; //indice password
 		do
 		{
@@ -344,18 +342,18 @@ void signup(FILE* file_utenti, utenti utente[], artisti artista[], int i, int sc
 			count_maiuscole= 0; //azzeramento della variabile "maiuscole"
 			count_numeri=	0;		//azzeramento della variabile "numeri"
 
-			lung_password_input= strlen(utente[count_utenti].password);
+			lung_password_in= strlen(utente[count_utenti].password);
 
-			for(j=0; j < lung_password_input; j++)
+			for(j=0; j < lung_password_in; j++)
 			{
 				count_numeri= count_numeri + isdigit(utente[count_utenti].password[j]); //conteggio delle cifre numeriche presenti nella password inserita
 				count_maiuscole= count_maiuscole + isupper(utente[count_utenti].password[j]); //conteggio delle lettere maiuscole presenti nella password inserita
 
 				if((count_numeri > 0) && (count_maiuscole > 0))
-					j= lung_password_input; //non vi è il bisogno di eseguire tutti i cicli se è stata già rilevata una lettara maiuscola e una cifra numerica
+					j= lung_password_in; //non vi è il bisogno di eseguire tutti i cicli se è stata già rilevata una lettara maiuscola e una cifra numerica
 			}
 
-			if((lung_password_input < (LUNG_PASSWORD / 2)) || (lung_password_input > LUNG_PASSWORD))
+			if((lung_password_in < (LUNG_PASSWORD / 2)) || (lung_password_in > LUNG_PASSWORD))
 				printf("\n   * PASSWORD NON VALIDA! INSERIRE UN NUMERO DI CARATTERI COMPRESO TRA 5 E 10\n");
 
 			if	(count_numeri	==	0) //verifica se la password inserita non ha una cifra numerica
@@ -364,7 +362,7 @@ void signup(FILE* file_utenti, utenti utente[], artisti artista[], int i, int sc
 			if	(count_maiuscole == 0)	//verifica se la password inserita non ha una lettera maiuscola
 				printf("\n   * PASSWORD NON VALIDA! INSERIRE ALMENO UN CARATTERE MAIUSCOLO\n");
 
-		}while(!((count_numeri > 0) && (count_maiuscole > 0) && (lung_password_input >= (LUNG_PASSWORD / 2)) && (lung_password_input <= LUNG_PASSWORD))); //ripete il ciclo finchè i vincoli imposti sulla sintassi della password non sono rispettati
+		}while(!((count_numeri > 0) && (count_maiuscole > 0) && (lung_password_in >= (LUNG_PASSWORD / 2)) && (lung_password_in <= LUNG_PASSWORD))); //ripete il ciclo finchè i vincoli imposti sulla sintassi della password non sono rispettati
 
 		fprintf(file_utenti, "%s\t%s\t%d\t%d\t%d\t%s\t%s\n", utente[count_utenti].nome_utente, utente[count_utenti].cognome_utente, utente[count_utenti].giorno_nascita,  utente[count_utenti].mese_nascita, utente[count_utenti].anno_nascita, utente[count_utenti].username, utente[count_utenti].password);
 
