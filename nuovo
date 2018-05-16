@@ -366,6 +366,8 @@ void signup(FILE* file_utenti, utenti utente[], artisti artista[], int i, int sc
 
 		fprintf(file_utenti, "%s\t%s\t%d\t%d\t%d\t%s\t%s\n", utente[count_utenti].nome_utente, utente[count_utenti].cognome_utente, utente[count_utenti].giorno_nascita,  utente[count_utenti].mese_nascita, utente[count_utenti].anno_nascita, utente[count_utenti].username, utente[count_utenti].password);
 
+		fclose(file_utenti);
+
 		printf("\n\n\tISCRIZIONE EFFETTUATA!\n");
 		int tasto_accedi=0;
 
@@ -379,12 +381,11 @@ void signup(FILE* file_utenti, utenti utente[], artisti artista[], int i, int sc
 				system("cls");
 				scritta_spotify();
 				scritta_login();
-			login(file_utenti, utente, artista, i, scelta);
+				login(file_utenti, utente, artista, i, scelta);
 			}
 		}while(tasto_accedi != 0);
 	}
 
-	fclose(file_utenti);
 }
 
 void login(FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta)
@@ -411,18 +412,14 @@ void login(FILE* file_utenti, utenti utente[], artisti artista[], int i, int sce
 			if(strcmp(username_ricercato , utente[i].username) == 0)
 			{
 				if(strcmp(password_ricercata , utente[i].password) == 0)
-				{
 					menu_utente(file_utenti, utente, artista, i, scelta);
-					count_utenti= count_utenti-1;
-				}
 			}
 
         count_utenti++;
 		i++;
 		}
-
 	}
 
 	if(count_utenti == i)
-		printf("\nDATI ERRATI!\n");
+		printf("\nDATI INSERITI ERRATI, RIPROVA!\n");
 }
