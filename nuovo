@@ -10,6 +10,7 @@
 #define LUNG_USERNAME 15
 #define LUNG_PASSWORD 10
 #define LUNG_GENERE 30
+#define LUNG_CANZONE 30
 #define LUNG_NAZIONALITA 30
 #define N_UTENTI 5
 #define N_ARTISTI 5
@@ -26,6 +27,7 @@ typedef struct{
 	char genere[LUNG_GENERE];
 	char nazionalita[LUNG_NAZIONALITA];
 	int anno_inizio;
+	char canzone[LUNG_CANZONE];
 }artisti;
 //---------------------------------------------------------------------------------------------------------------------------------------------------//
 
@@ -52,6 +54,7 @@ void interfaccia_iniziale(utenti utente[], artisti artista[], int i, int scelta)
 void login(FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
 void signup(FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
 void menu_utente(FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
+void visualizza_artisti(utenti utente[],int i,artisti artista[]);
 //---------------------------------------------------------------------------------------------------------------------------------------------------//
 
 int main(void)
@@ -121,7 +124,7 @@ void scritta_home()
 
 void interfaccia_iniziale(utenti utente[], artisti artista[], int i, int scelta)
 {
-	FILE*file_utenti;
+	FILE* file_utenti;
 
 	scritta_spotify();
 	printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
@@ -203,14 +206,23 @@ void menu_utente(FILE* file_utenti, utenti utente[], artisti artista[], int i, i
      printf("\n\t\t\t\t\t\t\t\t\t  |                7. EXIT                |");
      printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
 
-     printf("\n\n\t\t\t\t\t\t\t\t\t    QUALE OPERAZIONE DESIDERI EFFETTUARE?   ");
+     do
+	{
+		printf("\n\n\t\t\t\t\t\t\t\t\t   > QUALE OPERAZIONE DESIDERI EFFETTUARE?   ");
+		scanf("%d", &scelta);
 
-     scanf("%d",&scelta);
+		if(scelta < 1 || scelta > 7)
+			printf("\n\n\t\t\t\t\t\t\t\t\t       * SCELTA NON VALIDA, RIPROVA!\n\n");
+
+	}while(!(scelta >= 1 && scelta <= 7)); //da implementare il controllo sui caratteri
+
 
      switch(scelta)
      {
 
-     	 case 1:
+     	 case 1: system("cls");
+		 scritta_spotify();
+     		 visualizza_artisti(utente, i, artista);
      		 break;
 
      	 case 2:
@@ -229,6 +241,8 @@ void menu_utente(FILE* file_utenti, utenti utente[], artisti artista[], int i, i
 			 break;
 
 		  case 7:
+			  system("cls");
+			  interfaccia_iniziale(utente, artista, i, scelta);
 			  break;
      }
 }
@@ -420,6 +434,29 @@ void login(FILE* file_utenti, utenti utente[], artisti artista[], int i, int sce
 		}
 	}
 
-	if(count_utenti == i)
-		printf("\nDATI INSERITI ERRATI, RIPROVA!\n");
+	//if(count_utenti == i)
+	//	printf("\nDATI INSERITI ERRATI, RIPROVA!\n");
+}
+
+void visualizza_artisti(utenti utente[],int i,artisti artista[])
+{
+	FILE*file_artisti;
+
+	if((file_artisti =  fopen("Artisti.txt" , "r")) == NULL)
+		printf("Errore nell'apertura!\n");
+
+	else
+	{
+		printf("\n\n\t\t\tNOME ARTISTA   |     GENERE MUSICALE|\t NAZIONALITA'    |ANNO INIZIO CARRIERA|  CANZONE POPOLARE  |\n");
+
+		i=0;
+
+		while(!feof(file_artisti))
+		{
+			fscanf(file_artisti,"%s %s %s %d %s", artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
+			printf("\t\t%d)%20s|%20s|%20s|%20d|%20s|  \n", i+1, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
+
+			i++;
+		}
+	}
 }
