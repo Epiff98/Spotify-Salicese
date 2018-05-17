@@ -208,29 +208,29 @@ void menu_utente(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti
      switch(scelta)
      {
 
-     	 case 1: system("cls"); //VISUALIZZAZIONE DELLA LISTA DEGLI ARTISTI
-     		 	 scritta_spotify();
-     		 	 visualizza_artisti(file_utenti, file_artisti, utente, artista, i, scelta);
-     		 	 break;
+	case 1: system("cls"); //VISUALIZZAZIONE DELLA LISTA DEGLI ARTISTI
+     		scritta_spotify();
+     	 	visualizza_artisti(file_utenti, file_artisti, utente, artista, i, scelta);
+     		break;
 
      	 case 2:
-     		 	 break;
+     		 break;
 
      	 case 3:
-     		 	 break;
+     		 break;
 
      	 case 4:
-     		 	 break;
+     		 break;
 
      	 case 5:
-     		 	 break;
+     		 break;
 
-		  case 6:
-			  	 break;
+	case 6:
+		break;
 
-		  case 7: system("cls"); //LOGOUT
-			  	  interfaccia_iniziale(file_utenti, file_utenti, utente, artista, i, scelta);
-			  	  break;
+ 	case 7: system("cls"); //LOGOUT
+		interfaccia_iniziale(file_utenti, file_utenti, utente, artista, i, scelta);
+		break;
      }
 }
 
@@ -251,7 +251,7 @@ void signup(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti arti
 			count_utenti++;
 			i++;
 		}
-
+		
 		printf("\n\n\n> INSERISCI IL NOME:   ");
 		scanf("%s", utente[count_utenti].nome_utente);
 		printf("\n\n> INSERISCI IL COGNOME:   ");
@@ -434,7 +434,7 @@ void login(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti artis
 				printf("\n\n   * USERNAME NON ISCRITTO!\n\n");
 
 				printf("\n\n1. RIPROVA\n");
-				printf("\n2. ISCRIVITI\n\n");
+				printf("\n2. Non sei iscritto? ISCRIVITI ORA!\n\n");
 
 				do
 				{
@@ -448,16 +448,16 @@ void login(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti artis
 
 				switch(scelta)
 				{
-					case 1: system("cls"); //riprova
-							scritta_spotify();
-							scritta_login();
-							login(file_utenti, file_artisti, utente, artista, i, scelta);
-							break;
+					case 1: system("cls"); //RIPROVA
+						scritta_spotify();
+						scritta_login();
+						login(file_utenti, file_artisti, utente, artista, i, scelta);
+						break;
 
-					case 2:	system("cls"); //iscriviti
-							scritta_spotify();
-							scritta_signup();
-							signup(file_utenti, file_artisti, utente, artista, i, scelta);
+					case 2:	system("cls"); //ISCRIVITI
+						scritta_spotify();
+						scritta_signup();
+						signup(file_utenti, file_artisti, utente, artista, i, scelta);
 				}
 			}
 
