@@ -112,7 +112,7 @@ void scritta_signup()
 			"    |    |                            ||                          ||            |    |\n"
 			"     |__|                         ||||||                          ||             |__|\n");
  }
- 
+
 void interfaccia_iniziale(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti artista[], int i, int scelta)
 {
 	scritta_spotify();
@@ -208,10 +208,10 @@ void menu_utente(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti
      switch(scelta)
      {
 
-	case 1: system("cls"); //VISUALIZZAZIONE DELLA LISTA DEGLI ARTISTI
-     		scritta_spotify();
-     	 	visualizza_artisti(file_utenti, file_artisti, utente, artista, i, scelta);
-     		break;
+     	 case 1: system("cls"); //VISUALIZZAZIONE DELLA LISTA DEGLI ARTISTI
+     	 	 scritta_spotify();
+     	 	 visualizza_artisti(file_utenti, file_artisti, utente, artista, i, scelta);
+     	 	 break;
 
      	 case 2:
      		 break;
@@ -251,7 +251,7 @@ void signup(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti arti
 			count_utenti++;
 			i++;
 		}
-		
+
 		printf("\n\n\n> INSERISCI IL NOME:   ");
 		scanf("%s", utente[count_utenti].nome_utente);
 		printf("\n\n> INSERISCI IL COGNOME:   ");
