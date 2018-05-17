@@ -49,7 +49,6 @@ typedef struct{
 void scritta_spotify();
 void scritta_login();
 void scritta_signup();
-void scritta_home();
 void interfaccia_iniziale(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti artista[], int i, int scelta);
 void login(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti artista[], int i, int scelta);
 void signup(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti artista[], int i, int scelta);
@@ -113,17 +112,7 @@ void scritta_signup()
 			"    |    |                            ||                          ||            |    |\n"
 			"     |__|                         ||||||                          ||             |__|\n");
  }
-
-void scritta_home()
-{
-	 printf("\n\n"
-			 "   ||  ||    ||||||    ||     ||    ||||||\n"
-			 "   ||  ||    ||  ||    |||| ||||    ||\n"
-			 "   ||||||    ||  ||    || ||  ||    ||||\n"
-			 "   ||  ||    ||  ||    ||     ||    ||\n"
-			 "   ||  ||    ||||||    ||     ||    ||||||\n");
- }
-
+ 
 void interfaccia_iniziale(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti artista[], int i, int scelta)
 {
 	scritta_spotify();
