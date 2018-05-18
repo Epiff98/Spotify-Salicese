@@ -442,7 +442,7 @@ void login(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artis
 		{
 			fscanf(file_utenti,"%s %s %d %d %d %s %s\n",utente[i].nome_utente, utente[i].cognome_utente, &utente[i].mese_nascita, &utente[i].giorno_nascita, &utente[i].anno_nascita, utente[i].username, utente[i].password);
 
-			if(strcmp(username_ricercato, utente[i].username) == 0)
+			if((strcmp(username_ricercato, utente[i].username) == 0))
 			{
 				username_trovato++;
 				do
@@ -625,6 +625,7 @@ void ricerca_pop(FILE* file_artisti,FILE* file_utenti, utenti utente[], int i,ar
 
 void ricerca_genere(FILE* file_artisti,FILE* file_utenti, utenti utente[], int i,artisti artista[], int scelta)
 {
+	do{
 	     printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
 	     printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
 	     printf("\n\t\t\t\t\t\t\t\t\t  |            GENERE MUSICALE            |");
@@ -657,8 +658,17 @@ void ricerca_genere(FILE* file_artisti,FILE* file_utenti, utenti utente[], int i
 	     printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
 	     printf("\n\t\t\t\t\t\t\t\t\t  |                7. EXIT                |");
 	     printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
-	     printf("\n\n\t\t\t\t\t\t\t\t\t  > QUALE OPERAZIONE DESIDERA EFFETTUARE?   ");
-	     			scanf("%d",&scelta);
+
+	     do
+	    	{
+	    		printf("\n\n\t\t\t\t\t\t\t\t\t   > QUALE OPERAZIONE DESIDERI EFFETTUARE?   ");
+	    		scanf("%d", &scelta);
+
+	    		if(scelta < 1 || scelta > 7)
+	    			printf("\n\n\t\t\t\t\t\t\t\t\t       * SCELTA NON VALIDA, RIPROVA!\n\n");
+
+	    	}while(!(scelta >= 1 && scelta <= 7)); //da implementare il controllo sui caratteri
+
 
 	     			switch(scelta)
 	     			{
@@ -704,6 +714,7 @@ void ricerca_genere(FILE* file_artisti,FILE* file_utenti, utenti utente[], int i
 	     					break;
 
 	     			}
+	}while(scelta);
 }
 
 void ricerca_rock(FILE* file_artisti,FILE* file_utenti, utenti utente[], int i,artisti artista[],int scelta)
