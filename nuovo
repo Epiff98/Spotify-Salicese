@@ -61,9 +61,9 @@ void ricerca_genere(FILE* file_artisti,FILE* file_utenti, utenti utente[], int i
 void ricerca_rock(FILE* file_artisti,FILE* file_utenti, utenti utente[], int i,artisti artista[],int scelta);
 void ricerca_rap(FILE* file_artisti,FILE* file_utenti, utenti utente[], int i,artisti artista[],int scelta);
 void ricerca_classico(FILE* file_artisti,FILE* file_utenti, utenti utente[], int i,artisti artista[],int scelta);
-void ricerca_musicaelettronica(FILE* file_artisti,FILE* file_utenti, utenti utente[], int i,artisti artista[],int scelta);
-void ricerca_raggae(FILE* file_artisti,FILE* file_utenti, utenti utente[], int i,artisti artista[],int scelta);
-
+void ricerca_musica_elettronica(FILE* file_artisti,FILE* file_utenti, utenti utente[], int i,artisti artista[],int scelta);
+void ricerca_raggae(FILE* file_artisti, FILE* file_utenti, utenti utente[], int i,artisti artista[],int scelta);
+void ricerca_anno_inizo_produzione(FILE* file_artisti,FILE* file_utenti, utenti utente[], int i,artisti artista[], int scelta);
 //---------------------------------------------------------------------------------------------------------------------------------------------------//
 
 int main(void)
@@ -558,6 +558,11 @@ void ricerca_artisti(FILE* file_artisti,FILE* file_utenti, utenti utente[], int 
 			printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
 			printf("\n\t\t\t\t\t\t\t\t\t  |           1. GENERE MUSICALE          |");
 			printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
+			printf("\n\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
+			printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
+			printf("\n\t\t\t\t\t\t\t\t\t  |       2. ANNO INIZIO PRODUZIONE       |");
+			printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
+
 			printf("\n\n\t\t\t\t\t\t\t\t   > PER QUALE PARAMETRO DESIDERA RICERCARE GLI ARTISTI?   ");
 //CONTROLLOOOOOOOOOOOO
 			scanf("%d",&scelta);
@@ -572,6 +577,10 @@ void ricerca_artisti(FILE* file_artisti,FILE* file_utenti, utenti utente[], int 
 					break;
 
 				case 2:
+					system("cls");
+					scritta_spotify();
+					ricerca_anno_inizo_produzione(file_artisti, file_utenti, utente, i, artista, scelta);
+
 					break;
 
 				case 3:
@@ -700,7 +709,7 @@ void ricerca_genere(FILE* file_artisti,FILE* file_utenti, utenti utente[], int i
 	     				case 5:
 	     					system("cls");
 	     				    scritta_spotify();
-	     					ricerca_musicaelettronica(file_artisti,file_utenti, utente, i, artista, scelta);
+	     					ricerca_musica_elettronica(file_artisti,file_utenti, utente, i, artista, scelta);
 	     					break;
 
 	     				case 6:
@@ -813,7 +822,7 @@ void ricerca_classico(FILE* file_artisti,FILE* file_utenti, utenti utente[], int
 	 	}while(scelta != 0);
 }
 
-void ricerca_musicaelettronica(FILE* file_artisti,FILE* file_utenti, utenti utente[], int i,artisti artista[],int scelta)
+void ricerca_musica_elettronica(FILE* file_artisti,FILE* file_utenti, utenti utente[], int i,artisti artista[],int scelta)
 {
 	printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
 	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
@@ -875,4 +884,60 @@ void ricerca_raggae(FILE* file_artisti,FILE* file_utenti, utenti utente[], int i
 	 		else
 	 			menu_utente(file_artisti, file_utenti, utente, artista, i, scelta);
 	 	}while(scelta != 0);
+}
+
+void ricerca_anno_inizo_produzione(FILE* file_artisti,FILE* file_utenti, utenti utente[], int i,artisti artista[], int scelta)
+{
+ int primo_anno=0, secondo_anno=0;
+
+ printf("\n\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
+ printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
+ printf("\n\t\t\t\t\t\t\t\t\t  |        ANNO INIZIO PRODUZIONE         |");
+ printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
+
+ do
+ {
+	 printf("\nINSERISCI ANNO INIZIO RICERCA:   ");
+	 scanf("%d",&primo_anno);
+	 printf("\nINSERISCI ANNO FINE RICERCA:   ");
+	 scanf("%d",&secondo_anno);
+
+	 if(primo_anno>secondo_anno)
+	 {
+	  printf("\n\t   * ANNO NON VALIDO! ANNO INIZIO RICERCA PIU' GRANDE DELL' ANNO DI FINE RICERCA!\n\n");
+	 }
+	 else if(primo_anno>2018 || secondo_anno>2018 || primo_anno<1901 || secondo_anno<1901)
+	 {
+	  printf("\n\t   * ANNO NON VALIDO! INSERIRE UN VALORE COMPRESO TRA 1901 E 2018!\n\n");
+	 }
+
+ }while(primo_anno>secondo_anno || primo_anno>2018 || secondo_anno>2018 || primo_anno<1901 || secondo_anno<1901 );
+
+
+
+ printf("\n\n\n\t\t\t\t\tNOME ARTISTA   |      GENERE MUSICALE|        NAZIONALITA'|   ANNO INIZIO CARRIERA|  CANZONE POPOLARE  |\n\n");
+
+ 	 while(!feof(file_artisti))
+ 	 {
+ 			fscanf(file_artisti,"%s %s %s %d %s", artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
+ 			if(artista[i].anno_inizio>=primo_anno && artista[i].anno_inizio<=secondo_anno)
+ 			{
+ 				printf("\t\t\t\t   %20s|%21s|%20s|%23d|%20s|  \n",artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
+ 			}
+ 			i++;
+ 	 }
+
+ 	 do
+ 	 	{
+ 	 		printf("\n\n\n> PREMI '0' PER RITORNARE AL MENU':   ");
+ 	 		scanf("%d", &scelta);
+
+ 	 		if(scelta != 0)
+ 	 			printf("\n\n   * INPUT NON VALIDO, RIPROVA!\n\n");
+
+ 	 		else
+ 	 			menu_utente(file_artisti, file_utenti, utente, artista, i, scelta);
+ 	 	}while(scelta != 0);
+
+
 }
