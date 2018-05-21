@@ -450,60 +450,78 @@ void login(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artis
 
 		i=0;
 
-		while(!feof(file_utenti))
+		if(strcmp(username_ricercato, "admin") == 0)
 		{
-			fscanf(file_utenti,"%s %s %d %d %d %s %s\n",utente[i].nome_utente, utente[i].cognome_utente, &utente[i].mese_nascita, &utente[i].giorno_nascita, &utente[i].anno_nascita, utente[i].username, utente[i].password);
-
-			if(strcmp(username_ricercato, utente[i].username) == 0)
+			do
 			{
-				username_trovato++;
-				do
-				{
-					printf("\n> INSERISCI PASSWORD:  ");
-					scanf("%s",password_ricercata);
+				printf("\n> INSERISCI PASSWORD:  ");
+				scanf("%s",password_ricercata);
 
-					if(strcmp(password_ricercata, utente[i].password) != 0)
-						printf("\n\n   * PASSWORD NON VALIDA, RIPROVA!\n\n");
+				if(strcmp(password_ricercata, "Admin123") != 0)
+					printf("\n\n   * PASSWORD NON VALIDA, RIPROVA!\n\n");
 
-				}while(!(strcmp(password_ricercata, utente[i].password) == 0));
+			}while(!(strcmp(password_ricercata, "Admin123") == 0));
 
-				menu_utente(file_artisti, file_utenti, utente, artista, i, scelta);
-			}
+			menu_utente(file_artisti, file_utenti, utente, artista, i, scelta); //menu_admin
+		}
 
-			if(feof(file_utenti) && username_trovato == 0)
+		else
+		{
+			while(!feof(file_utenti))
 			{
-				printf("\n\n   * UTENTE NON ISCRITTO!\n\n");
+				fscanf(file_utenti,"%s %s %d %d %d %s %s\n",utente[i].nome_utente, utente[i].cognome_utente, &utente[i].mese_nascita, &utente[i].giorno_nascita, &utente[i].anno_nascita, utente[i].username, utente[i].password);
 
-				printf("\n\n1. RIPROVA\n");
-				printf("\n2. Non sei iscritto? ISCRIVITI ORA!\n\n");
-
-				do
+				if(strcmp(username_ricercato, utente[i].username) == 0)
 				{
-					printf("\n> QUALE OPERAZIONE DESIDERI EFFETTUARE?   ");
-					scanf("%d", &scelta);
+					username_trovato++;
+					do
+					{
+						printf("\n> INSERISCI PASSWORD:  ");
+						scanf("%s",password_ricercata);
 
-					if(scelta < 1 || scelta > 2)
-						printf("\n\n   * INPUT NON VALIDO, RIPROVA!\n\n");
+						if(strcmp(password_ricercata, utente[i].password) != 0)
+							printf("\n\n   * PASSWORD NON VALIDA, RIPROVA!\n\n");
 
-				}while(scelta < 1 || scelta > 2);
+					}while(!(strcmp(password_ricercata, utente[i].password) == 0));
 
-				switch(scelta)
-				{
-					case 1: system("cls"); //RIPROVA
-						scritta_spotify();
-						scritta_login();
-						login(file_utenti, file_artisti, utente, artista, i, scelta);
-						break;
-
-					case 2:	system("cls"); //ISCRIVITI
-						scritta_spotify();
-						scritta_signup();
-						signup(file_utenti, file_artisti, utente, artista, i, scelta);
+					menu_utente(file_artisti, file_utenti, utente, artista, i, scelta);
 				}
-			}
 
-			else
-				i++;
+				if(feof(file_utenti) && username_trovato == 0)
+				{
+					printf("\n\n   * UTENTE NON ISCRITTO!\n\n");
+
+					printf("\n\n1. RIPROVA\n");
+					printf("\n2. Non sei iscritto? ISCRIVITI ORA!\n\n");
+
+					do
+					{
+						printf("\n> QUALE OPERAZIONE DESIDERI EFFETTUARE?   ");
+						scanf("%d", &scelta);
+
+						if(scelta < 1 || scelta > 2)
+							printf("\n\n   * INPUT NON VALIDO, RIPROVA!\n\n");
+
+					}while(scelta < 1 || scelta > 2);
+
+					switch(scelta)
+					{
+						case 1: system("cls"); //RIPROVA
+							scritta_spotify();
+							scritta_login();
+							login(file_utenti, file_artisti, utente, artista, i, scelta);
+							break;
+
+						case 2:	system("cls"); //ISCRIVITI
+							scritta_spotify();
+							scritta_signup();
+							signup(file_utenti, file_artisti, utente, artista, i, scelta);
+					}
+				}
+
+				else
+					i++;
+			}
 		}
 	}
 }
