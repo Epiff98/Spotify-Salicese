@@ -4,9 +4,8 @@
 #include <string.h>
 
 //------------------------------------------------------- DEFINIZIONE COSTANTI SIMBOLICHE -----------------------------------------------------------//
-#define LUNG_NOME 30
-#define LUNG_COGNOME 30
-#define LUNG_DATA_DI_NASCITA 8
+#define LUNG_NOME 30				//LUNGHEZZA MASSIMA DEL CAMPO "NOME"
+#define LUNG_COGNOME 30				//LUNGHEZZA MASSIMA DEL CAMPO "COGNOME"
 #define LUNG_USERNAME 15
 #define LUNG_PASSWORD 10
 #define LUNG_GENERE 30
