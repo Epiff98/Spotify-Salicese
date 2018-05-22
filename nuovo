@@ -11,10 +11,10 @@
 #define LUNG_GENERE 20				//LUNGHEZZA MASSIMA DEL CAMPO "GENERE": 20
 #define LUNG_CANZONE 20				//LUNGHEZZA MASSIMA DEL CAMPO "CANZONE": 20
 #define LUNG_NAZIONALITA 20			//LUNGHEZZA MASSIMA DEL CAMPO "NAZIONALITA": 20
-#define N_UTENTI 50					//NUMERO MASSIMO DI UTENTI: 50
+#define N_UTENTI 50				//NUMERO MASSIMO DI UTENTI: 50
 #define N_ARTISTI 50				//NUMERO MASSIMO DI ARTISTI: 50
-#define MESE_MIN 1					//MESE MINIMO: 1 (= GENNAIO)
-#define MESE_MAX 12					//MESE MASSIMO: 12 (= DICEMBRE)
+#define MESE_MIN 1				//MESE MINIMO: 1 (= GENNAIO)
+#define MESE_MAX 12				//MESE MASSIMO: 12 (= DICEMBRE)
 #define ANNO_MIN 1901				//ANNO MINIMO: 1901
 #define ANNO_MAX 2018				//ANNO MASSIMO: 2018
 //---------------------------------------------------------------------------------------------------------------------------------------------------//
