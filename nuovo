@@ -683,10 +683,12 @@ void aggiungi_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 	printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
 	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
 	printf("\n\t\t\t\t\t\t\t\t\t  |           AGGIUNGI UN ARTISTA         |");
-	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
+	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|\n\n");
 
 	int count_artisti=0;
 	int artista_esistente=0;
+
+	i=0;
 
 	if((file_artisti =  fopen("Artisti.txt" , "a+")) == NULL)
 		printf("Errore nell'apertura!\n");
