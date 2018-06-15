@@ -188,26 +188,25 @@ void interfaccia_iniziale(FILE* file_artisti, FILE* file_utenti, utenti utente[]
 
 void signup(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti artista[], int i, int scelta)
 {
-
 	if((file_utenti =  fopen("Utenti.txt" , "a+")) == NULL)
 		printf("Errore nell'apertura!\n");
 
 	else //apertura del file in modalità di lettura/scrittura in coda ("a+")
 	{
-		int count_utenti=0; //contatore del n utenti salvati
+		int count_utenti=0; //variabile contatore che conterrà il numero di utenti salvati sul file "Utenti.txt"
 
-		i=0;
-		rewind(file_utenti);
+		i=0; //azzeramento dell'indice
+		rewind(file_utenti); //riavvolgimento dello stream
 
-		//conteggio degli utenti salvati su file
+		//conteggio degli utenti salvati sul file "Utenti.txt"
 		while(!feof(file_utenti))
 		{
 			fscanf(file_utenti,"%d %s %s %d %d %d %s %s", &utente[i].id_utente, utente[i].nome_utente, utente[i].cognome_utente, &utente[i].mese_nascita, &utente[i].giorno_nascita, &utente[i].anno_nascita, utente[i].username, utente[i].password);
-			count_utenti++; //incremento del contatore degli utenti salvati
+			count_utenti++; //incremento unitario del contatore degli utenti salvati
 			i++;
 		}
 
-		int nome_errato= 0;
+		int nome_errato= 0; //flag utilizzato per verificare se il nome
 
 		utente[count_utenti].id_utente= count_utenti+1; //assegnazione dell'ID. UTENTE, un identificativo numerico di ciascun utente
 
@@ -592,7 +591,9 @@ void menu_utente(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti
 			printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
 			printf("\n\t\t\t\t\t\t\t\t\t  |        VISUALIZZA LISTA ARTISTI       |");
 			printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
+
 			visualizza_artisti(file_artisti, file_utenti, utente, artista, i, scelta);
+
 			do
 			{
 				printf("\n\n\n> PREMI '0' PER RITORNARE AL MENU':   ");
@@ -735,7 +736,7 @@ void ricerca_per_genere(FILE* file_artisti, FILE* file_utenti, utenti utente[], 
 
 		 int genere_errato= 0; //flag che verifica se la stringa del "genere riceracato" contiene un numero
 		 int genere_trovato= 0; //flag che verifica se il "genere ricercato" è presente
-
+		 int lung_genere_inserito= 0;
 		 do
 		 {
 			 genere_errato= 0;
@@ -745,12 +746,14 @@ void ricerca_per_genere(FILE* file_artisti, FILE* file_utenti, utenti utente[], 
 			 printf("\n\n\n> INSERISCI IL GENERE:   ");
 			 scanf("%s", genere_ricercato);
 
-			 for(int j=0; j < LUNG_GENERE; j++)
+			 lung_genere_inserito= strlen(genere_ricercato);
+
+			 for(int j=0; j < lung_genere_inserito; j++)
 			 {
 				if((isdigit(genere_ricercato[j])) == 1) //verifica se è stata inserita una cifra numerica
 				{
 					genere_errato= 1;
-					j= LUNG_GENERE; //non vi è il bisogno di sorrere i successivi caratteri della stringa poichè è gia stato rilevato un numero
+					j= lung_genere_inserito; //non vi è il bisogno di sorrere i successivi caratteri della stringa poichè è gia stato rilevato un numero
 				}
 
 				else
