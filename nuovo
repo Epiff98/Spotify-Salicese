@@ -668,15 +668,15 @@ void ricerca_artisti(FILE* file_artisti,FILE* file_utenti, utenti utente[], arti
 	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
 	printf("\n\t\t\t\t\t\t\t\t\t  |           1. GENERE MUSICALE          |");
 	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
-	printf("\n\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
+	printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
 	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
 	printf("\n\t\t\t\t\t\t\t\t\t  |       2. ANNO INIZIO PRODUZIONE       |");
 	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
-	printf("\n\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
+	printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
 	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
 	printf("\n\t\t\t\t\t\t\t\t\t  |            3. NAZIONALITA'            |");
 	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
-	printf("\n\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
+	printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
 	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
 	printf("\n\t\t\t\t\t\t\t\t\t  |                4. EXIT                |");
 	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
