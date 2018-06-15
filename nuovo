@@ -63,6 +63,8 @@ void menu_admin(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti 
 void visualizza_utenti(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
 void aggiungi_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
 void modifica_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
+void return_menu_admin(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
+void return_menu_utente(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
 //-------------------------------------------------------------------------------------------------------------------------------------------------//
 
 //------------------------------------------------------------------- MAIN ------------------------------------------------------------------------//
@@ -593,19 +595,7 @@ void menu_utente(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti
 			printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
 
 			visualizza_artisti(file_artisti, file_utenti, utente, artista, i, scelta);
-
-			do
-			{
-				printf("\n\n\n> PREMI '0' PER RITORNARE AL MENU':   ");
-				scanf("%d", &scelta);
-
-				if(scelta != 0)
-					printf("\n   * INPUT NON VALIDO, RIPROVA!");
-
-				else
-					menu_utente(file_artisti, file_utenti, utente, artista, i, scelta);
-
-			}while(scelta != 0);
+			return_menu_utente(file_artisti, file_utenti, utente, artista, i, scelta);
 			break;
 
 		case 2:
@@ -734,13 +724,11 @@ void ricerca_per_genere(FILE* file_artisti, FILE* file_utenti, utenti utente[], 
 	 {
 		 char genere_ricercato[LUNG_GENERE];
 
-		 int genere_errato= 0; //flag che verifica se la stringa del "genere riceracato" contiene un numero
 		 int genere_trovato= 0; //flag che verifica se il "genere ricercato" è presente
 		 int lung_genere_inserito= 0;
 
 		 do
 		 {
-			 genere_errato= 0;
 			 genere_trovato= 0;
 
 			 //acquisizione del GENERE: parametro di ricerca degli artisti
@@ -750,16 +738,7 @@ void ricerca_per_genere(FILE* file_artisti, FILE* file_utenti, utenti utente[], 
 			 lung_genere_inserito= strlen(genere_ricercato);
 
 			 for(int j=0; j < lung_genere_inserito; j++)
-			 {
-				if((isdigit(genere_ricercato[j])) == 1) //verifica se è stata inserita una cifra numerica
-				{
-					genere_errato= 1;
-					j= lung_genere_inserito; //non vi è il bisogno di sorrere i successivi caratteri della stringa poichè è gia stato rilevato un numero
-				}
-
-				else
-					genere_ricercato[j]= toupper(genere_ricercato[j]); //trasforma tutti i caratteri del NOME DELL'UTENTE in maiuscolo
-			 }
+				genere_ricercato[j]= toupper(genere_ricercato[j]); //trasforma tutti i caratteri del NOME DELL'UTENTE in maiuscolo
 
 			 i=0;
 			 rewind(file_artisti); //riavvolgimento dello stream
@@ -777,10 +756,10 @@ void ricerca_per_genere(FILE* file_artisti, FILE* file_utenti, utenti utente[], 
 				 i++;
 			 }
 
-			 if( genere_errato != 0 || genere_trovato == 0)
+			 if(genere_trovato == 0)
 				printf("\n   * GENERE NON TROVATO, RIPROVA!\n");
 
-		 }while(genere_errato != 0 || genere_trovato == 0);
+		 }while(genere_trovato == 0);
 
 		 printf("\n\nGENERE %s:", genere_ricercato);
 		 printf("\n\n\n\t\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\n\n");
@@ -798,25 +777,9 @@ void ricerca_per_genere(FILE* file_artisti, FILE* file_utenti, utenti utente[], 
 			 i++;
 		 }
 	 }
-
 	 fclose(file_artisti);
 
-	do
-	{
-		printf("\n\n\n> PREMI '0' PER RITORNARE AL MENU':   ");
-		scanf("%d", &scelta);
-
-		if(scelta == 0)
-		{
-			system("cls");
-			scritta_spotify();
-			menu_utente(file_utenti, file_artisti, utente, artista, i, scelta);
-		}
-
-		else
-			printf("\n   * INPUT NON VALIDO, RIPROVA!");
-
-	}while(scelta != 0);
+	 return_menu_utente(file_artisti, file_utenti, utente, artista, i, scelta);
 }
 
 void ricerca_per_nazionalita(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta)
@@ -900,22 +863,7 @@ void ricerca_per_nazionalita(FILE* file_artisti, FILE* file_utenti, utenti utent
 
 	 fclose(file_artisti);
 
-	do
-	{
-		printf("\n\n\n> PREMI '0' PER RITORNARE AL MENU':   ");
-		scanf("%d", &scelta);
-
-		if(scelta == 0)
-		{
-			system("cls");
-			scritta_spotify();
-			menu_utente(file_utenti, file_artisti, utente, artista, i, scelta);
-		}
-
-		else
-			printf("\n   * INPUT NON VALIDO, RIPROVA!");
-
-	}while(scelta != 0);
+	 return_menu_utente(file_artisti, file_utenti, utente, artista, i, scelta);
 }
 
 void ricerca_per_anno_inizio_produzione(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta)
@@ -965,18 +913,7 @@ void ricerca_per_anno_inizio_produzione(FILE* file_artisti, FILE* file_utenti, u
 	}
 	fclose(file_artisti);
 
-	do
-	{
-		printf("\n\n\n> PREMI '0' PER RITORNARE AL MENU':   ");
-		scanf("%d", &scelta);
-
-		if(scelta != 0)
-			printf("\n   * INPUT NON VALIDO, RIPROVA!");
-
-		else
-			menu_utente(file_artisti, file_utenti, utente, artista, i, scelta);
-
-	}while(scelta != 0);
+	return_menu_utente(file_artisti, file_utenti, utente, artista, i, scelta);
 }
 
 void profilo(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta)
@@ -1051,6 +988,11 @@ void anagrafica(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti 
 	printf("\n\t\t\t\t\t\t\t\t\t  |               ANAGRAFICA              |");
 	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
 
+	return_menu_utente(file_artisti, file_utenti, utente, artista, i, scelta);
+}
+
+void return_menu_utente(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta)
+{
 	do
 	{
 		printf("\n\n\n> PREMI '0' PER RITORNARE AL MENU':   ");
@@ -1064,7 +1006,6 @@ void anagrafica(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti 
 
 	}while(scelta != 0);
 }
-
 //-------------------------------------------------------------------------------------------------------------------------------------------------//
 
 //---------------------------------------------------- FUNZIONI DELL'INTERFACCIA ADMIN ------------------------------------------------------------//
@@ -1161,18 +1102,7 @@ void visualizza_utenti(FILE* file_artisti, FILE* file_utenti, utenti utente[], a
 	}
 	fclose(file_utenti);
 
-	do
-	{
-		printf("\n\n\n> PREMI '0' PER RITORNARE AL MENU':   ");
-		scanf("%d", &scelta);
-
-		if(scelta != 0)
-			printf("\n   * INPUT NON VALIDO, RIPROVA!");
-
-		else
-			menu_admin(file_artisti, file_utenti, utente, artista, i, scelta);
-
-	}while(scelta != 0);
+	return_menu_admin(file_artisti, file_utenti, utente, artista, i, scelta);
 }
 
 void aggiungi_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta)
@@ -1208,7 +1138,7 @@ void aggiungi_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 
 			//acquisizione del NOME D'ARTE del nuovo artista
 			printf("\n\n\n> INSERISCI IL NOME D'ARTE:   ");
-			scanf("%s", artista[count_artisti].nome_artista);
+			scanf(" %s", artista[count_artisti].nome_artista);
 
 			for(int j=0; j < LUNG_NOME; j++)
 				artista[count_artisti].nome_artista[j]= toupper(artista[count_artisti].nome_artista[j]); //trasforma tutti i caratteri del NOME DELL'ARTISTA in maiuscolo
@@ -1302,18 +1232,7 @@ void aggiungi_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 	}
 	fclose(file_artisti); //chiusura del file "file_artisti"
 
-	do
-	{
-		printf("\n\n\n> PREMI '0' PER RITORNARE AL MENU':   ");
-		scanf("%d", &scelta);
-
-		if(scelta != 0)
-			printf("\n   * INPUT NON VALIDO, RIPROVA!");
-
-		else
-			menu_admin(file_artisti, file_utenti, utente, artista, i, scelta);
-
-	}while(scelta != 0);	//da implementare il controllo sui caratteri
+	return_menu_admin(file_artisti, file_utenti, utente, artista, i, scelta);
 }
 
 void modifica_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta)
@@ -1528,6 +1447,11 @@ void modifica_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 	}
 	fclose(file_artisti);
 
+	return_menu_admin(file_artisti, file_utenti, utente, artista, i, scelta);
+}
+
+void return_menu_admin(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta)
+{
 	do
 	{
 		printf("\n\n\n> PREMI '0' PER RITORNARE AL MENU':   ");
@@ -1539,7 +1463,6 @@ void modifica_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 		else
 			menu_admin(file_artisti, file_utenti, utente, artista, i, scelta);
 
-	}while(scelta != 0);
-
+	}while(scelta != 0);	//da implementare il controllo sui caratteri
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------//
