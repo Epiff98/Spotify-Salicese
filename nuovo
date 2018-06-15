@@ -54,13 +54,7 @@ void signup(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti arti
 void menu_utente(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
 void visualizza_artisti(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
 void ricerca_artisti(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
-void ricerca_pop(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
 void ricerca_per_genere(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
-void ricerca_rock(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
-void ricerca_rap(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
-void ricerca_classico(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
-void ricerca_musica_elettronica(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
-void ricerca_reggae(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
 void ricerca_per_anno_inizio_produzione(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
 void profilo(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
 void anagrafica(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
@@ -198,11 +192,14 @@ void signup(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti arti
 	if((file_utenti =  fopen("Utenti.txt" , "a+")) == NULL)
 		printf("Errore nell'apertura!\n");
 
-	else
+	else //apertura del file in modalità di lettura/scrittura in coda ("a+")
 	{
 		int count_utenti=0; //contatore del n utenti salvati
 
 		i=0;
+		rewind(file_utenti);
+
+		//conteggio degli utenti salvati su file
 		while(!feof(file_utenti))
 		{
 			fscanf(file_utenti,"%d %s %s %d %d %d %s %s", &utente[i].id_utente, utente[i].nome_utente, utente[i].cognome_utente, &utente[i].mese_nascita, &utente[i].giorno_nascita, &utente[i].anno_nascita, utente[i].username, utente[i].password);
@@ -212,21 +209,22 @@ void signup(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti arti
 
 		int nome_errato= 0;
 
-		utente[count_utenti].id_utente= count_utenti+1; //assegnazione dell'ID. UTENTE, un identificativo numerico
+		utente[count_utenti].id_utente= count_utenti+1; //assegnazione dell'ID. UTENTE, un identificativo numerico di ciascun utente
 
 		do
 		{
+			nome_errato= 0;
+
+			//acquisizione del NOME di un nuovo utente
 			printf("\n\n\n> INSERISCI IL NOME:   ");
 			scanf("%s", utente[count_utenti].nome_utente);
-
-			nome_errato= 0;
 
 			for(int j=0; j < LUNG_NOME; j++)
 			{
 				if((isdigit(utente[count_utenti].nome_utente[j])) == 1)
 				{
-					nome_errato++;
-					break;
+					nome_errato= 1;
+					j= LUNG_NOME;
 				}
 
 				else
@@ -238,20 +236,22 @@ void signup(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti arti
 
 		}while(nome_errato != 0);
 
-		int cognome_errato=0;
+		int cognome_errato= 0;
 
 		do
 		{
+			cognome_errato= 0;
+
+			//acquisizione del COGNOME di un nuovo utente
 			printf("\n\n\n> INSERISCI IL COGNOME:   ");
 			scanf("%s", utente[count_utenti].cognome_utente);
-			cognome_errato= 0;
 
 			for(int j=0; j < LUNG_COGNOME; j++)
 			{
 				if((isdigit(utente[count_utenti].cognome_utente[j])) == 1)
 				{
-					cognome_errato++;
-					break;
+					cognome_errato= 1;
+					j= LUNG_COGNOME;
 				}
 
 				else
@@ -262,8 +262,9 @@ void signup(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti arti
 				printf("\n   * COGNOME NON VALIDO, RIPROVA!");
 
 		}while(cognome_errato != 0);
-		printf("\n\n\nDATA DI NASCITA: ");
 
+		//acquisizione della DATA DI NASCITA di un nuovo utente
+		printf("\n\n\nDATA DI NASCITA: ");
 		do
 		{
 			printf("\n\n\t> INSERISCI IL MESE DI NASCITA:   ");
@@ -330,8 +331,9 @@ void signup(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti arti
 		printf("\n\n\n- NOTA USERNAME: Numero max caratteri: %d.", LUNG_USERNAME);
 		do
 		{
-			username_esistente=0;
+			username_esistente= 0;
 
+			//acuisizione dell'USERNAME di un nuovo utente
 			printf("\n\n> INSERISCI L'USERNAME:   ");
 			scanf("%s",	utente[count_utenti].username);
 
@@ -345,7 +347,7 @@ void signup(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti arti
 				fscanf(file_utenti,"%d %s %s %d %d %d %s %s\n", &utente[i].id_utente, utente[i].nome_utente, utente[i].cognome_utente, &utente[i].mese_nascita, &utente[i].giorno_nascita, &utente[i].anno_nascita, utente[i].username, utente[i].password);
 
 				if(strcmp(utente[i].username, utente[count_utenti].username) == 0)
-					username_esistente++;
+					username_esistente= 1;
 			}
 
 			if(username_esistente != 0)
@@ -353,8 +355,8 @@ void signup(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti arti
 
 		}while(lung_username_inserito > LUNG_USERNAME || username_esistente != 0);
 
-		int count_maiuscole=0; 	//contatore caratteri maiuscoli
-		int count_numeri=0;		//contatore caratteri numerici
+		int count_maiuscole= 0; 	//contatore caratteri maiuscoli
+		int count_numeri= 0;		//contatore caratteri numerici
 
 		printf("\n\n\n- NOTA PASSWORD: Numero caratteri compreso tra %d e %d, con almeno una maiuscola e almeno un numero.", LUNG_PASSWORD/2, LUNG_PASSWORD);
 
@@ -363,11 +365,12 @@ void signup(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti arti
 
 		do
 		{
+			//acquisizione della PASSWORD di un nuovo utente
 			printf("\n\n> INSERISCI LA PASSWORD:   ");
 			scanf("%s", utente[count_utenti].password);
 
 			count_maiuscole= 0; //azzeramento della variabile "maiuscole"
-			count_numeri=	0;		//azzeramento della variabile "numeri"
+			count_numeri= 0;		//azzeramento della variabile "numeri"
 
 			lung_password_inserita= strlen(utente[count_utenti].password);
 
@@ -394,7 +397,6 @@ void signup(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti arti
 		fprintf(file_utenti, "\n%d %s %s %d %d %d %s %s", utente[i].id_utente, utente[count_utenti].nome_utente, utente[count_utenti].cognome_utente, utente[count_utenti].giorno_nascita,  utente[count_utenti].mese_nascita, utente[count_utenti].anno_nascita, utente[count_utenti].username, utente[count_utenti].password);
 		printf("\n\n\n***************** ISCRIZIONE EFFETTUATA CORRETTAMENTE! *****************\n");
 	}
-
 	fclose(file_utenti);
 
 	do
@@ -426,11 +428,14 @@ void login_utente(FILE* file_artisti, FILE* file_utenti, utenti utente[], artist
 		char username_ricercato[LUNG_USERNAME];
 		char password_ricercata[LUNG_PASSWORD];
 
+		//acquisizione dell'USERNAME dell'utente che vuole effettuare l'accesso
 		printf("\n> INSERISCI USERNAME:  ");
 		scanf("%s",username_ricercato);
 
 		int username_trovato=0; //flag che verifica se l'utente ricercato è stato trovato
+
 		i=0;
+		rewind(file_utenti); //riavvolgimento dello stream
 
 		while(!feof(file_utenti))
 		{
@@ -438,10 +443,11 @@ void login_utente(FILE* file_artisti, FILE* file_utenti, utenti utente[], artist
 
 			if(strcmp(username_ricercato, utente[i].username) == 0)
 			{
-				username_trovato++; //utente trovato
+				username_trovato= 1; //utente trovato
 
 				do
 				{
+					//acquisizione della PASSWORD dell'utente che vuole effettuare l'accesso
 					printf("\n> INSERISCI PASSWORD:  ");
 					scanf("%s",password_ricercata);
 
@@ -456,8 +462,6 @@ void login_utente(FILE* file_artisti, FILE* file_utenti, utenti utente[], artist
 			else
 				i++;
 		}
-
-		fclose(file_utenti); //chiusura del file "file_utenti"
 
 		if(username_trovato == 0) //utente non trovato
 		{
@@ -495,6 +499,7 @@ void login_utente(FILE* file_artisti, FILE* file_utenti, utenti utente[], artist
 					break;
 			}
 		}
+		fclose(file_utenti); //chiusura del file "file_utenti"
 	}
 }
 
@@ -503,39 +508,37 @@ void login_admin(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti
 	char username_ricercato[LUNG_USERNAME];
 	char password_ricercata[LUNG_PASSWORD];
 
-	if((file_utenti =  fopen("Utenti.txt" , "r")) == NULL)
-		printf("Errore nell'apertura!\n");
-
-	else //apertura del file in modalità di lettura ("r")
+	do
 	{
-		do{
-			printf("\n> INSERISCI USERNAME ADMIN:  ");
-			scanf("%s",username_ricercato);
+		//acquisizione dell'USERNAME DELL'ADMIN che vuole effettuare l'accesso
+		printf("\n> INSERISCI USERNAME ADMIN:  ");
+		scanf("%s", username_ricercato);
 
-			if(strcmp(username_ricercato, "admin") != 0)
-				printf("\n   * USERNAME ADMIN NON VALIDO, RIPROVA!\n\n");
+		if(strcmp(username_ricercato, "admin") != 0)
+			printf("\n   * USERNAME ADMIN NON VALIDO, RIPROVA!\n\n");
 
-		}while(strcmp(username_ricercato, "admin") != 0);
+	}while(strcmp(username_ricercato, "admin") != 0);
 
-		if(strcmp(username_ricercato, "admin") == 0)
+	if(strcmp(username_ricercato, "admin") == 0)
+	{
+		do
 		{
-			do
-			{
-				printf("\n> INSERISCI PASSWORD ADMIN:  ");
-				scanf("%s",password_ricercata);
+			//acquisizione della PASSWORD DELL'ADMIN che vuole effettuare l'accesso
+			printf("\n> INSERISCI PASSWORD ADMIN:  ");
+			scanf("%s",password_ricercata);
 
-				if(strcmp(password_ricercata, "Admin123") != 0)
-					printf("\n   * PASSWORD ADMIN NON VALIDA, RIPROVA!\n\n");
+			if(strcmp(password_ricercata, "Admin123") != 0)
+				printf("\n   * PASSWORD ADMIN NON VALIDA, RIPROVA!\n\n");
 
-			}while(!(strcmp(password_ricercata, "Admin123") == 0));
+		}while(!(strcmp(password_ricercata, "Admin123") == 0));
 
-			menu_admin(file_artisti, file_utenti, utente, artista, i, scelta); //menu_admin
-		}
+		menu_admin(file_artisti, file_utenti, utente, artista, i, scelta); //menu_admin
 	}
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------//
 
 //--------------------------------------------------- FUNZIONI DELL'INTERFACCIA UTENTE ------------------------------------------------------------//
+
 void menu_utente(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta)
 {
 	system("cls");
@@ -583,12 +586,12 @@ void menu_utente(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti
 	switch(scelta)
 	{
 		case 1: //VISUALIZZAZIONE DEGLI ARTISTI
+			system("cls");
+			scritta_spotify();
 			printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
 			printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
 			printf("\n\t\t\t\t\t\t\t\t\t  |        VISUALIZZA LISTA ARTISTI       |");
 			printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
-			system("cls");
-			scritta_spotify();
 			visualizza_artisti(file_artisti, file_utenti, utente, artista, i, scelta);
 			do
 			{
@@ -641,6 +644,7 @@ void visualizza_artisti(FILE* file_artisti, FILE* file_utenti, utenti utente[], 
 		printf("\n\n\n\n\t\t\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\n\n");
 
 		i=0;
+		rewind(file_artisti); //riavvolgimento dello stream
 
 		while(!feof(file_artisti))
 		{
@@ -659,68 +663,60 @@ void ricerca_artisti(FILE* file_artisti,FILE* file_utenti, utenti utente[], arti
 	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
 	printf("\n\t\t\t\t\t\t\t\t\t  |            RICERCA ARTISTA            |");
 	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
+	printf("\n\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
+	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
+	printf("\n\t\t\t\t\t\t\t\t\t  |           1. GENERE MUSICALE          |");
+	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
+	printf("\n\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
+	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
+	printf("\n\t\t\t\t\t\t\t\t\t  |       2. ANNO INIZIO PRODUZIONE       |");
+	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
+	printf("\n\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
+	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
+	printf("\n\t\t\t\t\t\t\t\t\t  |            3. NAZIONALITA'            |");
+	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
+	printf("\n\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
+	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
+	printf("\n\t\t\t\t\t\t\t\t\t  |                4. EXIT                |");
+	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
 
-	if((file_artisti =  fopen("Artisti.txt" , "r")) == NULL)
-		printf("Errore nell'apertura!\n");
-
-	else
+	do
 	{
-		printf("\n\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
-		printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
-		printf("\n\t\t\t\t\t\t\t\t\t  |           1. GENERE MUSICALE          |");
-		printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
-		printf("\n\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
-		printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
-		printf("\n\t\t\t\t\t\t\t\t\t  |       2. ANNO INIZIO PRODUZIONE       |");
-		printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
-		printf("\n\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
-		printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
-		printf("\n\t\t\t\t\t\t\t\t\t  |            3. NAZIONALITA'            |");
-		printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
-		printf("\n\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
-		printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
-		printf("\n\t\t\t\t\t\t\t\t\t  |                4. EXIT                |");
-		printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
+		printf("\n\n\n\t\t\t\t\t\t\t\t   > PER QUALE PARAMETRO DESIDERI RICERCARE GLI ARTISTI?   ");
+		scanf("%d", &scelta);
 
-		do
-		{
-			printf("\n\n\n\t\t\t\t\t\t\t\t   > PER QUALE PARAMETRO DESIDERI RICERCARE GLI ARTISTI?   ");
-			scanf("%d", &scelta);
+		if(scelta < 1 || scelta > 4)
+			printf("\n\n\t\t\t\t\t\t\t\t\t       * SCELTA NON VALIDA, RIPROVA!\n");
 
-			if(scelta < 1 || scelta > 3)
-				printf("\n\n\t\t\t\t\t\t\t\t\t       * SCELTA NON VALIDA, RIPROVA!\n");
+	}while(scelta < 1 || scelta > 4); //da implementare il controllo sui caratteri
 
-		}while(scelta < 1 && scelta > 3); //da implementare il controllo sui caratteri
+	switch(scelta)
+	{
 
-		switch(scelta)
-		{
+		case 1: //RICERCA PER GENERE
+			system("cls");
+			scritta_spotify();
+			ricerca_per_genere(file_artisti, file_utenti, utente, artista, i, scelta);
+			break;
 
-			case 1: //RICERCA PER GENERE
-				system("cls");
-				scritta_spotify();
-				ricerca_per_genere(file_artisti, file_utenti, utente, artista, i, scelta);
-				break;
+		case 2: //RICERCA PER ANNO DI INIZIO PRODUZIONE
+			system("cls");
+			scritta_spotify();
+			ricerca_per_anno_inizio_produzione(file_artisti, file_utenti, utente, artista, i, scelta);
 
-			case 2: //RICERCA PER ANNO DI INIZIO PRODUZIONE
-				system("cls");
-				scritta_spotify();
-				ricerca_per_anno_inizio_produzione(file_artisti, file_utenti, utente, artista, i, scelta);
+			break;
 
-				break;
+		case 3: //RICERCA PER NAZIONALITA' 				//da implementare
+			system("cls");
+			scritta_spotify();
+			break;
 
-			case 3: //RICERCA PER NAZIONALITA' 				//da implementare
-				system("cls");
-				scritta_spotify();
-				break;
-
-			case 4: //EXIT
-				system("cls");
-				scritta_spotify();
-				menu_utente(file_artisti, file_utenti, utente, artista, i, scelta);
-				break;
-		}
+		case 4: //EXIT
+			system("cls");
+			scritta_spotify();
+			menu_utente(file_artisti, file_utenti, utente, artista, i, scelta);
+			break;
 	}
-	fclose(file_artisti);
 }
 
 void ricerca_per_genere(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta)
@@ -728,297 +724,93 @@ void ricerca_per_genere(FILE* file_artisti, FILE* file_utenti, utenti utente[], 
 	 printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
 	 printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
 	 printf("\n\t\t\t\t\t\t\t\t\t  |            GENERE MUSICALE            |");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
-	 printf("\n\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |                1. POP                 |");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
-	 printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |                2. ROCK                |");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
-	 printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |                 3. RAP                |");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
-	 printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |              4. CLASSICO              |");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
-	 printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |         5. MUSICA ELETTRONICA         |");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
-	 printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |              6. RAGGAE                |");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
-	 printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |                7. EXIT                |");
-	 printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
+	 printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|\n\n");
 
-	 do
-	{
-		printf("\n\n\n\t\t\t\t\t\t\t\t\t   > QUALE OPERAZIONE DESIDERI EFFETTUARE?   ");
-		scanf("%d", &scelta);
+	 if((file_artisti =  fopen("Artisti.txt" , "r")) == NULL)
+	 		printf("Errore nell'apertura!\n");
 
-		if(scelta < 1 || scelta > 7)
-			printf("\n\n\t\t\t\t\t\t\t\t\t       * SCELTA NON VALIDA, RIPROVA!\n");
+	 else
+	 {
+		 char genere_ricercato[LUNG_GENERE];
 
-	}while(scelta < 1 && scelta > 7); //da implementare il controllo sui caratteri
+		 int genere_errato= 0; //flag che verifica se la stringa del "genere riceracato" contiene un numero
+		 int genere_trovato= 0; //flag che verifica se il "genere ricercato" è presente
 
+		 do
+		 {
+			 genere_errato= 0;
+			 genere_trovato= 0;
 
-	switch(scelta)
-	{
-		case 1: //RICERCA PER GENERE "POP"
-			system("cls");
-			scritta_spotify();
-			ricerca_pop(file_artisti, file_utenti, utente, artista, i, scelta);
-			break;
+			 //acquisizione del GENERE: parametro di ricerca degli artisti
+			 printf("\n\n\n> INSERISCI IL GENERE:   ");
+			 scanf("%s", genere_ricercato);
 
-		case 2: //RICERCA PER GENERE "ROCK"
-			system("cls");
-			scritta_spotify();
-			ricerca_rock(file_artisti, file_utenti, utente, artista, i, scelta);
-			break;
+			 for(int j=0; j < LUNG_GENERE; j++)
+			 {
+				if((isdigit(genere_ricercato[j])) == 1) //verifica se è stata inserita una cifra numerica
+				{
+					genere_errato= 1;
+					j= LUNG_GENERE; //non vi è il bisogno di sorrere i successivi caratteri della stringa poichè è gia stato rilevato un numero
+				}
 
-		case 3: //RICERCA PER GENERE "RAP"
-			system("cls");
-			scritta_spotify();
-			ricerca_rap(file_artisti, file_utenti, utente, artista, i, scelta);
-			break;
+				else
+					genere_ricercato[j]= toupper(genere_ricercato[j]); //trasforma tutti i caratteri del NOME DELL'UTENTE in maiuscolo
+			 }
 
-		case 4: //RICERCA PER GENERE "CLASSICO"
-			system("cls");
-			scritta_spotify();
-			ricerca_classico(file_artisti, file_utenti, utente, artista, i, scelta);
-			break;
+			 i=0;
+			 rewind(file_artisti); //riavvolgimento dello stream
 
-		case 5: //RICERCA PER GENERE "MUSICA ELETTRONICA"
-			system("cls");
-			scritta_spotify();
-			ricerca_musica_elettronica(file_artisti, file_utenti, utente, artista, i, scelta);
-			break;
+			 while(!feof(file_artisti))
+			 {
+				 fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
 
-		case 6: //RICERCA PER GENERE "REGGAE"
-			system("cls");
-			scritta_spotify();
-			ricerca_reggae(file_artisti, file_utenti, utente, artista, i, scelta);
-			break;
+				 if(strcmp(genere_ricercato, artista[i].genere) == 0)
+				 {
+					 genere_trovato= 1;
+					 break;
+				 }
 
-		case 7: //EXIT
-			system("cls");
-			menu_utente(file_artisti, file_utenti, utente, artista, i, scelta);
-			break;
-	}
-}
+				 i++;
+			 }
 
-void ricerca_pop(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta)
-{
-	printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
-	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
-	printf("\n\t\t\t\t\t\t\t\t\t  |                  POP                  |");
-	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
+			 if( genere_errato != 0 || genere_trovato == 0)
+				printf("\n   * GENERE NON TROVATO, RIPROVA!");
 
-	printf("\n\n\n\n\t\t\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\n\n");
+		 }while(genere_errato != 0 || genere_trovato == 0);
 
-	i=0;
+		 printf("\n\nGENERE %s:", genere_ricercato);
+		 printf("\n\n\n\t\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\n\n");
 
-	while(!feof(file_artisti))
-	{
-		fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
+		 i=0;
+		 rewind(file_artisti); //riavvolgimento dello stream
 
-		if(strcmp(artista[i].genere, "POP") == 0)
-			printf("\t\t\t  %20d|%19s|%20s|%20s|%25d|%22s|  \n", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
+		 while(!feof(file_artisti))
+		 {
+			 fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
 
-		i++;
-	}
+			 if(strcmp(genere_ricercato, artista[i].genere) == 0)
+				 printf("\t\t  %20d|%19s|%20s|%20s|%25d|%22s|  \n", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
+
+			 i++;
+		 }
+	 }
+
+	 fclose(file_artisti);
 
 	do
 	{
 		printf("\n\n\n> PREMI '0' PER RITORNARE AL MENU':   ");
 		scanf("%d", &scelta);
 
-		if(scelta != 0)
-			printf("\n   * INPUT NON VALIDO, RIPROVA!");
+		if(scelta == 0)
+		{
+			system("cls");
+			scritta_spotify();
+			menu_utente(file_utenti, file_artisti, utente, artista, i, scelta);
+		}
 
 		else
-			menu_utente(file_artisti, file_utenti, utente, artista, i, scelta);
-
-	}while(scelta != 0);
-}
-
-void ricerca_rock(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta)
-{
-	printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
-	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
-	printf("\n\t\t\t\t\t\t\t\t\t  |                  ROCK                 |");
-	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
-
-	printf("\n\n\n\n\t\t\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\n\n");
-
-	i=0;
-
-	while(!feof(file_artisti))
-	{
-		fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
-
-		if(strcmp(artista[i].genere, "ROCK") == 0)
-			printf("\t\t\t  %20d|%19s|%20s|%20s|%25d|%22s|  \n", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
-
-		i++;
-	}
-
-	do
-	{
-		printf("\n\n\n> PREMI '0' PER RITORNARE AL MENU':   ");
-		scanf("%d", &scelta);
-
-		if(scelta != 0)
 			printf("\n   * INPUT NON VALIDO, RIPROVA!");
-
-		else
-			menu_utente(file_artisti, file_utenti, utente, artista, i, scelta);
-
-	}while(scelta != 0);
-}
-
-void ricerca_rap(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta)
-{
-	printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
-	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
-	printf("\n\t\t\t\t\t\t\t\t\t  |                   RAP                 |");
-	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
-
-	printf("\n\n\n\n\t\t\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\n\n");
-
-	i=0;
-
-	while(!feof(file_artisti))
-	{
-		fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
-
-		if(strcmp(artista[i].genere, "RAP") == 0)
-			printf("\t\t\t  %20d|%19s|%20s|%20s|%25d|%22s|  \n", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
-
-		i++;
-	}
-
-	do
-	{
-		printf("\n\n\n> PREMI '0' PER RITORNARE AL MENU':   ");
-		scanf("%d", &scelta);
-
-		if(scelta != 0)
-			printf("\n   * INPUT NON VALIDO, RIPROVA!");
-
-		else
-			menu_utente(file_artisti, file_utenti, utente, artista, i, scelta);
-
-	}while(scelta != 0);
-}
-
-void ricerca_classico(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta)
-{
-	printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
-	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
-	printf("\n\t\t\t\t\t\t\t\t\t  |               CLASSICO                |");
-	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
-
-	printf("\n\n\n\n\t\t\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\n\n");
-
-	i=0;
-
-	while(!feof(file_artisti))
-	{
-		fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
-
-		if(strcmp(artista[i].genere, "CLASSICO") == 0)
-			printf("\t\t\t  %20d|%19s|%20s|%20s|%25d|%22s|  \n", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
-
-		i++;
-	}
-
-	do
-	{
-		printf("\n\n\n> PREMI '0' PER RITORNARE AL MENU':   ");
-		scanf("%d", &scelta);
-
-		if(scelta != 0)
-			printf("\n   * INPUT NON VALIDO, RIPROVA!");
-
-		else
-			menu_utente(file_artisti, file_utenti, utente, artista, i, scelta);
-
-	}while(scelta != 0);
-}
-
-void ricerca_musica_elettronica(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta)
-{
-	printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
-	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
-	printf("\n\t\t\t\t\t\t\t\t\t  |          MUSICA ELETTRONICA           |");
-	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
-
-	printf("\n\n\n\n\t\t\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\n\n");
-
-	i=0;
-
-	while(!feof(file_artisti))
-	{
-		fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
-
-		if(strcmp(artista[i].genere, "MUSICA_ELETTRONICA") == 0)
-			printf("\t\t\t  %20d|%19s|%20s|%20s|%25d|%22s|  \n", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
-
-		i++;
-	}
-
-	do
-	{
-		printf("\n\n\n> PREMI '0' PER RITORNARE AL MENU':   ");
-		scanf("%d", &scelta);
-
-		if(scelta != 0)
-			printf("\n   * INPUT NON VALIDO, RIPROVA!");
-
-		else
-			menu_utente(file_artisti, file_utenti, utente, artista, i, scelta);
-	}while(scelta != 0);
-}
-
-void ricerca_reggae(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta)
-{
-	printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
-	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
-	printf("\n\t\t\t\t\t\t\t\t\t  |                 REGGAE                |");
-	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
-
-	printf("\n\n\n\n\t\t\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\n\n");
-
-	i=0;
-
-	while(!feof(file_artisti))
-	{
-		fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
-
-		if(strcmp(artista[i].genere, "REGGAE") == 0)
-			printf("\t\t\t  %20d|%19s|%20s|%20s|%25d|%22s|  \n", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
-
-		i++;
-	}
-
-	do
-	{
-		printf("\n\n\n> PREMI '0' PER RITORNARE AL MENU':   ");
-		scanf("%d", &scelta);
-
-		if(scelta != 0)
-			printf("\n   * INPUT NON VALIDO, RIPROVA!");
-
-		else
-			menu_utente(file_artisti, file_utenti, utente, artista, i, scelta);
 
 	}while(scelta != 0);
 }
@@ -1032,34 +824,43 @@ void ricerca_per_anno_inizio_produzione(FILE* file_artisti, FILE* file_utenti, u
 	printf("\n\t\t\t\t\t\t\t\t\t  |        ANNO INIZIO PRODUZIONE         |");
 	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|\n\n\n");
 
-	do
+	if((file_artisti =  fopen("Artisti.txt" , "r")) == NULL)
+		 		printf("Errore nell'apertura!\n");
+
+	else
 	{
-		 printf("\n> INSERISCI ANNO INIZIO RICERCA:   ");
-		 scanf("%d",&primo_anno);
-		 printf("\n\n> INSERISCI ANNO FINE RICERCA:   ");
-		 scanf("%d",&secondo_anno);
+		do
+		{
+			 //acquisizione del range dell'ANNO: parametro di ricerca degli artisti
+			 printf("\n> INSERISCI ANNO INIZIO RICERCA:   ");
+			 scanf("%d",&primo_anno);
+			 printf("\n\n> INSERISCI ANNO FINE RICERCA:   ");
+			 scanf("%d",&secondo_anno);
 
-		 if(primo_anno > secondo_anno)
-			 printf("\n\n   * ANNO NON VALIDO! ANNO INIZIO RICERCA RISULTA PIU' GRANDE DELL' ANNO DI FINE RICERCA!\n\n");
+			 if(primo_anno > secondo_anno)
+				 printf("\n\n   * ANNO NON VALIDO! ANNO INIZIO RICERCA RISULTA PIU' GRANDE DELL' ANNO DI FINE RICERCA!\n\n");
 
-		 else if(primo_anno > ANNO_MAX || secondo_anno > ANNO_MAX || primo_anno < ANNO_MIN || secondo_anno < ANNO_MIN)
-			 printf("\n\n   * ANNO NON VALIDO! INSERIRE UN VALORE COMPRESO TRA %d E %d!\n\n", ANNO_MIN, ANNO_MAX);
+			 else if(primo_anno > ANNO_MAX || secondo_anno > ANNO_MAX || primo_anno < ANNO_MIN || secondo_anno < ANNO_MIN)
+				 printf("\n\n   * ANNO NON VALIDO! INSERIRE UN VALORE COMPRESO TRA %d E %d!\n\n", ANNO_MIN, ANNO_MAX);
 
-	}while(primo_anno > ANNO_MAX || secondo_anno > ANNO_MAX || primo_anno < ANNO_MIN || secondo_anno < ANNO_MIN);
+		}while(primo_anno > ANNO_MAX || secondo_anno > ANNO_MAX || primo_anno < ANNO_MIN || secondo_anno < ANNO_MIN);
 
-	printf("\n\n\n\n\t\t\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\n\n");
+		printf("\n\n\n\t\t\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\n\n");
 
-	i=0;
+		i=0;
+		rewind(file_artisti); //riavvolgimento dello stream
 
-	while(!feof(file_artisti))
-	{
-		fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
+		while(!feof(file_artisti))
+		{
+			fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
 
-		if(artista[i].anno_inizio >= primo_anno && artista[i].anno_inizio <= secondo_anno)
-			printf("\t\t\t  %20d|%19s|%20s|%20s|%25d|%22s|  \n", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
+			if(artista[i].anno_inizio >= primo_anno && artista[i].anno_inizio <= secondo_anno)
+				printf("\t\t\t  %20d|%19s|%20s|%20s|%25d|%22s|  \n", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
 
-		i++;
+			i++;
+		}
 	}
+	fclose(file_artisti);
 
 	do
 	{
@@ -1239,13 +1040,14 @@ void aggiungi_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 	int count_artisti=0;
 	int artista_esistente=0;
 
-	i=0;
-
 	if((file_artisti =  fopen("Artisti.txt" , "a+")) == NULL)
 		printf("Errore nell'apertura!\n");
 
 	else
 	{
+		i=0;
+		rewind(file_artisti);
+
 		while(!feof(file_artisti))
 		{
 			fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
@@ -1253,12 +1055,13 @@ void aggiungi_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 			i++;
 		}
 
-		artista[count_artisti].id_artista= count_artisti+1; //assegnazione dell'ID. ARTISTA, un identificativo numerico
+		artista[count_artisti].id_artista= count_artisti+1; //assegnazione dell'ID. ARTISTA, un identificativo numerico di ciascun artista
 
 		do
 		{
-			artista_esistente=0; //azzeramento del flag
+			artista_esistente= 0; //azzeramento del flag
 
+			//acquisizione del NOME D'ARTE del nuovo artista
 			printf("\n\n\n> INSERISCI IL NOME D'ARTE:   ");
 			scanf("%s", artista[count_artisti].nome_artista);
 
@@ -1270,7 +1073,7 @@ void aggiungi_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 				fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
 
 				if(strcmp(artista[count_artisti].nome_artista, artista[i].nome_artista) == 0)
-					artista_esistente++;
+					artista_esistente= 1;
 			}
 
 			if(artista_esistente != 0)
@@ -1278,88 +1081,61 @@ void aggiungi_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 
 		}while(artista_esistente != 0);
 
-		printf("\n\n\nGENERE:   ");
-		printf("\n\n\t1. POP  |  2. ROCK  |  3. RAP  |  4. CLASSICO  |  5. MUSICA ELETTRONICA  |  6. REGGAE\n");
+		int genere_errato= 0;
+		do
+		{
+			genere_errato= 0;
+
+			//acquisizione del GENERE del nuovo artista
+			printf("\n\n\n> INSERISCI IL GENERE di '%s':   ", artista[count_artisti].nome_artista);
+			scanf("%s", artista[count_artisti].genere);
+
+			for(int j=0; j < LUNG_GENERE; j++)
+			{
+				if((isdigit(artista[count_artisti].genere[j])) == 1)
+				{
+					genere_errato= 1;
+					break;
+				}
+
+				else
+					artista[count_artisti].genere[j]= toupper(artista[count_artisti].genere[j]); //trasforma tutti i caratteri del GENERE in maiuscolo
+			}
+
+			if(genere_errato != 0)
+				printf("\n   * GENERE NON VALIDO, RIPROVA!");
+
+		}while(genere_errato != 0);
+
+		int nazionalita_errata= 0;
+		do
+		{
+			nazionalita_errata= 0;
+
+			//acquisizione della NAZIONALITA' del nuovo artista
+			printf("\n\n\n> INSERISCI LA NAZIONALITA' di '%s':   ", artista[count_artisti].nome_artista);
+			scanf("%s", artista[count_artisti].nazionalita);
+
+			for(int j=0; j < LUNG_NAZIONALITA; j++)
+			{
+				if((isdigit(artista[count_artisti].nazionalita[j])) == 1)
+				{
+					nazionalita_errata= 1;
+					break;
+				}
+
+				else
+					artista[count_artisti].nazionalita[j]= toupper(artista[count_artisti].nazionalita[j]); //trasforma tutti i caratteri della NAZIONALITA in maiuscolo
+			}
+
+			if(nazionalita_errata != 0)
+				printf("\n   * NAZIONALITA' NON VALIDA, RIPROVA!");
+
+		}while(nazionalita_errata != 0);
 
 		do
 		{
-			printf("\n\n> A QUALE GENERE APPARTIENE '%s'?   ", artista[count_artisti].nome_artista);
-			scanf("%d", &scelta);
-
-			if(scelta < 1 || scelta > 6)
-				printf("\n   * INPUT NON VALIDO, RIPROVA!");
-
-		}while(scelta < 1 || scelta > 6);
-
-		switch(scelta)
-		{
-			case 1: //POP
-				strcpy(artista[count_artisti].genere, "POP");
-				break;
-
-			case 2: //ROCK
-				strcpy(artista[count_artisti].genere, "ROCK");
-				break;
-
-			case 3: //RAP
-				strcpy(artista[count_artisti].genere, "RAP");
-				break;
-
-			case 4: //CLASSICO
-				strcpy(artista[count_artisti].genere, "CLASSICO");
-				break;
-
-			case 5: //MUSICA ELETTRONICA
-				strcpy(artista[count_artisti].genere, "MUSICA_ELETTRONICA");
-				break;
-
-			case 6: //REGGAE
-				strcpy(artista[count_artisti].genere, "REGGAE");
-				break;
-		}
-
-		printf("\n\n\nNAZIONALITA': ");
-		printf("\n\n\t1. ITALIANA  |  2. FRANCESE  |  3. AMERICANA  |  4. INGLESE  |  5. SPAGNOLA  |  6. ALTRA\n");
-
-		do
-		{
-			printf("\n\n> QUAL E' LA NAZIONALITA' DI '%s'?   ", artista[count_artisti].nome_artista);
-			scanf("%d", &scelta);
-
-			if(scelta < 1 || scelta > 6)
-				printf("\n   * INPUT NON VALIDO, RIPROVA!");
-
-		}while(scelta < 1 || scelta > 6);
-
-		switch(scelta)
-		{
-			case 1: //NAZIONALITA': ITALIANA
-				strcpy(artista[count_artisti].nazionalita, "ITALIANA");
-				break;
-
-			case 2: //NAZIONALITA': FRANCESE
-				strcpy(artista[count_artisti].nazionalita, "FRANCESE");
-				break;
-
-			case 3: //NAZIONALITA': AMERICANA
-				strcpy(artista[count_artisti].nazionalita, "AMERICANA");
-				break;
-
-			case 4: //NAZIONALITA': INGLESE
-				strcpy(artista[count_artisti].nazionalita, "INGLESE");
-				break;
-
-			case 5: //NAZIONALITA': SPAGNOLA
-				strcpy(artista[count_artisti].nazionalita, "SPAGNOLA");
-				break;
-
-			case 6: //ALTRA NAZIONALITA'
-				strcpy(artista[count_artisti].nazionalita, "ALTRA");
-				break;
-		}
-
-		do
-		{
+			//acquisizione dell'ANNO INIZIO CARRIERA del nuovo artista
 			printf("\n\n\n> INSERISCI L'ANNO DI INIZIO CARRIERA DI '%s':   ", artista[count_artisti].nome_artista);
 			scanf("%d", &artista[count_artisti].anno_inizio);
 
@@ -1368,6 +1144,7 @@ void aggiungi_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 
 		}while(artista[count_artisti].anno_inizio < ANNO_MIN || artista[count_artisti].anno_inizio > ANNO_MAX);
 
+		//acquisizione della CANZONE POPOLARE del nuovo artista
 		printf("\n\n\n> INSERISCI IL TITOLO DELLA SUA CANZONE POPOLARE:   ");
 		scanf("%s", artista[count_artisti].canzone);
 
@@ -1376,7 +1153,7 @@ void aggiungi_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 
 		printf("\n\n\n***************** ARTISTA AGGIUNTO CORRETTAMENTE! *****************\n");
 
-		fprintf(file_artisti,"\n%d %s %s %s %d %s", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
+		fprintf(file_artisti,"\n%d %s %s %s %d %s", artista[count_artisti].id_artista, artista[count_artisti].nome_artista, artista[count_artisti].genere, artista[count_artisti].nazionalita, artista[count_artisti].anno_inizio, artista[count_artisti].canzone); //salvataggio su file dei dati del nuovo artista aggiunto
 	}
 	fclose(file_artisti); //chiusura del file "file_artisti"
 
@@ -1409,6 +1186,7 @@ void visualizza_utenti(FILE* file_artisti, FILE* file_utenti, utenti utente[], a
 		printf("\n\n\n\n\t\t\t\t\tID. UTENTE|\t      NOME|\t     COGNOME|\t      DATA DI NASCITA|\t        USERNAME|\t   PASSWORD|\n\n");
 
 		i=0;
+		rewind(file_utenti);
 
 		while(!feof(file_utenti))
 		{
@@ -1450,6 +1228,10 @@ void modifica_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 
 	else
 	{
+		i=0;
+		rewind(file_artisti);
+
+		//conteggio degli artisti salvati sul file
 		while(!feof(file_artisti))
 		{
 			fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
@@ -1461,6 +1243,7 @@ void modifica_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 
 	int id_artista_ricercato=0;
 
+	//acquisizione ID DELL'ARTISTA da modificare
 	printf("\n\n\n> INSERISCI L'ID DELL'ARTISTA CHE VUOI MODIFICARE:   ");
 	scanf("%d", &id_artista_ricercato);
 
@@ -1470,6 +1253,8 @@ void modifica_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 	{
 		if(id_artista_ricercato == artista[i].id_artista)
 		{
+			id_artista_trovato++; //artista trovato
+
 			printf("\n\n\nMODIFICA: ");
 			printf("\n\n\t1. NOME  |  2. GENERE  |  3. NAZIONALITA'  |  4. ANNO INIZIO  |  5. CANZONE POPOLARE\n");
 
@@ -1479,36 +1264,80 @@ void modifica_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 				scanf("%d", &scelta);
 
 				if(scelta < 1 || scelta > 5)
-					printf("\n   * INPUT NON VALIDO, RIPROVA!");
+					printf("\n   * INPUT NON VALIDO, RIPROVA!\n");
 
 			}while(scelta < 1 || scelta > 5);
+
+			int nome_errato= 0;
+			int genere_errato= 0;
+			int nazionalita_errata= 0;
+			int canzone_errata= 0;
 
 			switch(scelta)
 			{
 				case 1: //MODIFICA "NOME ARTISTA"
-					printf("\n\n> INSERISCI IL NUOVO NOME DI '%s':   ", artista[i].nome_artista);
-					scanf("%s", artista[i].nome_artista);
+					do
+					{
+						printf("\n\n> INSERISCI IL NUOVO NOME DI '%s':   ", artista[i].nome_artista);
+						scanf("%s", artista[i].nome_artista);
 
-					for(int j=0; j < LUNG_NOME; j++)
-						artista[i].nome_artista[j]= toupper(artista[i].nome_artista[j]); //trasforma tutti i caratteri del NOME DELL'ARTISTA in maiuscolo
+						for(int j=0; j < LUNG_NOME; j++)
+						{
+							if(isdigit(artista[i].nome_artista[j]) == 1)
+							{
+								nome_errato= 1;
+								j= LUNG_NOME;
+							}
+
+							else
+								artista[i].nome_artista[j]= toupper(artista[i].nome_artista[j]); //trasforma tutti i caratteri del NOME DELL'ARTISTA in maiuscolo
+						}
+
+					}while(nome_errato != 0);
 
 					break;
 
 				case 2: //MODIFICA "GENERE"
-					printf("\n\n> INSERISCI IL NUOVO GENERE DI '%s': ", artista[i].nome_artista);
-					scanf("%s", artista[i].genere);
+					do
+					{
+						printf("\n\n> INSERISCI IL NUOVO GENERE DI '%s': ", artista[i].nome_artista);
+						scanf("%s", artista[i].genere);
 
-					for(int j=0; j < LUNG_GENERE; j++)
-						artista[i].genere[j]= toupper(artista[i].genere[j]); //trasforma tutti i caratteri del GENERE in maiuscolo
+						for(int j=0; j < LUNG_GENERE; j++)
+						{
+							if(isdigit(artista[i].genere[j]) == 1)
+							{
+								genere_errato= 1;
+								j= LUNG_GENERE;
+							}
+
+							else
+								artista[i].genere[j]= toupper(artista[i].genere[j]); //trasforma tutti i caratteri del GENERE in maiuscolo
+						}
+
+					}while(genere_errato != 0);
 
 					break;
 
 				case 3: //MODIFICA "NAZIONALITA'"
-					printf("\n\n> INSERISCI LA NUOVA NAZIONALITA' DI '%s':   ", artista[i].nome_artista);
-					scanf("%s", artista[i].nazionalita);
+					do
+					{
+						printf("\n\n> INSERISCI LA NUOVA NAZIONALITA' DI '%s':   ", artista[i].nome_artista);
+						scanf("%s", artista[i].nazionalita);
 
-					for(int j=0; j < LUNG_NAZIONALITA; j++)
-						artista[i].nazionalita[j]= toupper(artista[i].nazionalita[j]); //trasforma tutti i caratteri della NAZIONALITA' in maiuscolo
+						for(int j=0; j < LUNG_NAZIONALITA; j++)
+						{
+							if(isdigit(artista[i].nazionalita[j]) == 1)
+							{
+								genere_errato= 1;
+								j= LUNG_NAZIONALITA;
+							}
+
+							else
+								artista[i].nazionalita[j]= toupper(artista[i].nazionalita[j]); //trasforma tutti i caratteri della NAZIONALITA' in maiuscolo
+						}
+
+					}while(nazionalita_errata != 0);
 
 					break;
 
@@ -1526,42 +1355,29 @@ void modifica_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 					break;
 
 				case 5: //MODIFICA "CANZONE POPOLARE"
-					printf("\n\n> INSERISCI LA NUOVA CANZONE POPOLARE DI '%s':   ", artista[i].nome_artista);
-					scanf("%s", artista[i].canzone);
+					do
+					{
+						printf("\n\n> INSERISCI LA NUOVA CANZONE POPOLARE DI '%s':   ", artista[i].nome_artista);
+						scanf("%s", artista[i].canzone);
 
-					for(int j=0; j < LUNG_CANZONE; j++)
-						artista[i].canzone[j]= toupper(artista[i].canzone[j]); //trasforma tutti i caratteri della CANZONE in maiuscolo
+						for(int j=0; j < LUNG_CANZONE; j++)
+						{
+							if(isdigit(artista[i].canzone[j]) == 1)
+							{
+								canzone_errata= 1;
+								j= LUNG_CANZONE;
+							}
+
+							else
+								artista[i].canzone[j]= toupper(artista[i].canzone[j]); //trasforma tutti i caratteri della CANZONE in maiuscolo
+						}
+
+					}while(canzone_errata != 0);
 
 					break;
 			}
 
 			printf("\n\n\n***************** ARTISTA MODIFICATO CORRETTAMENTE! *****************\n");
-			
-
-			if((file_artisti =  fopen("Artisti.txt" , "w")) == NULL)
-					printf("Errore nell'apertura!\n");
-
-			else
-			{
-				for(i=0; i < count_artisti; i++)
-					fprintf(file_artisti,"\n%d %s %s %s %d %s", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
-			}
-			fclose(file_artisti);
-
-			do
-			{
-				printf("\n\n\n> PREMI '0' PER RITORNARE AL MENU':   ");
-				scanf("%d", &scelta);
-
-				if(scelta != 0)
-					printf("\n   * INPUT NON VALIDO, RIPROVA!");
-
-				else
-					menu_admin(file_artisti, file_utenti, utente, artista, i, scelta);
-
-			}while(scelta != 0);
-
-			id_artista_trovato++; //artista trovato
 		}
 	}
 
@@ -1595,5 +1411,31 @@ void modifica_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 				break;
 		}
 	}
+
+	if((file_artisti =  fopen("Artisti.txt" , "w")) == NULL)
+		printf("Errore nell'apertura!\n");
+
+	else
+	{
+		i=0;
+
+		for(i=0; i<count_artisti; i++)
+			fprintf(file_artisti,"\n%d %s %s %s %d %s", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
+	}
+	fclose(file_artisti);
+
+	do
+	{
+		printf("\n\n\n> PREMI '0' PER RITORNARE AL MENU':   ");
+		scanf("%d", &scelta);
+
+		if(scelta != 0)
+			printf("\n   * INPUT NON VALIDO, RIPROVA!");
+
+		else
+			menu_admin(file_artisti, file_utenti, utente, artista, i, scelta);
+
+	}while(scelta != 0);
+
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------//
