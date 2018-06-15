@@ -11,7 +11,7 @@
 #define LUNG_GENERE 20				//LUNGHEZZA MASSIMA DEL CAMPO "GENERE": 20
 #define LUNG_CANZONE 20				//LUNGHEZZA MASSIMA DEL CAMPO "CANZONE": 20
 #define LUNG_NAZIONALITA 20			//LUNGHEZZA MASSIMA DEL CAMPO "NAZIONALITA": 20
-#define N_UTENTI 100					//NUMERO MASSIMO DI UTENTI: 50
+#define N_UTENTI 100				//NUMERO MASSIMO DI UTENTI: 50
 #define N_ARTISTI 100				//NUMERO MASSIMO DI ARTISTI: 50
 #define MESE_MIN 1					//MESE MINIMO: 1 (= GENNAIO)
 #define MESE_MAX 12					//MESE MASSIMO: 12 (= DICEMBRE)
@@ -44,9 +44,9 @@ typedef struct{
 //-------------------------------------------------------------------------------------------------------------------------------------------------//
 
 //--------------------------------------------------------------- PROTOTIPI DI FUNZIONE ------------------------------------- ---------------------//
-void scritta_spotify();	//procedura che stampa la scritta "SPOTIFY"
-void scritta_login();	//procedura che stampa la scritta "LOGIN"
-void scritta_signup();	//procedura che stampa la scritta "SIGNUP"
+void scritta_spotify();	//PROCEDURA CHE STAMPA A VIDEO LA SCRITTA "SPOTIFY"
+void scritta_login();	//PROCEDURA CHE STAMPA A VIDEO LA SCRITTA "LOGIN"
+void scritta_signup();	//PROCEDURA CHE STAMPA A VIDEO LA SCRITTA "SIGNUP"
 void interfaccia_iniziale(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
 void login_admin(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
 void login_utente(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta);
@@ -70,15 +70,15 @@ void return_menu_utente(FILE* file_artisti, FILE* file_utenti, utenti utente[], 
 //------------------------------------------------------------------- MAIN ------------------------------------------------------------------------//
 int main(void)
 {
-	FILE* file_utenti= NULL;
-	FILE* file_artisti= NULL;
+	FILE* file_utenti= NULL; //DICHIARAZIONE/INIZIALIZZAZIONE VARIABILE "file_utenti" PUNTATORE A FILE
+	FILE* file_artisti= NULL; //DICHIARAZIONE/INIZIALIZZAZIONE VARIABILE "file_artisti" PUNTATORE A FILE
 
-	utenti utente[N_UTENTI];
-    artisti artista[N_ARTISTI];
-    int i=0;
-    int scelta=0;
+	utenti utente[N_UTENTI]; //ARRAY "utente[]" DI TIPO "utenti" CON DIMENSIONE "N_UTENTI" (= max 100)
+    artisti artista[N_ARTISTI]; //ARRAY "artista[]" DI TIPO "artisti" CON DIMENSIONE "N_ARTISTI" (= max 100)
+    int i= 0; //DICHIARAZIONE/INIZIALIZZAZIONE DELL'INDICE "i" DEGLI ARRAY
+    int scelta= 0; //DICHIARAZIONE/INIZIALIZZAZIONE DELLA VARIABILE "scelta", UTILIZZATA PER SELEZIONARE DETERMINATE FUNZIONALITA' A DISPOSIZIONE DELL'UTENTE
 
-    interfaccia_iniziale(file_artisti, file_utenti, utente, artista, i, scelta);
+    interfaccia_iniziale(file_artisti, file_utenti, utente, artista, i, scelta); //INTERFACCIA INIZIALE
     system("pause");
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------//
@@ -95,7 +95,6 @@ void scritta_spotify()
         "\t\t\t\t\t\t          |||||||    ||         ||||||||       ||       ||    ||            ||        \n"
       );
  }
-
 void scritta_login()
 {
 	 printf(
@@ -113,7 +112,6 @@ void scritta_login()
          "     |_________________|                         ||\n"
          "                                             ||||||\n");
 }
-
 void scritta_signup()
 {
 	 printf("\n\n"
@@ -128,7 +126,7 @@ void scritta_signup()
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------//
 
-//------------------------------------------------------ FUNZIONI DI PRE-ACCESSO ------------------------------------------------------------------//
+//------------------------------------------------------ FUNZIONI DI "PRE-ACCESSO" ------------------------------------------------------------------//
 void interfaccia_iniziale(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta)
 {
 	system("cls");
@@ -188,236 +186,242 @@ void interfaccia_iniziale(FILE* file_artisti, FILE* file_utenti, utenti utente[]
 			break;
 	}
 }
-
 void signup(FILE* file_utenti, FILE* file_artisti, utenti utente[], artisti artista[], int i, int scelta)
 {
 	if((file_utenti =  fopen("Utenti.txt" , "a+")) == NULL)
 		printf("Errore nell'apertura!\n");
 
-	else //apertura del file in modalità di lettura/scrittura in coda ("a+")
+	else //APERTURA DEL FILE "Utenti.txt" IN MODALITA' DI APERTURA/SCRITTURA IN CODA ("a+")
 	{
-		int count_utenti=0; //variabile contatore che conterrà il numero di utenti salvati sul file "Utenti.txt"
+		int count_utenti=0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI UTENTI SALVATI NEL FILE "Utenti.txt"
 
-		i=0; //azzeramento dell'indice
-		rewind(file_utenti); //riavvolgimento dello stream
+		i=0; //AZZERAMENTO DELL'INDICE "i"
+		rewind(file_utenti); //RIAVVOLGIMENTO DELLO STREAM, RIPORTA IL PUNTATORE ALL'INIZIO DEL FILE
 
-		//conteggio degli utenti salvati sul file "Utenti.txt"
+	//CONTEGGIO DEGLI UTENTI SALVATI ALL'INTERNO DEL FILE "Utenti.txt"
 		while(!feof(file_utenti))
 		{
-			fscanf(file_utenti,"%d %s %s %d %d %d %s %s", &utente[i].id_utente, utente[i].nome_utente, utente[i].cognome_utente, &utente[i].mese_nascita, &utente[i].giorno_nascita, &utente[i].anno_nascita, utente[i].username, utente[i].password);
-			count_utenti++; //incremento unitario del contatore degli utenti salvati
-			i++;
+			fscanf(file_utenti,"%d %s %s %d %d %d %s %s", &utente[i].id_utente, utente[i].nome_utente, utente[i].cognome_utente, &utente[i].mese_nascita, &utente[i].giorno_nascita, &utente[i].anno_nascita, utente[i].username, utente[i].password); //LETTURA DEI DATI RELATIVI ALL'i-ESIMO UTENTE SALVATO NEL FILE
+			count_utenti++; //INCREMENTO UNITARIO DEL CONTATORE DEL NUMERO DI UTENTI SALVATI NEL FILE
+			i++; //INCREMENTO UNITARIO DELL'INDICE "i" DELL'ARRAY "utente[]"
 		}
 
-		int nome_errato= 0; //flag utilizzato per verificare se il nome
+		utente[count_utenti].id_utente= count_utenti+1; //ASSEGNAZIONE DELL'ID. UTENTE, UN IDENTIFICATIVO PER CIASCUN UTENTE DENOTATO DA UN VALORE INTERO CHE PARTE DA "1"
 
-		utente[count_utenti].id_utente= count_utenti+1; //assegnazione dell'ID. UTENTE, un identificativo numerico di ciascun utente
-
+	//ACQUISIZIONE DEL NOME DEL NUOVO UTENTE DA REGISTRARE
+		int nome_errato= 0; //FLAG CHE VERRA' IMPOSTATO A "1" NEL CASCO IN CUI LA STRINGA DEL NOME, DEL NUOVO UTENTE DA REGISTRARE, CONTENGA AL SUO INTERNO UN VALORE NUMERICO (non consentito!)
 		do
 		{
-			nome_errato= 0;
+			nome_errato= 0; //RIPRISTINO DEL VALORE DI PARTENZA DEL FLAG "nome_errato"
 
-			//acquisizione del NOME di un nuovo utente
 			printf("\n\n\n> INSERISCI IL NOME:   ");
-			scanf("%s", utente[count_utenti].nome_utente);
+			scanf("%s", utente[count_utenti].nome_utente); //ACQUISIZIONE DEL NOME
 
+		//VERIFICA VALIDITA' NOME
 			for(int j=0; j < LUNG_NOME; j++)
 			{
-				if((isdigit(utente[count_utenti].nome_utente[j])) == 1)
+				if((isdigit(utente[count_utenti].nome_utente[j])) == 1) //CONDIZIONE CHE VERIFICA SE IL j-CARATTERE DELLA STRINGA INSERITA (IL NOME DELL'UTENTE) CONTIENE UN VALORE NUMERICO
 				{
-					nome_errato= 1;
-					j= LUNG_NOME;
+					nome_errato= 1; //IMPOSTA IL FLAG "nome_errato" A "1" POICHE' E' STATO RILEVATO UN VALORE NUMERICO (non consentito) ALL'INTERNO DELLA STRINGA INSERITA
+					j= LUNG_NOME;	//NON ABBIAMO BISOGNO DI SCORRERE TUTTI I CICLI, E' SUFFICIENTE FERMARSI ALLA PRIMA OCCORRENZA DEL VALORE NUMERICO
 				}
 
 				else
-					utente[count_utenti].nome_utente[j]= toupper(utente[count_utenti].nome_utente[j]); //trasforma tutti i caratteri del NOME DELL'UTENTE in maiuscolo
+					utente[count_utenti].nome_utente[j]= toupper(utente[count_utenti].nome_utente[j]); //CONVERSIONE DI TUTTI I CARATTERI DELLA STRINGA (NOME UTENTE) IN MAIUSCOLO
 			}
 
 			if(nome_errato != 0)
 				printf("\n   * NOME NON VALIDO, RIPROVA!");
 
-		}while(nome_errato != 0);
+		}while(nome_errato != 0); //RIPETE IL CICLO FINCHE' IL VALORE DEL FLAG "nome_errato" RISULTA UGUALE A '0', OSSIA IL NOME DELL'UTENTE NON E' VALIDO
 
-		int cognome_errato= 0;
-
+	//ACQUISIZIONE DEL COGNOME DEL NUOVO UTENTE DA REGISTRARE
+		int cognome_errato= 0; //FLAG CHE VERRA' IMPOSTATO A "1" NEL CASCO IN CUI LA STRINGA DEL COGNOME, DEL NUOVO UTENTE DA REGISTRARE, CONTENGA AL SUO INTERNO UN VALORE NUMERICO (non consentito!)
 		do
 		{
-			cognome_errato= 0;
+			cognome_errato= 0; //RIPRISTINO DEL VALORE DI PARTENZA DEL FLAG "cognome_errato"
 
-			//acquisizione del COGNOME di un nuovo utente
 			printf("\n\n\n> INSERISCI IL COGNOME:   ");
-			scanf("%s", utente[count_utenti].cognome_utente);
+			scanf("%s", utente[count_utenti].cognome_utente); //ACQUISIZIONE DEL COGNOME
 
+		//VERIFICA VALIDITA' COGNOME
 			for(int j=0; j < LUNG_COGNOME; j++)
 			{
-				if((isdigit(utente[count_utenti].cognome_utente[j])) == 1)
+				if((isdigit(utente[count_utenti].cognome_utente[j])) == 1) //CONDIZIONE CHE VERIFICA SE IL j-CARATTERE DELLA STRINGA INSERITA (IL COGNOME DELL'UTENTE) CONTIENE UN VALORE NUMERICO
 				{
-					cognome_errato= 1;
-					j= LUNG_COGNOME;
+					cognome_errato= 1; //IMPOSTA IL FLAG "cognome_errato" A '1' POICHE' E' STATO RILEVATO UN VALORE NUMERICO (non consentito) ALL'INTERNO DELLA STRINGA INSERITA
+					j= LUNG_COGNOME; //NON ABBIAMO BISOGNO DI SCORRERE TUTTI I CICLI, E' SUFFICIENTE FERMARSI ALLA PRIMA OCCORRENZA DEL VALORE NUMERICO
 				}
 
 				else
-					utente[count_utenti].cognome_utente[j]= toupper(utente[count_utenti].cognome_utente[j]); //trasforma tutti i caratteri del NOME DELL'UTENTE in maiuscolo
+					utente[count_utenti].cognome_utente[j]= toupper(utente[count_utenti].cognome_utente[j]); //CONVERSIONE DI TUTTI I CARATTERI DELLA STRINGA (COGNOME UTENTE) IN MAIUSCOLO
 			}
 
 			if(cognome_errato != 0)
 				printf("\n   * COGNOME NON VALIDO, RIPROVA!");
 
-		}while(cognome_errato != 0);
+		}while(cognome_errato != 0); //RIPETE IL CICLO FINCHE' IL VALORE DEL FLAG "cognome_errato" RISULTA UGUALE A '0', OSSIA IL COGNOME DELL'UTENTE NON E' VALIDO
 
-		//acquisizione della DATA DI NASCITA di un nuovo utente
+	//ACQUISIZIONE DELLA DATA DI NASCITA DEL NUOVO UTENTE DA REGISTRARE
 		printf("\n\n\nDATA DI NASCITA: ");
 		do
 		{
 			printf("\n\n\t> INSERISCI IL MESE DI NASCITA:   ");
-			scanf("%d",&utente[count_utenti].mese_nascita);
+			scanf("%d",&utente[count_utenti].mese_nascita); //ACQUISIZIONE DEL MESE DI NASCITA
 
-			if(utente[count_utenti].mese_nascita < MESE_MIN || utente[count_utenti].mese_nascita > MESE_MAX)
+		//VERIFICA VALIDITA' MESE DI NASCITA
+			if(utente[count_utenti].mese_nascita < MESE_MIN || utente[count_utenti].mese_nascita > MESE_MAX) //CONDIZIONE CHE VERIFICA SE IL VALORE DEL MESE INSERITO NON E' VALIDO, OSSIA: MINORE DI '1' oppure MAGGIORE DI '12'
 				printf("\n\t   * MESE NON VALIDO! INSERISCI UN VALORE COMPRESO TRA %d E %d.\n", MESE_MIN, MESE_MAX);
 
-		}while(utente[count_utenti].mese_nascita < MESE_MIN || utente[count_utenti].mese_nascita > MESE_MAX);
+		}while(utente[count_utenti].mese_nascita < MESE_MIN || utente[count_utenti].mese_nascita > MESE_MAX); //RIPETE IL CICLO FINCHE' IL VALORE DEL MESE INSERITO NON E' VALIDO
 
-		if(utente[count_utenti].mese_nascita == 2) //mese febbraio
+	//ACQUISIZIONE DEL GIORNO DI NASCITA DEL NUOVO UTENTE DA REGISTRARE
+		if(utente[count_utenti].mese_nascita == 2) //CONDIZIONE CHE VERIFICA SE IL VALORE DEL MESE INSERITO E' UGUALE A '2' (= FEBBRAIO: range 1 - 28 gg)
 		{
 			do
 			{
 				printf("\n\n\t> INSERISCI IL GIORNO DI NASCITA:   ");
-				scanf("%d",&utente[count_utenti].giorno_nascita);
+				scanf("%d",&utente[count_utenti].giorno_nascita); //ACQUISIZIONE DEL GIORNO DI NASCITA
 
-				if(utente[count_utenti].giorno_nascita < 1 || utente[count_utenti].giorno_nascita > 28)
+			//VERIFICA VALIDITA' GIORNO DI NASCITA
+				if(utente[count_utenti].giorno_nascita < 1 || utente[count_utenti].giorno_nascita > 28) //CONDIZIONE CHE VERIFICA SE IL VALORE DEL GIORNO INSERITO NON E' VALIDO, OSSIA: MINORE DI '1' oppure MAGGIORE DI '28'
 					printf("\n\t   * GIORNO NON VALIDO! INSERISCI UN VALORE COMPRESO TRA 1 E 28.\n");
 
-			}while(utente[count_utenti].giorno_nascita < 1 || utente[count_utenti].giorno_nascita > 28);
+			}while(utente[count_utenti].giorno_nascita < 1 || utente[count_utenti].giorno_nascita > 28); //RIPETE IL CICLO FINCHE' IL VALORE DEL GIORNO INSERITO NON E' VALIDO
 		}
 
-		else if(utente[count_utenti].mese_nascita == 4 || utente[count_utenti].mese_nascita == 6 || utente[count_utenti].mese_nascita == 9 || utente[count_utenti].mese_nascita == 11)
+		else if(utente[count_utenti].mese_nascita == 4 || utente[count_utenti].mese_nascita == 6 || utente[count_utenti].mese_nascita == 9 || utente[count_utenti].mese_nascita == 11) //CONDIZIONE CHE VERIFICA SE IL VALORE DEL MESE INSERITO E' UGUALE A '4' (= APRILE), '6' (= GIUGNO), '9' (= SETTEMBRE) oppure '11' (= NOVEMBRE) (range: 1 - 30 gg)
 		{
 			do
 			{
 				printf("\n\n\t> INSERISCI GIORNO DI NASCITA:   ");
-				scanf("%d", &utente[count_utenti].giorno_nascita);
+				scanf("%d", &utente[count_utenti].giorno_nascita); //ACQUISIZIONE DEL GIORNO DI NASCITA
 
-				if(utente[count_utenti].giorno_nascita < 1 || utente[count_utenti].giorno_nascita > 30)
+			//VERIFICA VALIDITA' GIORNO DI NASCITA
+				if(utente[count_utenti].giorno_nascita < 1 || utente[count_utenti].giorno_nascita > 30) //CONDIZIONE CHE VERIFICA SE IL VALORE DEL GIORNO INSERITO NON E' VALIDO, OSSIA: MINORE DI '1' oppure MAGGIORE DI '30'
 				   printf("\n\t   * GIORNO NON VALIDO! INSERISCI UN VALORE COMPRESO TRA 1 E 30.\n");
 
-			}while(utente[count_utenti].giorno_nascita < 1 || utente[count_utenti].giorno_nascita > 30);
+			}while(utente[count_utenti].giorno_nascita < 1 || utente[count_utenti].giorno_nascita > 30); //RIPETE IL CICLO FINCHE' IL VALORE DEL GIORNO INSERITO NON E' VALIDO
 		}
 
-		else if(utente[count_utenti].mese_nascita == 1 || utente[count_utenti].mese_nascita == 3 || utente[count_utenti].mese_nascita == 5 || utente[count_utenti].mese_nascita == 7 || utente[count_utenti].mese_nascita == 8 || utente[count_utenti].mese_nascita == 10 || utente[count_utenti].mese_nascita == 12)
+		else if(utente[count_utenti].mese_nascita == 1 || utente[count_utenti].mese_nascita == 3 || utente[count_utenti].mese_nascita == 5 || utente[count_utenti].mese_nascita == 7 || utente[count_utenti].mese_nascita == 8 || utente[count_utenti].mese_nascita == 10 || utente[count_utenti].mese_nascita == 12) //CONDIZIONE CHE VERIFICA SE IL VALORE DEL MESE INSERITO E' UGUALE A '1' (= GENNAIO), '3' (= MARZO), '5' (= MAGGIO), '7' (= LUGLIO), '8' (= AGOSTO), '10' (= OTTOBRE) oppure "12" (= DICEMBRE) (range: 1 - 31 gg)
 		{
 			do
 			{
 				printf("\n\n\t> INSERISCI IL GIORNO DI NASCITA:   ");
-				 scanf("%d", &utente[count_utenti].giorno_nascita);
+				 scanf("%d", &utente[count_utenti].giorno_nascita); //ACQUISIZIONE DEL GIORNO DI NASCITA
 
-				if(utente[count_utenti].giorno_nascita < 1 || utente[count_utenti].giorno_nascita > 31)
+			//VERIFICA VALIDITA' GIORNO DI NASCITA
+				if(utente[count_utenti].giorno_nascita < 1 || utente[count_utenti].giorno_nascita > 31) //CONDIZIONE CHE VERIFICA SE IL VALORE DEL GIORNO INSERITO NON E' VALIDO, OSSIA: MINORE DI '1' oppure MAGGIORE DI '31'
 				   printf("\n\t   * GIORNO NON VALIDO! INSERISCI UN VALORE COMPRESO TRA 1 E 31.\n");
 
-			}while(utente[count_utenti].giorno_nascita < 1 || utente[count_utenti].giorno_nascita > 31);
+			}while(utente[count_utenti].giorno_nascita < 1 || utente[count_utenti].giorno_nascita > 31); //RIPETE IL CICLO FINCHE' IL VALORE DEL GIORNO INSERITO NON E' VALIDO
 		}
 
+	//ACQUISIZIONE DELL'ANNO DI NASCITA DEL NUOVO UTENTE DA REGISTRARE
 		do
 		{
 			printf("\n\n\t> INSERISCI L'ANNO DI NASCITA:   ");
-			scanf("%d",&utente[count_utenti].anno_nascita);
+			scanf("%d",&utente[count_utenti].anno_nascita); //ACQUISIZIONE DELL'ANNO DI NASCITA
 
-			if(utente[count_utenti].anno_nascita < ANNO_MIN || utente[count_utenti].anno_nascita > ANNO_MAX)
+		//VERIFICA VALIDITA' ANNO DI NASCITA
+			if(utente[count_utenti].anno_nascita < ANNO_MIN || utente[count_utenti].anno_nascita > ANNO_MAX) //CONDIZIONE CHE VERIFICA SE IL VALORE DELL'ANNO INSERITO NON E' VALIDO, OSSIA: MINORE DI '1901' oppure MAGGIORE DI '2018'
 				printf("\n\t   * ANNO NON VALIDO! INSERISCI UN VALORE COMPRESO TRA %d E %d.\n", ANNO_MIN, ANNO_MAX);
 
-		}while(utente[count_utenti].anno_nascita < ANNO_MIN || utente[count_utenti].anno_nascita > ANNO_MAX);
+		}while(utente[count_utenti].anno_nascita < ANNO_MIN || utente[count_utenti].anno_nascita > ANNO_MAX); //RIPETE IL CICLO FINCHE' IL VALORE DELL'ANNO INSERITO NON E' VALIDO
 
-
-		int lung_username_inserito=0;
-		int username_esistente=0; //flag che verifica se l'username inserito è già in uso
+	//ACQUISIZIONE DELL'USERNAME DEL NUOVO UTENTE DA REGISTRARE
+		int lung_username_inserito= 0; //VARIABILE CHE CONTERRA' LA LUNGHEZZA EFFETTIVA DELL'USERNAME INSERITO, IL NUMERO DI CARATTERI DI CUI E' COMPOSTA LA STRINGA
+		int username_esistente= 0; //FLAG CHE VERRA' IMPOSTATO A '1' NEL CASO IN CUI L'USERNAME INSERITO, DELL'UTENTE DA REGISTRARE, E' GIA' ASSOCIATO AD UN ALTRO UTENTE PRECEDENTEMENTE REGISTRATO
 
 		printf("\n\n\n- NOTA USERNAME: Numero max caratteri: %d.", LUNG_USERNAME);
 		do
 		{
-			username_esistente= 0;
+			username_esistente= 0; //RIPRISTINO DEL VALORE DI PARTENZA DEL FLAG "username_esistente"
 
-			//acuisizione dell'USERNAME di un nuovo utente
 			printf("\n\n> INSERISCI L'USERNAME:   ");
-			scanf("%s",	utente[count_utenti].username);
+			scanf("%s",	utente[count_utenti].username); //ACQUISIZIONE DELL'USERNAME
 
-			lung_username_inserito= strlen(utente[count_utenti].username);
+			lung_username_inserito= strlen(utente[count_utenti].username); //DETERMINA IL NUMERO DI CARATTERI DI CUI E' COMPOSTA LA STRINGA INSERITA (L'USERNAME DELL'UTENTE)
 
-			if(lung_username_inserito > LUNG_USERNAME)
+		//VERIFICA VALIDITA' USERNAME
+			if(lung_username_inserito > LUNG_USERNAME) //CONDIZIONE CHE VERIFICA SE IL NUMERO DI CARATTERI DELL'USERNAME INSERITO E' MAGGIORE DELLA MASSIMA LUNGHEZZA PREDEFINITA (max 15 caratteri)
 				printf("\n   * USERNAME NON VALIDO! INSERISCI MAX %d CARATTERI.\n", LUNG_USERNAME);
 
+		//VERIFICA UNIVOCITA' USERNAME
 			for(i=0; i<count_utenti; i++)
 			{
-				fscanf(file_utenti,"%d %s %s %d %d %d %s %s\n", &utente[i].id_utente, utente[i].nome_utente, utente[i].cognome_utente, &utente[i].mese_nascita, &utente[i].giorno_nascita, &utente[i].anno_nascita, utente[i].username, utente[i].password);
+				fscanf(file_utenti,"%d %s %s %d %d %d %s %s\n", &utente[i].id_utente, utente[i].nome_utente, utente[i].cognome_utente, &utente[i].mese_nascita, &utente[i].giorno_nascita, &utente[i].anno_nascita, utente[i].username, utente[i].password); //LETTURA DEI DATI RELATIVI ALL'i-ESIMO UTENTE SALVATO NEL FILE
 
-				if(strcmp(utente[i].username, utente[count_utenti].username) == 0)
-					username_esistente= 1;
+				if(strcmp(utente[count_utenti].username, utente[i].username) == 0) //CONDIZIONE CHE VERIFICA SE L'USERNAME DEL NUOVO UTENTE DA REGISTRARE E' UGUALE A QUELLO DELL'i-ESIMO UTENTE SALVATO NEL FILE
+					username_esistente= 1; //IMPOSTA IL FLAG "utente_esistente" A '1' POICHE' L'USERNAME INSERITO E' STATO GIA' IN PRECENDENZA ASSOCIATO AD UN ALTRO UTENTE REGISTRATO
 			}
 
 			if(username_esistente != 0)
 				printf("\n   * USERNAME GIA' IN USO!\n");
 
-		}while(lung_username_inserito > LUNG_USERNAME || username_esistente != 0);
+		}while(lung_username_inserito > LUNG_USERNAME || username_esistente != 0); //RIPETE IL CICLO FINCHE' LA LUNGHEZZA DELL'USERNAME INSERITO E' MAGGIORE DELLA LUNGHEZZA PREDEFINITA oppure IL VALORE DEL FLAG "utente_esistente" RISULTA UGUALE A '0', OSSIA APPARTIENE AD UN ALTRO UTENTE SALVATO
 
-		int count_maiuscole= 0; 	//contatore caratteri maiuscoli
-		int count_numeri= 0;		//contatore caratteri numerici
+	//ACQUISIZIONE DELLA PASSWORD DEL NUOVO UTENTE DA REGISTRARE
+		int count_maiuscole= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI LETTERE MAIUSCOLE PRESENTI NELLA STRINGA "PASSWORD"
+		int count_numeri= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI CIFRE NUMERICHE PRESENTI NELLA STRINGA "PASSWORD"
+		int lung_password_inserita=0; //VARIABILE CHE CONTERRA' LA LUNGHEZZA EFFETTIVA DELL'USERNAME INSERITO, IL NUMERO DI CARATTERI DI CUI E' COMPOSTA LA STRINGA
 
 		printf("\n\n\n- NOTA PASSWORD: Numero caratteri compreso tra %d e %d, con almeno una maiuscola e almeno un numero.", LUNG_PASSWORD/2, LUNG_PASSWORD);
-
-		int lung_password_inserita=0;
-		int j=0; //indice password
-
 		do
 		{
-			//acquisizione della PASSWORD di un nuovo utente
+			count_maiuscole= 0; //AZZERAMENTO DELLA VARIABILE "count_maiuscole"
+			count_numeri= 0; //AZZERAMENTO DELLA VARIABILE "count_numeri"
+
 			printf("\n\n> INSERISCI LA PASSWORD:   ");
-			scanf("%s", utente[count_utenti].password);
+			scanf("%s", utente[count_utenti].password); //ACQUISIZIONE DELLA PASSWORD
 
-			count_maiuscole= 0; //azzeramento della variabile "maiuscole"
-			count_numeri= 0;		//azzeramento della variabile "numeri"
+			lung_password_inserita= strlen(utente[count_utenti].password);  //DETERMINA IL NUMERO DI CARATTERI DI CUI E' COMPOSTA LA PASSWORD INSERITA
 
-			lung_password_inserita= strlen(utente[count_utenti].password);
-
-			for(j=0; j < lung_password_inserita; j++)
+		//VERIFICA VALIDITA' PASSWORD
+			for(int j=0; j < lung_password_inserita; j++)
 			{
-				count_numeri= count_numeri + isdigit(utente[count_utenti].password[j]); //conteggio delle cifre numeriche presenti nella password inserita
-				count_maiuscole= count_maiuscole + isupper(utente[count_utenti].password[j]); //conteggio delle lettere maiuscole presenti nella password inserita
+				count_numeri= count_numeri + isdigit(utente[count_utenti].password[j]); //CONTEGGIO DELLE CIFRE NUMERICHE PRESENTI NELLA PASSWORD INSERITA
+				count_maiuscole= count_maiuscole + isupper(utente[count_utenti].password[j]); //CONTEGGIO DELLE LETTERE MAIUSCOLE PRESENTI NELLA PASSWORD INSERITA
 
 				if((count_numeri > 0) && (count_maiuscole > 0))
-					j= lung_password_inserita; //non vi è il bisogno di eseguire tutti i cicli se è stata già rilevata una lettara maiuscola e una cifra numerica
+					j= lung_password_inserita; //NON ABBIAMO BISOGNO DI SCORRERE TUTTI I CICLI SE SONO STATE GIA' RILEVATE UNA LETTERA MAIUSCOLA E UNA CIFRA NUMERICA ALL'INTERNO DELLA STRINGA INSERITA (PASSWORD)
 			}
 
-			if((lung_password_inserita < (LUNG_PASSWORD / 2)) || (lung_password_inserita > LUNG_PASSWORD))
+			if((lung_password_inserita < (LUNG_PASSWORD / 2)) || (lung_password_inserita > LUNG_PASSWORD)) //CONDIZIONE CHE VERIFICA SE LA LUNGHEZZA DELLA PASSWORD NON E'COMPRESA TRA: 5 e 10 CIFRE
 				printf("\n   * PASSWORD NON VALIDA! INSERIRE UN NUMERO DI CARATTERI COMPRESO TRA %d E %d.\n", LUNG_PASSWORD/2, LUNG_PASSWORD);
 
-			if(count_numeri	==	0) //verifica se la password inserita non ha una cifra numerica
+			if(count_numeri	==	0) //CONDIZIONE CHE VERIFICA SE LA PASSWORD INSERITA NON PRESENTA AL SUO INTERNO NEANCHE UNA CIFRA NUMERICA
 				printf("\n   * PASSWORD NON VALIDA! INSERIRE ALMENO UN NUMERO.\n");
 
-			if(count_maiuscole == 0)	//verifica se la password inserita non ha una lettera maiuscola
+			if(count_maiuscole == 0) //CONDIZIONE CHE VERIFICA SE LA PASSWORD INSERITA NON PRESENTA AL SUO INTERNO NEANCHE UNA LETTERA MAIUSCOLA
 				printf("\n   * PASSWORD NON VALIDA! INSERIRE ALMENO UN CARATTERE MAIUSCOLO.\n");
 
-		}while(!((count_numeri > 0) && (count_maiuscole > 0) && (lung_password_inserita >= (LUNG_PASSWORD / 2)) && (lung_password_inserita <= LUNG_PASSWORD))); //ripete il ciclo finchè i vincoli imposti sulla sintassi della password non sono rispettati
+		}while(!((count_numeri > 0) && (count_maiuscole > 0) && (lung_password_inserita >= (LUNG_PASSWORD / 2)) && (lung_password_inserita <= LUNG_PASSWORD))); //RIPETE IL CICLO FINCHE' I VINCOLI IMPOSTI SULLA SINTASSI DELLA PASSWORD NON SONO RISPETTATI
 
-		fprintf(file_utenti, "\n%d %s %s %d %d %d %s %s", utente[i].id_utente, utente[count_utenti].nome_utente, utente[count_utenti].cognome_utente, utente[count_utenti].giorno_nascita,  utente[count_utenti].mese_nascita, utente[count_utenti].anno_nascita, utente[count_utenti].username, utente[count_utenti].password);
+		fprintf(file_utenti, "\n%d %s %s %d %d %d %s %s", utente[i].id_utente, utente[count_utenti].nome_utente, utente[count_utenti].cognome_utente, utente[count_utenti].giorno_nascita,  utente[count_utenti].mese_nascita, utente[count_utenti].anno_nascita, utente[count_utenti].username, utente[count_utenti].password); //SALVATAGGIO SUL FILE "Utenti.txt" DI TUTTI I DATI INSERITI E REGISTRAZIONE DEL NUOVO UTENTE EFFETTUATA!
 		printf("\n\n\n***************** ISCRIZIONE EFFETTUATA CORRETTAMENTE! *****************\n");
 	}
-	fclose(file_utenti);
+	fclose(file_utenti); //chiusura del file
 
+//POSSIBILITA' DI EFFETTUARE IL LOGIN
 	do
 	{
 		printf("\n\n\n> ORA PREMI '0' PER ACCEDERE:   ");
-		scanf("%d", &scelta);
+		scanf("%d", &scelta); //ACQUISIZIONE DELLA SCELTA PER ACCEDERE
 
-		if(scelta == 0)
+		if(scelta == 0) //CONDIZIONE CHE VERIFICA SE IL VALORE DELLA SCELTA E' UGUALE A '0'
 		{
 			system("cls");
 			scritta_spotify();
 			scritta_login();
-			login_utente(file_utenti, file_artisti, utente, artista, i, scelta);
+			login_utente(file_utenti, file_artisti, utente, artista, i, scelta); //LOGIN
 		}
 
 		else
 			printf("\n   * INPUT NON VALIDO, RIPROVA!");
 
-	}while(scelta != 0);
+	}while(scelta != 0); //RIPETE IL CICLO FINCHE' IL VALORE INSERITO NON E' VALIDO
 }
 
 void login_utente(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta)
