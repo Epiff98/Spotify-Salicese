@@ -798,7 +798,7 @@ void ricerca_per_genere(FILE* file_artisti, FILE* file_utenti, utenti utente[], 
 
 			 while(!feof(file_artisti))
 			 {
-				 fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
+					fscanf(file_artisti,"%d %s %s %s %d %s %d %d %d", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone, &artista[i].count_listen, &artista[i].count_like, &artista[i].count_dislike);
 
 				 if(strcmp(genere_ricercato, artista[i].genere) == 0)
 				 {
@@ -815,17 +815,17 @@ void ricerca_per_genere(FILE* file_artisti, FILE* file_utenti, utenti utente[], 
 		 }while(genere_trovato == 0);
 
 		 printf("\n\nGENERE %s:", genere_ricercato);
-		 printf("\n\n\n\t\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\n\n");
+			printf("\n\n\n\n\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\t N.ASCOLTI|    N.LIKE|    N.DISLIKE|\n\n");
 
 		 i=0;
 		 rewind(file_artisti); //riavvolgimento dello stream
 
 		 while(!feof(file_artisti))
 		 {
-			 fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
+				fscanf(file_artisti,"%d %s %s %s %d %s %d %d %d", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone, &artista[i].count_listen, &artista[i].count_like, &artista[i].count_dislike);
 
 			 if(strcmp(genere_ricercato, artista[i].genere) == 0)
-				 printf("\t\t  %20d|%19s|%20s|%20s|%25d|%22s|  \n", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
+					printf("\t  %20d|%19s|%20s|%20s|%25d|%22s|%12d|%10d|%13d|\n", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone, artista[i].count_listen, artista[i].count_like, artista[i].count_dislike);
 
 			 i++;
 		 }
@@ -881,7 +881,7 @@ void ricerca_per_nazionalita(FILE* file_artisti, FILE* file_utenti, utenti utent
 
 			 while(!feof(file_artisti))
 			 {
-				 fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
+					fscanf(file_artisti,"%d %s %s %s %d %s %d %d %d", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone, &artista[i].count_listen, &artista[i].count_like, &artista[i].count_dislike);
 
 				 if(strcmp(nazionalita_ricercata, artista[i].nazionalita) == 0)
 				 {
@@ -898,17 +898,17 @@ void ricerca_per_nazionalita(FILE* file_artisti, FILE* file_utenti, utenti utent
 		 }while(nazionalita_errata != 0 || nazionalita_trovata == 0);
 
 		 printf("\n\nNAZIONALITA' %s:", nazionalita_ricercata);
-		 printf("\n\n\n\t\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\n\n");
+			printf("\n\n\n\n\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\t N.ASCOLTI|    N.LIKE|    N.DISLIKE|\n\n");
 
 		 i=0;
 		 rewind(file_artisti); //riavvolgimento dello stream
 
 		 while(!feof(file_artisti))
 		 {
-			 fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
+				fscanf(file_artisti,"%d %s %s %s %d %s %d %d %d", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone, &artista[i].count_listen, &artista[i].count_like, &artista[i].count_dislike);
 
 			 if(strcmp(nazionalita_ricercata, artista[i].nazionalita) == 0)
-				 printf("\t\t  %20d|%19s|%20s|%20s|%25d|%22s|  \n", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
+		     printf("\t  %20d|%19s|%20s|%20s|%25d|%22s|%12d|%10d|%13d|\n", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone, artista[i].count_listen, artista[i].count_like, artista[i].count_dislike);
 
 			 i++;
 		 }
@@ -949,17 +949,17 @@ void ricerca_per_anno_inizio_produzione(FILE* file_artisti, FILE* file_utenti, u
 
 		}while(primo_anno > ANNO_MAX || secondo_anno > ANNO_MAX || primo_anno < ANNO_MIN || secondo_anno < ANNO_MIN);
 
-		printf("\n\n\n\t\t\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\n\n");
+		printf("\n\n\n\n\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\t N.ASCOLTI|    N.LIKE|    N.DISLIKE|\n\n");
 
 		i=0;
 		rewind(file_artisti); //riavvolgimento dello stream
 
 		while(!feof(file_artisti))
 		{
-			fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
+			fscanf(file_artisti,"%d %s %s %s %d %s %d %d %d", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone, &artista[i].count_listen, &artista[i].count_like, &artista[i].count_dislike);
 
 			if(artista[i].anno_inizio >= primo_anno && artista[i].anno_inizio <= secondo_anno)
-				printf("\t\t\t  %20d|%19s|%20s|%20s|%25d|%22s|  \n", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
+			printf("\t  %20d|%19s|%20s|%20s|%25d|%22s|%12d|%10d|%13d|\n", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone, artista[i].count_listen, artista[i].count_like, artista[i].count_dislike);
 
 			i++;
 		}
@@ -1123,8 +1123,9 @@ void preferenza(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti 
 
 
 					id_artista_trovato++;
-					printf("\n\n\n\n\t\t\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\n\n");
-					printf("\n\t\t\t  %20d|%19s|%20s|%20s|%25d|%22s|\n", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
+					printf("\n\n\n\n\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\t N.ASCOLTI|    N.LIKE|    N.DISLIKE|\n\n");
+					printf("\t  %20d|%19s|%20s|%20s|%25d|%22s|%12d|%10d|%13d|\n", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone, artista[i].count_listen, artista[i].count_like, artista[i].count_dislike);
+
 
 					printf("\n\nQUALE PREFERENZA VUOI ASSEGNARE?\n");
 					printf("    >. 1. ASCOLTA\n\n");
@@ -1341,7 +1342,7 @@ void aggiungi_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 
 		while(!feof(file_artisti))
 		{
-			fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
+			fscanf(file_artisti,"%d %s %s %s %d %s %d %d %d", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone, &artista[i].count_listen, &artista[i].count_like, &artista[i].count_dislike);
 			count_artisti++;
 			i++;
 		}
@@ -1439,12 +1440,17 @@ void aggiungi_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 		printf("\n\n\n> INSERISCI IL TITOLO DELLA SUA CANZONE POPOLARE:   ");
 		scanf("%s", artista[count_artisti].canzone);
 
+		artista[count_artisti].count_listen=0;
+		artista[count_artisti].count_like=0;
+		artista[count_artisti].count_dislike=0;
+
 		for(int j=0; j < LUNG_CANZONE; j++)
 			artista[count_artisti].canzone[j]= toupper(artista[count_artisti].canzone[j]); //trasforma tutti i caratteri della NOME DELLA CANZONE in maiuscolo
 
 		printf("\n\n\n***************** ARTISTA AGGIUNTO CORRETTAMENTE! *****************\n");
 
-		fprintf(file_artisti,"\n%d %s %s %s %d %s", artista[count_artisti].id_artista, artista[count_artisti].nome_artista, artista[count_artisti].genere, artista[count_artisti].nazionalita, artista[count_artisti].anno_inizio, artista[count_artisti].canzone); //salvataggio su file dei dati del nuovo artista aggiunto
+		fprintf(file_artisti,"\n%d %s %s %s %d %s %d %d %d", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone, artista[i].count_listen, artista[i].count_like, artista[i].count_dislike);
+
 	}
 	fclose(file_artisti); //chiusura del file "file_artisti"
 
@@ -1473,7 +1479,7 @@ void modifica_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 		//conteggio degli artisti salvati sul file
 		while(!feof(file_artisti))
 		{
-			fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
+			fscanf(file_artisti,"%d %s %s %s %d %s %d %d %d", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone, &artista[i].count_listen, &artista[i].count_like, &artista[i].count_dislike);
 			count_artisti++;
 			i++;
 		}
@@ -1659,7 +1665,7 @@ void modifica_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], ar
 		i=0;
 
 		for(i=0; i<count_artisti; i++)
-			fprintf(file_artisti,"\n%d %s %s %s %d %s", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
+			fprintf(file_artisti,"\n%d %s %s %s %d %s %d %d %d", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone, artista[i].count_listen, artista[i].count_like, artista[i].count_dislike);
 	}
 	fclose(file_artisti);
 
@@ -1708,7 +1714,7 @@ void elimina_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], art
 				//conteggio degli artisti salvati sul file
 				while(!feof(file_artisti))
 				{
-					fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
+					fscanf(file_artisti,"%d %s %s %s %d %s %d %d %d", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone, &artista[i].count_listen, &artista[i].count_like, &artista[i].count_dislike);
 					count_artisti++;
 					i++;
 				}
@@ -1730,8 +1736,9 @@ void elimina_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], art
 				{
 					if(id_artista_ricercato != artista[i].id_artista)
 					{
-					fprintf(file_artisti,"\n%d %s %s %s %d %s", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
-					id_artista_trovato++;
+
+					 fprintf(file_artisti,"\n%d %s %s %s %d %s %d %d %d", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone, artista[i].count_listen, artista[i].count_like, artista[i].count_dislike);
+                     id_artista_trovato++;
 					}
                }
 				fclose(file_artisti);
@@ -1772,7 +1779,7 @@ void elimina_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], art
 					file_artisti=  fopen("Artisti.txt" , "r");
 					while(!feof(file_artisti))
 					{
-					fscanf(file_artisti,"%d %s %s %s %d %s", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone);
+					fscanf(file_artisti,"%d %s %s %s %d %s %d %d %d", &artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, &artista[i].anno_inizio, artista[i].canzone, &artista[i].count_listen, &artista[i].count_like, &artista[i].count_dislike);
 					count_artisti++;
 					i++;
 					}
@@ -1782,7 +1789,7 @@ void elimina_artista(FILE* file_artisti, FILE* file_utenti, utenti utente[], art
 					for(i=0;i<count_artisti;i++)
 					{
 					artista[i].id_artista=i+1;
-					fprintf(file_artisti,"\n%d %s %s %s %d %s", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone);
+					fprintf(file_artisti,"\n%d %s %s %s %d %s %d %d %d", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone, artista[i].count_listen, artista[i].count_like, artista[i].count_dislike);
 					}
 					fclose(file_artisti);
 
