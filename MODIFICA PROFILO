@@ -1,0 +1,254 @@
+void modifica_profilo(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta,int z)
+{
+	int count_utenti=0;
+
+	printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
+    printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
+	printf("\n\t\t\t\t\t\t\t\t\t  |            MODIFICA PROFILO           |");
+	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
+
+    i=0;
+	if((file_utenti =  fopen("Utenti.txt" , "r")) == NULL)
+		 		printf("Errore nell'apertura!\n");
+
+		 else
+		 {
+			 while(!feof(file_utenti))
+			 {
+				fscanf(file_utenti,"%d %s %s %d %d %d %s %s", &utente[i].id_utente, utente[i].nome_utente, utente[i].cognome_utente, &utente[i].giorno_nascita, &utente[i].mese_nascita, &utente[i].anno_nascita, utente[i].username, utente[i].password);
+                count_utenti++;
+                i++;
+			 }
+		 }
+	fclose(file_utenti);
+
+	z=lettura_id(file_artisti, file_utenti, utente, artista, i, scelta,z);
+
+	printf("\n\n\n\n\t\t\t\t\tID. UTENTE|\t      NOME|\t     COGNOME|\t      DATA DI NASCITA|\t        USERNAME|\t   PASSWORD|\n\n");
+	printf("\t\t\t\t  %16d|%15s|%17s|%12d / %2d / %d|%18s|%18s|  \n", utente[z].id_utente, utente[z].nome_utente, utente[z].cognome_utente, utente[z].giorno_nascita, utente[z].mese_nascita, utente[z].anno_nascita, utente[z].username, utente[z].password);
+
+    printf("\n\n\nMODIFICA: ");
+				printf("\n\n\t1. NOME  |  2. COGNOME  |  3. DATA DI NASCITA  |  4. PASSWORD\n");
+
+				do
+				{
+
+					printf("\n\n> QUALE CAMPO VUOI MODIFICARE?   ");
+					scanf("%d", &scelta);
+
+					if(scelta < 1 || scelta > 5)
+						printf("\n   * INPUT NON VALIDO, RIPROVA!\n");
+
+				}while(scelta < 1 || scelta > 5);
+				int nome_errato= 0;
+				int cognome_errato= 0;
+				int count_maiuscole= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI LETTERE MAIUSCOLE PRESENTI NELLA STRINGA "PASSWORD"
+				int count_numeri= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI CIFRE NUMERICHE PRESENTI NELLA STRINGA "PASSWORD"
+				int lung_password_inserita=0; //VARIABILE CHE CONTERRA' LA LUNGHEZZA EFFETTIVA DELL'USERNAME INSERITO, IL NUMERO DI CARATTERI DI CUI E' COMPOSTA LA STRINGA
+
+				switch(scelta)
+						{
+							case 1: //MODIFICA "NOME UTENTE"
+								do
+								{
+									printf("\n\n> INSERISCI IL NUOVO NOME:  ");
+									scanf("%s", utente[z].nome_utente);
+
+									for(int j=0; j < LUNG_NOME; j++)
+									{
+										if(isdigit(utente[z].nome_utente[j]) == 1)
+										{
+											nome_errato= 1;
+											j= LUNG_NOME;
+										}
+										else
+											utente[z].nome_utente[j]= toupper(utente[z].nome_utente[j]); //trasforma tutti i caratteri del NOME DELL'UTENTE in maiuscolo
+									}
+
+								}while(nome_errato != 0);
+
+								if((file_utenti =  fopen("Utenti.txt" , "w")) == NULL)
+										 		printf("Errore nell'apertura!\n");
+
+										 else
+										 {
+											 for(i=0;i<count_utenti;i++)
+											 {
+												fprintf(file_utenti,"\n%d %s %s %d %d %d %s %s", utente[i].id_utente, utente[i].nome_utente, utente[i].cognome_utente, utente[i].giorno_nascita, utente[i].mese_nascita, utente[i].anno_nascita, utente[i].username, utente[i].password);
+								             }
+										 }
+									fclose(file_utenti);
+
+								printf("\n\nMODIFICA EFFETTUATA CON SUCCESSO!");
+								return_menu_utente(file_artisti, file_utenti, utente, artista, i, scelta,z);
+
+								break;
+							case 2: //MODIFICA "COGNOME UTENTE"
+								do
+								{
+				    				printf("\n\n> INSERISCI IL NUOVO COGNOME:  ");
+									scanf("%s", utente[z].cognome_utente);
+
+								    for(int j=0; j < LUNG_NOME; j++)
+							        {
+										if(isdigit(utente[z].cognome_utente[j]) == 1)
+										{
+											cognome_errato= 1;
+											j= LUNG_COGNOME;
+										}
+							              else
+										      utente[z].cognome_utente[j]= toupper(utente[z].cognome_utente[j]); //trasforma tutti i caratteri del COGNOME DELL'UTENTE in maiuscolo
+						            }
+
+							    }while(nome_errato != 0);
+
+						        if((file_utenti =  fopen("Utenti.txt" , "w")) == NULL)
+								printf("Errore nell'apertura!\n");
+
+								else
+							    {
+									 for(i=0;i<count_utenti;i++)
+									 {
+										fprintf(file_utenti,"\n%d %s %s %d %d %d %s %s", utente[i].id_utente, utente[i].nome_utente, utente[i].cognome_utente, utente[i].giorno_nascita, utente[i].mese_nascita, utente[i].anno_nascita, utente[i].username, utente[i].password);
+									 }
+								}
+								fclose(file_utenti);
+
+								printf("\n\nMODIFICA EFFETTUATA CON SUCCESSO!");
+								return_menu_utente(file_artisti, file_utenti, utente, artista, i, scelta,z);
+
+								break;
+							case 3:  //MODIFICA DATA DI NASCITA
+								printf("\n\n\nDATA DI NASCITA: ");
+										do
+										{
+											printf("\n\n\t> INSERISCI IL NUOVO MESE DI NASCITA:   ");
+											scanf("%d",&utente[z].mese_nascita); //ACQUISIZIONE DEL MESE DI NASCITA
+
+										//VERIFICA VALIDITA' MESE DI NASCITA
+											if(utente[z].mese_nascita < MESE_MIN || utente[z].mese_nascita > MESE_MAX) //CONDIZIONE CHE VERIFICA SE IL VALORE DEL MESE INSERITO NON E' VALIDO, OSSIA: MINORE DI '1' oppure MAGGIORE DI '12'
+												printf("\n\t   * MESE NON VALIDO! INSERISCI UN VALORE COMPRESO TRA %d E %d.\n", MESE_MIN, MESE_MAX);
+
+										}while(utente[z].mese_nascita < MESE_MIN || utente[z].mese_nascita > MESE_MAX); //RIPETE IL CICLO FINCHE' IL VALORE DEL MESE INSERITO NON E' VALIDO
+
+									//ACQUISIZIONE DEL GIORNO DI NASCITA DEL NUOVO UTENTE DA REGISTRARE
+										if(utente[z].mese_nascita == 2) //CONDIZIONE CHE VERIFICA SE IL VALORE DEL MESE INSERITO E' UGUALE A '2' (= FEBBRAIO: range 1 - 28 gg)
+										{
+											do
+											{
+												printf("\n\n\t> INSERISCI IL NUOVO GIORNO DI NASCITA:   ");
+												scanf("%d",&utente[z].giorno_nascita); //ACQUISIZIONE DEL GIORNO DI NASCITA
+
+											//VERIFICA VALIDITA' GIORNO DI NASCITA
+												if(utente[z].giorno_nascita < 1 || utente[z].giorno_nascita > 28) //CONDIZIONE CHE VERIFICA SE IL VALORE DEL GIORNO INSERITO NON E' VALIDO, OSSIA: MINORE DI '1' oppure MAGGIORE DI '28'
+													printf("\n\t   * GIORNO NON VALIDO! INSERISCI UN VALORE COMPRESO TRA 1 E 28.\n");
+
+											}while(utente[z].giorno_nascita < 1 || utente[z].giorno_nascita > 28); //RIPETE IL CICLO FINCHE' IL VALORE DEL GIORNO INSERITO NON E' VALIDO
+										}
+
+										else if(utente[z].mese_nascita == 4 || utente[z].mese_nascita == 6 || utente[z].mese_nascita == 9 || utente[z].mese_nascita == 11) //CONDIZIONE CHE VERIFICA SE IL VALORE DEL MESE INSERITO E' UGUALE A '4' (= APRILE), '6' (= GIUGNO), '9' (= SETTEMBRE) oppure '11' (= NOVEMBRE) (range: 1 - 30 gg)
+										{
+											do
+											{
+												printf("\n\n\t> INSERISCI IL NUOVO GIORNO DI NASCITA:   ");
+												scanf("%d", &utente[z].giorno_nascita); //ACQUISIZIONE DEL GIORNO DI NASCITA
+
+											//VERIFICA VALIDITA' GIORNO DI NASCITA
+												if(utente[z].giorno_nascita < 1 || utente[z].giorno_nascita > 30) //CONDIZIONE CHE VERIFICA SE IL VALORE DEL GIORNO INSERITO NON E' VALIDO, OSSIA: MINORE DI '1' oppure MAGGIORE DI '30'
+												   printf("\n\t   * GIORNO NON VALIDO! INSERISCI UN VALORE COMPRESO TRA 1 E 30.\n");
+
+											}while(utente[z].giorno_nascita < 1 || utente[z].giorno_nascita > 30); //RIPETE IL CICLO FINCHE' IL VALORE DEL GIORNO INSERITO NON E' VALIDO
+										}
+
+										else if(utente[z].mese_nascita == 1 || utente[z].mese_nascita == 3 || utente[z].mese_nascita == 5 || utente[z].mese_nascita == 7 || utente[z].mese_nascita == 8 || utente[z].mese_nascita == 10 || utente[z].mese_nascita == 12) //CONDIZIONE CHE VERIFICA SE IL VALORE DEL MESE INSERITO E' UGUALE A '1' (= GENNAIO), '3' (= MARZO), '5' (= MAGGIO), '7' (= LUGLIO), '8' (= AGOSTO), '10' (= OTTOBRE) oppure "12" (= DICEMBRE) (range: 1 - 31 gg)
+										{
+											do
+											{
+												printf("\n\n\t> INSERISCI IL NUOVO GIORNO DI NASCITA:   ");
+												 scanf("%d", &utente[z].giorno_nascita); //ACQUISIZIONE DEL GIORNO DI NASCITA
+
+											//VERIFICA VALIDITA' GIORNO DI NASCITA
+												if(utente[z].giorno_nascita < 1 || utente[z].giorno_nascita > 31) //CONDIZIONE CHE VERIFICA SE IL VALORE DEL GIORNO INSERITO NON E' VALIDO, OSSIA: MINORE DI '1' oppure MAGGIORE DI '31'
+												   printf("\n\t   * GIORNO NON VALIDO! INSERISCI UN VALORE COMPRESO TRA 1 E 31.\n");
+
+											}while(utente[z].giorno_nascita < 1 || utente[z].giorno_nascita > 31); //RIPETE IL CICLO FINCHE' IL VALORE DEL GIORNO INSERITO NON E' VALIDO
+										}
+
+									//ACQUISIZIONE DELL'ANNO DI NASCITA DEL NUOVO UTENTE DA REGISTRARE
+										do
+										{
+											printf("\n\n\t> INSERISCI IL NUOVO ANNO DI NASCITA:   ");
+											scanf("%d",&utente[z].anno_nascita); //ACQUISIZIONE DELL'ANNO DI NASCITA
+
+										//VERIFICA VALIDITA' ANNO DI NASCITA
+											if(utente[z].anno_nascita < ANNO_MIN || utente[z].anno_nascita > ANNO_MAX) //CONDIZIONE CHE VERIFICA SE IL VALORE DELL'ANNO INSERITO NON E' VALIDO, OSSIA: MINORE DI '1901' oppure MAGGIORE DI '2018'
+												printf("\n\t   * ANNO NON VALIDO! INSERISCI UN VALORE COMPRESO TRA %d E %d.\n", ANNO_MIN, ANNO_MAX);
+
+										}while(utente[z].anno_nascita < ANNO_MIN || utente[z].anno_nascita > ANNO_MAX); //RIPETE IL CICLO FINCHE' IL VALORE DELL'ANNO INSERITO NON E' VALIDO
+										if((file_utenti =  fopen("Utenti.txt" , "w")) == NULL)
+										printf("Errore nell'apertura!\n");
+
+										else
+										{
+										 for(i=0;i<count_utenti;i++)
+										 {
+										  fprintf(file_utenti,"\n%d %s %s %d %d %d %s %s", utente[i].id_utente, utente[i].nome_utente, utente[i].cognome_utente, utente[i].giorno_nascita, utente[i].mese_nascita, utente[i].anno_nascita, utente[i].username, utente[i].password);
+										 }
+										}
+										fclose(file_utenti);
+										printf("\n\nMODIFICA EFFETTUATA CON SUCCESSO!");
+										return_menu_utente(file_artisti, file_utenti, utente, artista, i, scelta,z);
+										break;
+							case 4://MODIFICA PASSWORD
+								   //ACQUISIZIONE DELLA PASSWORD
+
+
+										printf("\n\n\n- NOTA PASSWORD: Numero caratteri compreso tra %d e %d, con almeno una maiuscola e almeno un numero.", LUNG_PASSWORD/2, LUNG_PASSWORD);
+										do
+										{
+											count_maiuscole= 0; //AZZERAMENTO DELLA VARIABILE "count_maiuscole"
+											count_numeri= 0; //AZZERAMENTO DELLA VARIABILE "count_numeri"
+
+											printf("\n\n> INSERISCI NUOVA PASSWORD:   ");
+											scanf("%s", utente[z].password); //ACQUISIZIONE DELLA PASSWORD
+
+											lung_password_inserita= strlen(utente[z].password);  //DETERMINA IL NUMERO DI CARATTERI DI CUI E' COMPOSTA LA PASSWORD INSERITA
+
+										//VERIFICA VALIDITA' PASSWORD
+											for(int j=0; j < lung_password_inserita; j++)
+											{
+												count_numeri= count_numeri + isdigit(utente[z].password[j]); //CONTEGGIO DELLE CIFRE NUMERICHE PRESENTI NELLA PASSWORD INSERITA
+												count_maiuscole= count_maiuscole + isupper(utente[z].password[j]); //CONTEGGIO DELLE LETTERE MAIUSCOLE PRESENTI NELLA PASSWORD INSERITA
+
+												if((count_numeri > 0) && (count_maiuscole > 0))
+													j= lung_password_inserita; //NON ABBIAMO BISOGNO DI SCORRERE TUTTI I CICLI SE SONO STATE GIA' RILEVATE UNA LETTERA MAIUSCOLA E UNA CIFRA NUMERICA ALL'INTERNO DELLA STRINGA INSERITA (PASSWORD)
+											}
+
+											if((lung_password_inserita < (LUNG_PASSWORD / 2)) || (lung_password_inserita > LUNG_PASSWORD)) //CONDIZIONE CHE VERIFICA SE LA LUNGHEZZA DELLA PASSWORD NON E'COMPRESA TRA: 5 e 10 CIFRE
+												printf("\n   * PASSWORD NON VALIDA! INSERIRE UN NUMERO DI CARATTERI COMPRESO TRA %d E %d.\n", LUNG_PASSWORD/2, LUNG_PASSWORD);
+
+											if(count_numeri	==	0) //CONDIZIONE CHE VERIFICA SE LA PASSWORD INSERITA NON PRESENTA AL SUO INTERNO NEANCHE UNA CIFRA NUMERICA
+												printf("\n   * PASSWORD NON VALIDA! INSERIRE ALMENO UN NUMERO.\n");
+
+											if(count_maiuscole == 0) //CONDIZIONE CHE VERIFICA SE LA PASSWORD INSERITA NON PRESENTA AL SUO INTERNO NEANCHE UNA LETTERA MAIUSCOLA
+												printf("\n   * PASSWORD NON VALIDA! INSERIRE ALMENO UN CARATTERE MAIUSCOLO.\n");
+
+										}while(!((count_numeri > 0) && (count_maiuscole > 0) && (lung_password_inserita >= (LUNG_PASSWORD / 2)) && (lung_password_inserita <= LUNG_PASSWORD))); //RIPETE IL CICLO FINCHE' I VINCOLI IMPOSTI SULLA SINTASSI DELLA PASSWORD NON SONO RISPETTATI
+
+
+										if((file_utenti =  fopen("Utenti.txt" , "w")) == NULL)
+										printf("Errore nell'apertura!\n");
+
+										else
+									    {
+										 for(i=0;i<count_utenti;i++)
+									     {
+										  fprintf(file_utenti,"\n%d %s %s %d %d %d %s %s", utente[i].id_utente, utente[i].nome_utente, utente[i].cognome_utente, utente[i].giorno_nascita, utente[i].mese_nascita, utente[i].anno_nascita, utente[i].username, utente[i].password);
+										 }
+										}
+										fclose(file_utenti);
+										printf("\n\nMODIFICA EFFETTUATA CON SUCCESSO!");
+										return_menu_utente(file_artisti, file_utenti, utente, artista, i, scelta,z);
+										break;
+						}
+}
