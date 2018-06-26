@@ -1,0 +1,101 @@
+void elimina_account(FILE* file_artisti, FILE* file_utenti, utenti utente[], artisti artista[], int i, int scelta,int z)
+{
+	int count_utenti=0;
+	char password_ricercata[LUNG_PASSWORD];
+
+		printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
+	    printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
+		printf("\n\t\t\t\t\t\t\t\t\t  |            ELIMINA ACCOUNT            |");
+		printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
+
+	    i=0;
+		if((file_utenti =  fopen("Utenti.txt" , "r")) == NULL)
+			 		printf("Errore nell'apertura!\n");
+
+			 else
+			 {
+				 while(!feof(file_utenti))
+				 {
+					fscanf(file_utenti,"%d %s %s %d %d %d %s %s", &utente[i].id_utente, utente[i].nome_utente, utente[i].cognome_utente, &utente[i].giorno_nascita, &utente[i].mese_nascita, &utente[i].anno_nascita, utente[i].username, utente[i].password);
+	                count_utenti++;
+	                i++;
+				 }
+			 }
+		fclose(file_utenti);
+
+		z=lettura_id(file_artisti, file_utenti, utente, artista, i, scelta,z);
+
+		printf("\n\n\n\n\t\t\t\t\tID. UTENTE|\t      NOME|\t     COGNOME|\t      DATA DI NASCITA|\t        USERNAME|\t   PASSWORD|\n\n");
+		printf("\t\t\t\t  %16d|%15s|%17s|%12d / %2d / %d|%18s|%18s|  \n", utente[z].id_utente, utente[z].nome_utente, utente[z].cognome_utente, utente[z].giorno_nascita, utente[z].mese_nascita, utente[z].anno_nascita, utente[z].username, utente[z].password);
+
+		printf("\n\n>. 1. ELIMINA ACCOUNT\n\n");
+		printf(">. 2. TORNA AL MENU\n\n");
+		printf("QUALE OPERAZIONE DESIDERI EFFETTUARE?   ");
+		scanf("%d",&scelta);
+
+		switch(scelta)
+		{
+		case 1:
+		do
+						{
+							//acquisizione della PASSWORD dell'utente che vuole effettuare l'accesso
+							printf("\n\n>. INSERISCI PASSWORD:  ");
+							scanf("%s",password_ricercata);
+
+							if(strcmp(password_ricercata, utente[z].password) != 0)
+								printf("\n   * PASSWORD NON VALIDA, RIPROVA!\n\n");
+
+						}while(strcmp(password_ricercata, utente[z].password) != 0);
+		if((file_utenti =  fopen("Utenti.txt" , "w")) == NULL)
+					 		printf("Errore nell'apertura!\n");
+		else
+		{
+		 for(i=0;i<count_utenti;i++)
+		 {
+			if(utente[i].id_utente!=z+1)
+			{
+				fprintf(file_utenti,"\n%d %s %s %d %d %d %s %s", utente[i].id_utente, utente[i].nome_utente, utente[i].cognome_utente, utente[i].giorno_nascita, utente[i].mese_nascita, utente[i].anno_nascita, utente[i].username, utente[i].password);
+			}
+		 }
+		}
+		fclose(file_utenti);
+
+		count_utenti=0;
+		i=0;
+		if((file_utenti =  fopen("Utenti.txt" , "r")) == NULL)
+		printf("Errore nell'apertura!\n");
+
+		else
+		{
+		 file_utenti=  fopen("Utenti.txt" , "r");
+		 while(!feof(file_utenti))
+		 {
+		  fscanf(file_utenti,"%d %s %s %d %d %d %s %s", &utente[i].id_utente, utente[i].nome_utente, utente[i].cognome_utente, &utente[i].giorno_nascita, &utente[i].mese_nascita, &utente[i].anno_nascita, utente[i].username, utente[i].password);
+		  count_utenti++;
+		  i++;
+		 }
+		}
+		fclose(file_utenti);
+
+		if((file_utenti =  fopen("Utenti.txt" , "r")) == NULL)
+				printf("Errore nell'apertura!\n");
+
+		else
+		{
+		 file_utenti=  fopen("Utenti.txt" , "w");
+		 for(i=0;i<count_utenti;i++)
+		 {
+		  utente[i].id_utente=i+1;
+		  fprintf(file_utenti,"\n%d %s %s %d %d %d %s %s", utente[i].id_utente, utente[i].nome_utente, utente[i].cognome_utente, utente[i].giorno_nascita, utente[i].mese_nascita, utente[i].anno_nascita, utente[i].username, utente[i].password);
+		 }
+		}
+		fclose(file_utenti);
+	    interfaccia_iniziale(file_artisti, file_utenti, utente, artista, i, scelta,z); //INTERFACCIA INIZIALE
+		break;
+
+		case 2:
+		menu_utente(file_artisti, file_utenti, utente, artista, i, scelta,z); //INTERFACCIA INIZIALE
+		break;
+		}
+
+}
