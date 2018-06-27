@@ -844,12 +844,12 @@ void aggiungi_preferenza(FILE* file_artisti, FILE* file_utenti,  FILE* file_pref
 
 					switch(scelta)
 					{
-						case 1://ASCOLTO
+						case 1://LISTEN
 							preferenza_artista[count_preferenze].id_preferenza= count_preferenze+1;
 							strcpy(preferenza_artista[count_preferenze].username_utente, utente[z].username);
 							strcpy(preferenza_artista[count_preferenze].nome_artista, artista[i].nome_artista);
 							strcpy(artista[count_preferenze].preferenza_artista[j].preferenza, "LISTEN");
-
+							artista[i].count_listen++;
 							break;
 
 						case 2://LIKE
@@ -857,6 +857,7 @@ void aggiungi_preferenza(FILE* file_artisti, FILE* file_utenti,  FILE* file_pref
 							strcpy(preferenza_artista[count_preferenze].username_utente, utente[z].username);
 							strcpy(preferenza_artista[count_preferenze].nome_artista, artista[i].nome_artista);
 							strcpy(artista[count_preferenze].preferenza_artista[j].preferenza, "LIKE");
+							artista[i].count_like++;
 							break;
 
 						case 3://DISLIKE
@@ -864,6 +865,7 @@ void aggiungi_preferenza(FILE* file_artisti, FILE* file_utenti,  FILE* file_pref
 							strcpy(preferenza_artista[count_preferenze].username_utente, utente[z].username);
 							strcpy(preferenza_artista[count_preferenze].nome_artista, artista[i].nome_artista);
 							strcpy(artista[count_preferenze].preferenza_artista[j].preferenza, "DISLIKE");
+							artista[i].count_dislike++;
 							break;
 					}
 				}
@@ -873,12 +875,13 @@ void aggiungi_preferenza(FILE* file_artisti, FILE* file_utenti,  FILE* file_pref
 				fprintf(file_preferenze,"\n%d %s %s %s", preferenza_artista[count_preferenze].id_preferenza, preferenza_artista[count_preferenze].username_utente, preferenza_artista[count_preferenze].nome_artista, artista[count_preferenze].preferenza_artista[j].preferenza);
 				fclose(file_preferenze);
 
-				file_artisti=  fopen("Artisti.txt" , "w");
-				artista[i].count_listen++;
-
-				for(i=0; i<count_artisti; i++)
-					fprintf(file_artisti,"\n%d %s %s %s %d %s %d %d %d", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone, artista[i].count_listen, artista[i].count_like, artista[i].count_dislike);
-
+				if((file_artisti=  fopen("Artisti.txt" , "w")) == NULL)
+					printf("Errore nell'apertura!\n");
+				else
+				{
+					for(i=0; i<count_artisti; i++)
+						fprintf(file_artisti,"\n%d %s %s %s %d %s %d %d %d", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone, artista[i].count_listen, artista[i].count_like, artista[i].count_dislike);
+				}
 				fclose(file_artisti);
 
 				return_menu_utente(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z);
