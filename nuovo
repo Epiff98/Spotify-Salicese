@@ -420,7 +420,7 @@ void signup(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti
 			if(count_maiuscole == 0) //CONDIZIONE CHE VERIFICA SE LA PASSWORD INSERITA NON PRESENTA AL SUO INTERNO NEANCHE UNA LETTERA MAIUSCOLA
 				printf("\n   * PASSWORD NON VALIDA! INSERIRE ALMENO UN CARATTERE MAIUSCOLO.\n");
 
-		}while(((count_numeri > 0) || (count_maiuscole > 0) || (lung_password_inserita >= (LUNG_PASSWORD / 2)) || (lung_password_inserita <= LUNG_PASSWORD))); //RIPETE IL CICLO FINCHE' I VINCOLI IMPOSTI SULLA SINTASSI DELLA PASSWORD NON SONO RISPETTATI
+		}while(!((count_numeri > 0) && (count_maiuscole > 0) && (lung_password_inserita >= (LUNG_PASSWORD / 2)) && (lung_password_inserita <= LUNG_PASSWORD))); //RIPETE IL CICLO FINCHE' I VINCOLI IMPOSTI SULLA SINTASSI DELLA PASSWORD NON SONO RISPETTATI
 
 		fprintf(file_utenti, "\n%d %s %s %d %d %d %s %s", utente[count_utenti].id_utente, utente[count_utenti].nome_utente, utente[count_utenti].cognome_utente, utente[count_utenti].giorno_nascita,  utente[count_utenti].mese_nascita, utente[count_utenti].anno_nascita, utente[count_utenti].username, utente[count_utenti].password); //SALVATAGGIO SUL FILE "Utenti.txt" DI TUTTI I DATI INSERITI E REGISTRAZIONE DEL NUOVO UTENTE EFFETTUATA!
 
