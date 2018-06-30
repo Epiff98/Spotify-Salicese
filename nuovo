@@ -3,20 +3,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*NOMI DEI FILE:
-file utenti: "Utenti.txt"
-file artisti: "Artisti.txt"
-file preferenze: "Preferenze.txt"
-file indice: "indice_utente_loggato"*/
-
 //-------------------------------------------------------------- DEFINIZIONE COSTANTI SIMBOLICHE -----------------------------------------------------------//
-#define LUNG_NOME 30				//LUNGHEZZA MASSIMA DEL CAMPO "NOME": 30
-#define LUNG_COGNOME 30				//LUNGHEZZA MASSIMA DEL CAMPO "COGNOME": 30
-#define LUNG_USERNAME 15			//LUNGHEZZA MASSIMA DEL CAMPO "USERNAME": 15
-#define LUNG_PASSWORD 10			//LUNGHEZZA MASSIMA DEL CAMPO "PASSWORD": 10
-#define LUNG_GENERE 20				//LUNGHEZZA MASSIMA DEL CAMPO "GENERE": 20
-#define LUNG_CANZONE 20				//LUNGHEZZA MASSIMA DEL CAMPO "CANZONE": 20
-#define LUNG_NAZIONALITA 20			//LUNGHEZZA MASSIMA DEL CAMPO "NAZIONALITA": 20
+#define LUNG_NOME 30				//LUNGHEZZA MASSIMA DEL CAMPO "NOME": 30 caratteri
+#define LUNG_COGNOME 30				//LUNGHEZZA MASSIMA DEL CAMPO "COGNOME": 30 caratteri
+#define LUNG_USERNAME 15			//LUNGHEZZA MASSIMA DEL CAMPO "USERNAME": 15 caratteri
+#define LUNG_PASSWORD 10			//LUNGHEZZA MASSIMA DEL CAMPO "PASSWORD": 10 caratteri
+#define LUNG_GENERE 30				//LUNGHEZZA MASSIMA DEL CAMPO "GENERE": 30 caratteri
+#define LUNG_CANZONE 30				//LUNGHEZZA MASSIMA DEL CAMPO "CANZONE": 30 caratteri
+#define LUNG_NAZIONALITA 30			//LUNGHEZZA MASSIMA DEL CAMPO "NAZIONALITA": 30 caratteri
+#define LUNG_PREFERENZA 15          //LUNGHEZZA MASSIMA DEL CAMPO "PREFERENZA": 15 caratteri
 #define N_UTENTI 100				//NUMERO MASSIMO DI UTENTI: 100
 #define N_ARTISTI 100				//NUMERO MASSIMO DI ARTISTI: 100
 #define N_PREFERENZE 100            // NUMERO MASSIMO PREFERENZE: 100
@@ -24,7 +19,6 @@ file indice: "indice_utente_loggato"*/
 #define MESE_MAX 12					//MESE MASSIMO: 12 (= DICEMBRE)
 #define ANNO_MIN 1901				//ANNO MINIMO: 1901
 #define ANNO_MAX 2018				//ANNO MASSIMO: 2018
-#define LUNG_PREFERENZA 15          //LUNGHEZZA MASSIMA DEL CAMPO "PREFERENZA": 15
 //----------------------------------------------------------------------------------------------------------------------------------------------------------//
 
 //------------------------------------------------------------------- STRUCT PREFERENZE --------------------------------------------------------------------//
@@ -102,18 +96,18 @@ void return_menu_admin(FILE* file_artisti, FILE* file_utenti,  FILE* file_prefer
 //------------------------------------------------------------------------ MAIN ----------------------------------------------------------------------------//
 int main(void)
 {
-	FILE* file_utenti= NULL; //DICHIARAZIONE/INIZIALIZZAZIONE VARIABILE "file_utenti" PUNTATORE A FILE
-	FILE* file_artisti= NULL; //DICHIARAZIONE/INIZIALIZZAZIONE VARIABILE "file_artisti" PUNTATORE A FILE
-	FILE* file_preferenze= NULL; //DICHIARAZIONE/INIZIALIZZAZIONE VARIABILE "file_preferenze" PUNTATORE A FILE
+	FILE* file_utenti= NULL; //DICHIARAZIONE & INIZIALIZZAZIONE VARIABILE "file_utenti" PUNTATORE A FILE
+	FILE* file_artisti= NULL; //DICHIARAZIONE & INIZIALIZZAZIONE VARIABILE "file_artisti" PUNTATORE A FILE
+	FILE* file_preferenze= NULL; //DICHIARAZIONE & INIZIALIZZAZIONE VARIABILE "file_preferenze" PUNTATORE A FILE
 
-	preferenze_artisti preferenza_artista[N_PREFERENZE];
+	preferenze_artisti preferenza_artista[N_PREFERENZE]; //ARRAY "preferenza_artista[]" DI TIPO  "preferenze_artisti" CON DIMENSIONE "N_PREFERENZE" (= max 100)
 	utenti utente[N_UTENTI]; //ARRAY "utente[]" DI TIPO "utenti" CON DIMENSIONE "N_UTENTI" (= max 100)
     artisti artista[N_ARTISTI]; //ARRAY "artista[]" DI TIPO "artisti" CON DIMENSIONE "N_ARTISTI" (= max 100)
-    int i= 0; //DICHIARAZIONE/INIZIALIZZAZIONE DELL'INDICE "i"
-    int scelta= 0; //DICHIARAZIONE/INIZIALIZZAZIONE DELLA VARIABILE "scelta", UTILIZZATA PER SELEZIONARE DETERMINATE FUNZIONALITA' A DISPOSIZIONE DELL'UTENTE
-    int z=0;  //DICHIARAZIONE/INIZIALIZZAZIONE DELL'INDICE "z" UTILIZZATO PER SALVARE SU FILE L'ID DELL'UTENTE CHE HA EFFETTUATO IL LOGIN
+    int i= 0; //DICHIARAZIONE & INIZIALIZZAZIONE DELL'INDICE DEGLI ARRAY "i"
+    int scelta= 0; //DICHIARAZIONE & INIZIALIZZAZIONE DELLA VARIABILE "scelta", UTILIZZATA PER SELEZIONARE DETERMINATE FUNZIONALITA' A DISPOSIZIONE DELL'UTENTE
+    int z= 0;  //DICHIARAZIONE & INIZIALIZZAZIONE DELL'INDICE "z" UTILIZZATO PER MEMORIZZARE SUL FILE "indice_utente_loggato" L'INDICE DELL'UTENTE CHE HA EFFETTUATO IL LOGIN
 
-    interfaccia_iniziale(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //INTERFACCIA INIZIALE
+    interfaccia_iniziale(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "interfaccia iniziale"
     system("pause");
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------------------//
@@ -167,8 +161,9 @@ void scritta_signup()
 void interfaccia_iniziale(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, int scelta, int z)
 {
 	system("cls");
-	scritta_spotify();
+	scritta_spotify(); //CHIAMATA DELLA PROCEDURA "scritta_spotify" CHE STAMPA A VIDEO LA SCRITTA "SPOTIFY"
 
+//MENU' INTERFACCIA INIZIALE
 	printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
 	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
 	printf("\n\t\t\t\t\t\t\t\t\t  |            1. LOGIN UTENTE            |");
@@ -186,40 +181,41 @@ void interfaccia_iniziale(FILE* file_artisti, FILE* file_utenti,  FILE* file_pre
 	printf("\n\t\t\t\t\t\t\t\t\t  |                4. EXIT                |");
 	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
 
+//ACQUISIZIONE DELLA "SCELTA" DELL'UTENTE, TRA LE VOCI ELENCATE NEL MENU'
 	do
 	{
 		printf("\n\n\n\t\t\t\t\t\t\t\t\t   > QUALE OPERAZIONE DESIDERI EFFETTUARE?   ");
-		scanf("%d", &scelta);
+		scanf("%d", &scelta); //ACQUISIZIONE DELLA SCELTA
 
 		if(scelta < 1 || scelta > 4)
 			printf("\n\n\t\t\t\t\t\t\t\t\t       * SCELTA NON VALIDA, RIPROVA!\n");
 
-	}while(scelta < 1 || scelta > 4); 													//da implementare il controllo sui caratteri
+	}while(scelta < 1 || scelta > 4); //RIPETE IL CICLO FINCHE' IL VALORE INSERITO NON E' VALIDO		//da implementare il controllo sui caratteri
 
 	switch(scelta)
 	{
-		case 1: //LOGIN UTENTE
-			system("cls");
-			scritta_spotify();
-			scritta_login();
-			login_utente(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z);
+		case 1: //SCELTA= 1 -> LOGIN UTENTE
+			system("cls"); //PULIZIA DELLO SCHERMO
+			scritta_spotify(); //CHIAMATA DELLA PROCEDURA "scritta_spotify" CHE STAMPA A VIDEO LA SCRITTA "SPOTIFY"
+			scritta_login(); //CHIAMAMTA DELLA PROCEDURA "scritta_login" CHE STAMPA A VIDEO LA SCRITTA "LOGIN"
+			login_utente(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "login_utente" CHE PERMETTE ALL'UTENTE DI EFFETTUARE L'ACCESSO ALLA PIATTAFORMA "SPOTIFY", INSERENDO IL PROPRIO USERNAME E PASSWORD.
 			break;
 
-		case 2: //LOGIN ADMIN
-			system("cls");
-			scritta_spotify();
-			scritta_login();
-			login_admin(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z);
+		case 2: //SCELTA= 2 -> LOGIN ADMIN
+			system("cls"); //PULIZIA DELLO SCHERMO
+			scritta_spotify(); //CHIAMATA DELLA PROCEDURA "scritta_spotify" CHE STAMPA A VIDEO LA SCRITTA "SPOTIFY"
+			scritta_login(); //CHIAMAMTA DELLA PROCEDURA "scritta_login" CHE STAMPA A VIDEO LA SCRITTA "LOGIN"
+			login_admin(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "login_admin" CHE PERMETTE ALL'AMMINISTRATORE DELLA PIATTAFORMA DI EFFETTUARE L'ACCESSO ALLA SUA INTERFACCIA RISERVATA, INSERENDO USERNAME E PASSWORD
 			break;
 
-		case 3: //SIGNUP
+		case 3: //SCELTA= 3 -> SIGNUP
 			system("cls");
-			scritta_spotify();
-			scritta_signup();
-			signup(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z);
+			scritta_spotify(); //CHIAMATA DELLA PROCEDURA "scritta_spotify" CHE STAMPA A VIDEO LA SCRITTA "SPOTIFY"
+			scritta_signup(); //CHIAMAMTA DELLA PROCEDURA "scritta_signup" CHE STAMPA A VIDEO LA SCRITTA "SIGNUP"
+			signup(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "signup" CHE PERMETTE ALL'UTENTE DI REGISTRARSI ALLA PIATTAFORMA "SPOTIFY", FORNENDO I PROPRI DATI ANAGRAFICI E SCEGLIENDO UN USERNAME E UNA PASSWORD PER POTER POI ACCEDERE
 			break;
 
-		case 4:	//EXIT
+		case 4:	//SCELTA= 4 -> EXIT
 			break;
 	}
 }
@@ -232,12 +228,12 @@ void signup(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti
 
 	else
 	{
-		int count_utenti= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI UTENTI SALVATI NEL FILE "Utenti.txt", CALCOLATO NELLA FUNZIONE "lettura_utenti_file".
-		count_utenti= lettura_utenti_da_file(file_utenti, utente, i); //ASSEGNA A "count_utenti" IL VALORE RESTITUITO DALLA FUNZIONE "lettura_utenti_file", OSSIA IL NUMERO DEGLI UTENTI SALVATI NEL FILE "Utenti.txt".
+		int count_utenti= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI UTENTI SALVATI NEL FILE "Utenti.txt", CALCOLATO NELLA FUNZIONE "lettura_utenti_da_file".
+		count_utenti= lettura_utenti_da_file(file_utenti, utente, i); //ASSEGNA A "count_utenti" IL VALORE RESTITUITO DALLA FUNZIONE "lettura_utenti_da_file", OSSIA IL NUMERO DEGLI UTENTI SALVATI NEL FILE "Utenti.txt".
 
-		utente[count_utenti].id_utente= count_utenti + 1; //ASSEGNAZIONE DELL'"ID UTENTE" AL NUOVO UTENTE DA REGISTRARE, UN IDENTIFICATIVO NUMERICO CHE DENOTA CIASCUN UTENTE. SI TRATTA DI UN VALORE PROGRESSIVO CHE PARTE DA '1'.
+		utente[count_utenti].id_utente= count_utenti + 1; //ASSEGNAZIONE DELL'"ID UTENTE" AL NUOVO UTENTE DA REGISTRARE, UN IDENTIFICATIVO NUMERICO CHE DENOTA CIASCUN UTENTE REGISTRATO. SI TRATTA DI UN VALORE PROGRESSIVO CHE PARTE DA '1'.
 
-	//ACQUISIZIONE DEL NOME DEL NUOVO UTENTE DA REGISTRARE
+	//ACQUISIZIONE DEL "NOME" DEL NUOVO UTENTE DA REGISTRARE
 		int nome_errato= 0; //FLAG CHE VERRA' IMPOSTATO A '1' NEL CASO IN CUI LA STRINGA DEL NOME, DEL NUOVO UTENTE DA REGISTRARE, CONTENGA AL SUO INTERNO UN CARATTERE NUMERICO (non consentito!).
 		do
 		{
@@ -251,7 +247,7 @@ void signup(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti
 			{
 				if((isdigit(utente[count_utenti].nome_utente[j])) == 1) //CONDIZIONE CHE VERIFICA SE IL j-CARATTERE DELLA STRINGA INSERITA (NOME UTENTE) E' UN CARATTERE NUMERICO.
 				{
-					nome_errato= 1; //IMPOSTA IL FLAG "nome_errato" A '1' POICHE' E' STATO RILEVATO UN CARATTERE NUMERICO (non consentito) ALL'INTERNO DELLA STRINGA INSERITA.
+					nome_errato= 1; //IMPOSTA IL FLAG "nome_errato" A '1' POICHE' E' STATO RILEVATO UN CARATTERE NUMERICO (non consentito!) ALL'INTERNO DELLA STRINGA INSERITA.
 					j= LUNG_NOME;	//NON ABBIAMO BISOGNO DI SCORRERE TUTTI I CICLI, E' SUFFICIENTE FERMARSI ALLA PRIMA OCCORRENZA DEL CARATTERE NUMERICO.
 				}
 
@@ -264,7 +260,7 @@ void signup(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti
 
 		}while(nome_errato != 0); //RIPETE IL CICLO FINCHE' IL VALORE DEL FLAG "nome_errato" RISULTA DIVERSO DA '0', CIO' IMPLICA CHE IL NOME DELL'UTENTE NON E' VALIDO.
 
-	//ACQUISIZIONE DEL COGNOME DEL NUOVO UTENTE DA REGISTRARE.
+	//ACQUISIZIONE DEL "COGNOME" DEL NUOVO UTENTE DA REGISTRARE
 		int cognome_errato= 0; //FLAG CHE VERRA' IMPOSTATO A '1' NEL CASO IN CUI LA STRINGA DEL COGNOME, DEL NUOVO UTENTE DA REGISTRARE, CONTENGA AL SUO INTERNO UN CARATTERE NUMERICO (non consentito!).
 		do
 		{
@@ -278,7 +274,7 @@ void signup(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti
 			{
 				if((isdigit(utente[count_utenti].cognome_utente[j])) == 1) //CONDIZIONE CHE VERIFICA SE IL j-CARATTERE DELLA STRINGA INSERITA (COGNOME UTENTE) E' UN CARATTERE NUMERICO.
 				{
-					cognome_errato= 1; //IMPOSTA IL FLAG "cognome_errato" A '1' POICHE' E' STATO RILEVATO UN CARATTERE NUMERICO (non consentito) ALL'INTERNO DELLA STRINGA INSERITA.
+					cognome_errato= 1; //IMPOSTA IL FLAG "cognome_errato" A '1' POICHE' E' STATO RILEVATO UN CARATTERE NUMERICO (non consentito!) ALL'INTERNO DELLA STRINGA INSERITA.
 					j= LUNG_COGNOME; //NON ABBIAMO BISOGNO DI SCORRERE TUTTI I CICLI, E' SUFFICIENTE FERMARSI ALLA PRIMA OCCORRENZA DEL CARATTERE NUMERICO.
 				}
 
@@ -291,7 +287,7 @@ void signup(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti
 
 		}while(cognome_errato != 0); //RIPETE IL CICLO FINCHE' IL VALORE DEL FLAG "cognome_errato" RISULTA DIVERSO DA '0', CIO' IMPLICA CHE IL COGNOME DELL'UTENTE NON E' VALIDO.
 
-	//ACQUISIZIONE DELLA DATA DI NASCITA DEL NUOVO UTENTE DA REGISTRARE
+	//ACQUISIZIONE DELLA "DATA DI NASCITA" DEL NUOVO UTENTE DA REGISTRARE
 		printf("\n\n\nDATA DI NASCITA: ");
 		do
 		{
@@ -304,7 +300,7 @@ void signup(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti
 
 		}while(utente[count_utenti].mese_nascita < MESE_MIN || utente[count_utenti].mese_nascita > MESE_MAX); //RIPETE IL CICLO FINCHE' IL VALORE DEL MESE INSERITO NON E' VALIDO
 
-	//ACQUISIZIONE DEL GIORNO DI NASCITA DEL NUOVO UTENTE DA REGISTRARE
+	//ACQUISIZIONE DEL "GIORNO DI NASCITA" DEL NUOVO UTENTE DA REGISTRARE
 		if(utente[count_utenti].mese_nascita == 2) //CONDIZIONE CHE VERIFICA SE IL VALORE DEL MESE INSERITO E' UGUALE A '2' (= FEBBRAIO: range 1 - 28 gg)
 		{
 			do
@@ -347,7 +343,7 @@ void signup(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti
 			}while(utente[count_utenti].giorno_nascita < 1 || utente[count_utenti].giorno_nascita > 31); //RIPETE IL CICLO FINCHE' IL VALORE DEL GIORNO INSERITO NON E' VALIDO
 		}
 
-	//ACQUISIZIONE DELL'ANNO DI NASCITA DEL NUOVO UTENTE DA REGISTRARE
+	//ACQUISIZIONE DELL'"ANNO DI NASCITA" DEL NUOVO UTENTE DA REGISTRARE
 		do
 		{
 			printf("\n\n\t> INSERISCI L'ANNO DI NASCITA:   ");
@@ -359,7 +355,7 @@ void signup(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti
 
 		}while(utente[count_utenti].anno_nascita < ANNO_MIN || utente[count_utenti].anno_nascita > ANNO_MAX); //RIPETE IL CICLO FINCHE' IL VALORE DELL'ANNO INSERITO NON E' VALIDO
 
-	//ACQUISIZIONE DELL'USERNAME DEL NUOVO UTENTE DA REGISTRARE
+	//ACQUISIZIONE DELL'"USERNAME" DEL NUOVO UTENTE DA REGISTRARE
 		int lung_username_inserito= 0; //VARIABILE CHE CONTERRA' LA LUNGHEZZA EFFETTIVA DELL'USERNAME INSERITO, IL NUMERO DI CARATTERI DI CUI E' COMPOSTA LA STRINGA
 		int username_esistente= 0; //FLAG CHE VERRA' IMPOSTATO A '1' NEL CASO IN CUI L'USERNAME INSERITO, DELL'UTENTE DA REGISTRARE, E' GIA' USATO DA UN'ALTRO UTENTE PRECEDENTEMENTE REGISTRATO
 
@@ -389,10 +385,10 @@ void signup(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti
 
 		}while(lung_username_inserito > LUNG_USERNAME || username_esistente != 0); //RIPETE IL CICLO FINCHE' LA LUNGHEZZA DELL'USERNAME INSERITO E' MAGGIORE DELLA LUNGHEZZA PREDEFINITA oppure IL VALORE DEL FLAG "utente_esistente" RISULTA DIVERSO DA '0', OSSIA APPARTIENE AD UN ALTRO UTENTE SALVATO
 
-	//ACQUISIZIONE DELLA PASSWORD DEL NUOVO UTENTE DA REGISTRARE
+	//ACQUISIZIONE DELLA "PASSWORD" DEL NUOVO UTENTE DA REGISTRARE
 		int count_maiuscole= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI LETTERE MAIUSCOLE PRESENTI NELLA STRINGA "PASSWORD"
 		int count_numeri= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI CIFRE NUMERICHE PRESENTI NELLA STRINGA "PASSWORD"
-		int lung_password_inserita=0; //VARIABILE CHE CONTERRA' LA LUNGHEZZA EFFETTIVA DELL'USERNAME INSERITO, IL NUMERO DI CARATTERI DI CUI E' COMPOSTA LA STRINGA
+		int lung_password_inserita= 0; //VARIABILE CHE CONTERRA' LA LUNGHEZZA EFFETTIVA DELLA PASSWORD INSERITA, IL NUMERO DI CARATTERI DI CUI E' COMPOSTA LA STRINGA
 
 		printf("\n\n\n- NOTA PASSWORD: Numero caratteri compreso tra %d e %d, con almeno una maiuscola e almeno un numero.", LUNG_PASSWORD/2, LUNG_PASSWORD);
 		do
@@ -415,7 +411,7 @@ void signup(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti
 					j= lung_password_inserita; //NON ABBIAMO BISOGNO DI SCORRERE TUTTI I CICLI SE SONO STATE GIA' RILEVATE UNA LETTERA MAIUSCOLA E UNA CIFRA NUMERICA ALL'INTERNO DELLA STRINGA INSERITA (PASSWORD)
 			}
 
-			if((lung_password_inserita < (LUNG_PASSWORD / 2)) || (lung_password_inserita > LUNG_PASSWORD)) //CONDIZIONE CHE VERIFICA SE LA LUNGHEZZA DELLA PASSWORD NON E'COMPRESA TRA: 5 e 10 CIFRE
+			if((lung_password_inserita < (LUNG_PASSWORD / 2)) || (lung_password_inserita > LUNG_PASSWORD)) //CONDIZIONE CHE VERIFICA SE LA LUNGHEZZA DELLA PASSWORD NON E' COMPRESA TRA 5 e 10 CIFRE
 				printf("\n   * PASSWORD NON VALIDA! INSERIRE UN NUMERO DI CARATTERI COMPRESO TRA %d E %d.\n", LUNG_PASSWORD/2, LUNG_PASSWORD);
 
 			if(count_numeri	==	0) //CONDIZIONE CHE VERIFICA SE LA PASSWORD INSERITA NON PRESENTA AL SUO INTERNO NEANCHE UNA CIFRA NUMERICA
@@ -424,7 +420,7 @@ void signup(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti
 			if(count_maiuscole == 0) //CONDIZIONE CHE VERIFICA SE LA PASSWORD INSERITA NON PRESENTA AL SUO INTERNO NEANCHE UNA LETTERA MAIUSCOLA
 				printf("\n   * PASSWORD NON VALIDA! INSERIRE ALMENO UN CARATTERE MAIUSCOLO.\n");
 
-		}while(!((count_numeri > 0) && (count_maiuscole > 0) && (lung_password_inserita >= (LUNG_PASSWORD / 2)) && (lung_password_inserita <= LUNG_PASSWORD))); //RIPETE IL CICLO FINCHE' I VINCOLI IMPOSTI SULLA SINTASSI DELLA PASSWORD NON SONO RISPETTATI
+		}while(((count_numeri > 0) || (count_maiuscole > 0) || (lung_password_inserita >= (LUNG_PASSWORD / 2)) || (lung_password_inserita <= LUNG_PASSWORD))); //RIPETE IL CICLO FINCHE' I VINCOLI IMPOSTI SULLA SINTASSI DELLA PASSWORD NON SONO RISPETTATI
 
 		fprintf(file_utenti, "\n%d %s %s %d %d %d %s %s", utente[count_utenti].id_utente, utente[count_utenti].nome_utente, utente[count_utenti].cognome_utente, utente[count_utenti].giorno_nascita,  utente[count_utenti].mese_nascita, utente[count_utenti].anno_nascita, utente[count_utenti].username, utente[count_utenti].password); //SALVATAGGIO SUL FILE "Utenti.txt" DI TUTTI I DATI INSERITI E REGISTRAZIONE DEL NUOVO UTENTE EFFETTUATA!
 
@@ -442,9 +438,9 @@ void signup(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti
 		if(scelta == 0) //CONDIZIONE CHE VERIFICA SE IL VALORE DELLA SCELTA E' UGUALE A '0'
 		{
 			system("cls");
-			scritta_spotify();
-			scritta_login();
-			login_utente(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //LOGIN
+			scritta_spotify(); //CHIAMATA DELLA PROCEDURA "scritta_spotify" CHE STAMPA A VIDEO LA SCRITTA "SPOTIFY"
+			scritta_login(); //CHIAMATA DELLA PROCEDURA "scritta_login" CHE STAMPA A VIDEO LA SCRITTA "LOGIN"
+			login_utente(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "login_utente" CHE PERMETTE ALL'UTENTE APPENA REGISTRATO DI EFFETTUARE L'ACCESSO ALLA PIATTAFORMA "SPOTIFY", INSERENDO IL PROPRIO USERNAME E PASSWORD
 		}
 
 		else
@@ -455,8 +451,8 @@ void signup(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti
 
 void login_utente(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, int scelta, int z)
 {
-	int count_utenti=0;
-	count_utenti= lettura_utenti_da_file(file_utenti, utente, i);
+	int count_utenti= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI UTENTI SALVATI NEL FILE "Utenti.txt", CALCOLATO NELLA FUNZIONE "lettura_utenti_da_file"
+	count_utenti= lettura_utenti_da_file(file_utenti, utente, i); //ASSEGNA A "count_utenti" IL VALORE RESTITUITO DALLA FUNZIONE "lettura_utenti_da_file", OSSIA IL NUMERO DEGLI UTENTI SALVATI NEL FILE "Utenti.txt"
 
 	char username_ricercato[LUNG_USERNAME];
 	char password_ricercata[LUNG_PASSWORD];
@@ -844,7 +840,7 @@ void aggiungi_preferenza(FILE* file_artisti, FILE* file_utenti,  FILE* file_pref
 
 					switch(scelta)
 					{
-						case 1://LISTEN
+						case 1://ASCOLTO
 							preferenza_artista[count_preferenze].id_preferenza= count_preferenze+1;
 							strcpy(preferenza_artista[count_preferenze].username_utente, utente[z].username);
 							strcpy(preferenza_artista[count_preferenze].nome_artista, artista[i].nome_artista);
@@ -877,6 +873,7 @@ void aggiungi_preferenza(FILE* file_artisti, FILE* file_utenti,  FILE* file_pref
 
 				if((file_artisti=  fopen("Artisti.txt" , "w")) == NULL)
 					printf("Errore nell'apertura!\n");
+
 				else
 				{
 					for(i=0; i<count_artisti; i++)
