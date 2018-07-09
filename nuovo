@@ -874,7 +874,7 @@ void aggiungi_preferenza(FILE* file_artisti, FILE* file_utenti,  FILE* file_pref
 		{
 			for(i=0; i<count_artisti; i++)
 			{
-				if(id_artista_ricercato == artista[i].id_artista) //CONDIZIONE CHE VERIFICA SE L'ID DELL'ARTISTA INSERITO E' PRESENTE NEL FILE "Artisti.txt"
+				if(id_artista_ricercato == artista[i].id_artista) //CONDIZIONE CHE VERIFICA SE L'ID. DELL'i-ESIMO ARTISTA PRESENTE NEL FILE E' UGUALE ALL'ID. DELL'ARTISTA INSERITO (AL QUALE ASSEGNARE LA PREFERENZA)
 				{
 					for(x=0; x<count_preferenze; x++)
 					{
@@ -1413,6 +1413,7 @@ void profilo(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utent
 		case '4': //"scelta"= '4' -> ELIMINA UNA PREFERENZA
 			system("cls"); //PULIZIA DELLO SCHERMO
 			scritta_spotify(); //CHIAMATA DELLA PROCEDURA "scritta_spotify" CHE STAMPA A VIDEO LA SCRITTA "SPOTIFY"
+			return_menu_utente(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "return_menu_admin" CHE PERMETTE ALL'AMMINISTRATORE DI RITORNARE AL SUO MENU' AL TERMINE DELL'OPERAZIONE ESEGUITA
 			break;
 
 		case '5': //"scelta"= '5' -> ELIMINA ACCOUNT
@@ -2059,151 +2060,154 @@ void modifica_artista(FILE* file_artisti, FILE* file_utenti,  FILE* file_prefere
 	{
 		for(i=0; i<count_artisti; i++)
 		{
-		//MODIFICA DELL'ARTISTA
-			printf("\n\n\nMODIFICA: ");
-			printf("\n\n\t1. NOME  |  2. GENERE  |  3. NAZIONALITA'  |  4. ANNO INIZIO  |  5. CANZONE POPOLARE\n");
-
-			do
+			if(id_artista_ricercato == artista[i].id_artista) //CONDIZIONE CHE VERIFICA SE L'ID. DELL'i-ESIMO ARTISTA PRESENTE NEL FILE E' UGUALE ALL'ID. DELL'ARTISTA INSERITO (DA MODIFICARE)
 			{
-				fflush(stdin); //PULIZIA DEL BUFFER DELLA TASTIERA PRIMA...
-				printf("\n\n> QUALE CAMPO VUOI MODIFICARE?   ");
-				scanf("%c", &scelta); //ACQUISIZIONE DELLA SCELTA
-				fflush(stdin); //...E DOPO L'UTILIZZO
+			//MODIFICA DELL'ARTISTA
+				printf("\n\n\nMODIFICA: ");
+				printf("\n\n\t1. NOME  |  2. GENERE  |  3. NAZIONALITA'  |  4. ANNO INIZIO  |  5. CANZONE POPOLARE\n");
 
-				if(scelta < '1' || scelta > '5')
-					printf("\n   * INPUT NON VALIDO, RIPROVA!\n");
+				do
+				{
+					fflush(stdin); //PULIZIA DEL BUFFER DELLA TASTIERA PRIMA...
+					printf("\n\n> QUALE CAMPO VUOI MODIFICARE?   ");
+					scanf("%c", &scelta); //ACQUISIZIONE DELLA SCELTA
+					fflush(stdin); //...E DOPO L'UTILIZZO
 
-			}while(scelta < '1' || scelta > '5'); //RIPETE IL CICLO FINCHE' IL CARATTERE INSERITO NON E' VALIDO
+					if(scelta < '1' || scelta > '5')
+						printf("\n   * INPUT NON VALIDO, RIPROVA!\n");
 
-			int nome_errato= 0; //FLAG CHE VERRA' IMPOSTATO A '1' NEL CASO IN CUI LA STRINGA DEL NOME INSERITO CONTENGA AL SUO INTERNO UN CARATTERE NUMERICO (non consentito!)
-			int genere_errato= 0; //FLAG CHE VERRA' IMPOSTATO A '1' NEL CASO IN CUI LA STRINGA DEL GENERE INSERITO CONTENGA AL SUO INTERNO UN CARATTERE NUMERICO (non consentito!)
-			int nazionalita_errata= 0; //FLAG CHE VERRA' IMPOSTATO A '1' NEL CASO IN CUI LA STRINGA DELLA NAZIONALITA' INSERITA CONTENGA AL SUO INTERNO UN CARATTERE NUMERICO (non consentito!)
+				}while(scelta < '1' || scelta > '5'); //RIPETE IL CICLO FINCHE' IL CARATTERE INSERITO NON E' VALIDO
 
-			switch(scelta)
-			{
-				case '1': //"scelta"= '1' -> MODIFICA "NOME ARTISTA"
-					do
-					{
-						nome_errato= 0; //RIPRISTINO DEL VALORE DI PARTENZA DEL FLAG "nome_errato"
+				int nome_errato= 0; //FLAG CHE VERRA' IMPOSTATO A '1' NEL CASO IN CUI LA STRINGA DEL NOME INSERITO CONTENGA AL SUO INTERNO UN CARATTERE NUMERICO (non consentito!)
+				int genere_errato= 0; //FLAG CHE VERRA' IMPOSTATO A '1' NEL CASO IN CUI LA STRINGA DEL GENERE INSERITO CONTENGA AL SUO INTERNO UN CARATTERE NUMERICO (non consentito!)
+				int nazionalita_errata= 0; //FLAG CHE VERRA' IMPOSTATO A '1' NEL CASO IN CUI LA STRINGA DELLA NAZIONALITA' INSERITA CONTENGA AL SUO INTERNO UN CARATTERE NUMERICO (non consentito!)
 
-						printf("\n\n> INSERISCI IL NUOVO NOME:   ");
-						scanf("%s", artista[i].nome_artista); //ACQUISIZIONE DEL NUOVO NOME
-
-					//VERIFICA VALIDITA' NOME
-						for(int j=0; j < LUNG_NOME; j++)
+				switch(scelta)
+				{
+					case '1': //"scelta"= '1' -> MODIFICA "NOME ARTISTA"
+						do
 						{
-							if(isdigit(artista[i].nome_artista[j]) == 1) //CONDIZIONE CHE VERIFICA SE IL j-CARATTERE DELLA STRINGA INSERITA (NOME ARTISTA) E' UN CARATTERE NUMERICO
+							nome_errato= 0; //RIPRISTINO DEL VALORE DI PARTENZA DEL FLAG "nome_errato"
+
+							printf("\n\n> INSERISCI IL NUOVO NOME:   ");
+							scanf("%s", artista[i].nome_artista); //ACQUISIZIONE DEL NUOVO NOME
+
+						//VERIFICA VALIDITA' NOME
+							for(int j=0; j < LUNG_NOME; j++)
 							{
-								nome_errato= 1; //IMPOSTA IL FLAG "nome_errato" A '1' POICHE' E' STATO RILEVATO UN CARATTERE NUMERICO (non consentito!) ALL'INTERNO DELLA STRINGA INSERITA
-								j= LUNG_NOME; //NON ABBIAMO BISOGNO DI SCORRERE TUTTI I CICLI, E' SUFFICIENTE FERMARSI ALLA PRIMA OCCORRENZA DEL CARATTERE NUMERICO
+								if(isdigit(artista[i].nome_artista[j]) == 1) //CONDIZIONE CHE VERIFICA SE IL j-CARATTERE DELLA STRINGA INSERITA (NOME ARTISTA) E' UN CARATTERE NUMERICO
+								{
+									nome_errato= 1; //IMPOSTA IL FLAG "nome_errato" A '1' POICHE' E' STATO RILEVATO UN CARATTERE NUMERICO (non consentito!) ALL'INTERNO DELLA STRINGA INSERITA
+									j= LUNG_NOME; //NON ABBIAMO BISOGNO DI SCORRERE TUTTI I CICLI, E' SUFFICIENTE FERMARSI ALLA PRIMA OCCORRENZA DEL CARATTERE NUMERICO
+								}
+
+								else
+									artista[i].nome_artista[j]= toupper(artista[i].nome_artista[j]); //CONVERSIONE DI TUTTI I CARATTERI DELLA STRINGA (NOME ARTISTA) IN MAIUSCOLO
 							}
 
-							else
-								artista[i].nome_artista[j]= toupper(artista[i].nome_artista[j]); //CONVERSIONE DI TUTTI I CARATTERI DELLA STRINGA (NOME ARTISTA) IN MAIUSCOLO
-						}
+							if(nome_errato != 0)
+								printf("\n   * NOME NON VALIDO, RIPROVA!\n");
 
-						if(nome_errato != 0)
-							printf("\n   * NOME NON VALIDO, RIPROVA!\n");
+						}while(nome_errato != 0); //RIPETE IL CICLO FINCHE' IL VALORE DEL FLAG "nome_errato" RISULTA DIVERSO DA '0', CIO' IMPLICA CHE IL NOME INSERITO NON E' VALIDO
 
-					}while(nome_errato != 0); //RIPETE IL CICLO FINCHE' IL VALORE DEL FLAG "nome_errato" RISULTA DIVERSO DA '0', CIO' IMPLICA CHE IL NOME INSERITO NON E' VALIDO
+						break;
 
-					break;
-
-				case '2': //"scelta"= '2' -> MODIFICA "GENERE"
-					do
-					{
-						genere_errato= 0; //RIPRISTINO DEL VALORE DI PARTENZA DEL FLAG "genere_errato"
-
-						printf("\n\n> INSERISCI IL NUOVO GENERE: ");
-						scanf("%s", artista[i].genere); //ACQUISIZIONE DEL NUOVO GENERE
-
-					//VERIFICA VALIDITA' GENERE
-						for(int j=0; j < LUNG_GENERE; j++)
+					case '2': //"scelta"= '2' -> MODIFICA "GENERE"
+						do
 						{
-							if(isdigit(artista[i].genere[j]) == 1) //CONDIZIONE CHE VERIFICA SE IL j-CARATTERE DELLA STRINGA INSERITA (GENERE) E' UN CARATTERE NUMERICO
+							genere_errato= 0; //RIPRISTINO DEL VALORE DI PARTENZA DEL FLAG "genere_errato"
+
+							printf("\n\n> INSERISCI IL NUOVO GENERE: ");
+							scanf("%s", artista[i].genere); //ACQUISIZIONE DEL NUOVO GENERE
+
+						//VERIFICA VALIDITA' GENERE
+							for(int j=0; j < LUNG_GENERE; j++)
 							{
-								genere_errato= 1; //IMPOSTA IL FLAG "genere_errato" A '1' POICHE' E' STATO RILEVATO UN CARATTERE NUMERICO (non consentito!) ALL'INTERNO DELLA STRINGA INSERITA
-								j= LUNG_GENERE; //NON ABBIAMO BISOGNO DI SCORRERE TUTTI I CICLI, E' SUFFICIENTE FERMARSI ALLA PRIMA OCCORRENZA DEL CARATTERE NUMERICO
+								if(isdigit(artista[i].genere[j]) == 1) //CONDIZIONE CHE VERIFICA SE IL j-CARATTERE DELLA STRINGA INSERITA (GENERE) E' UN CARATTERE NUMERICO
+								{
+									genere_errato= 1; //IMPOSTA IL FLAG "genere_errato" A '1' POICHE' E' STATO RILEVATO UN CARATTERE NUMERICO (non consentito!) ALL'INTERNO DELLA STRINGA INSERITA
+									j= LUNG_GENERE; //NON ABBIAMO BISOGNO DI SCORRERE TUTTI I CICLI, E' SUFFICIENTE FERMARSI ALLA PRIMA OCCORRENZA DEL CARATTERE NUMERICO
+								}
+
+								else
+									artista[i].genere[j]= toupper(artista[i].genere[j]); //CONVERSIONE DI TUTTI I CARATTERI DELLA STRINGA (GENERE) IN MAIUSCOLO
 							}
 
-							else
-								artista[i].genere[j]= toupper(artista[i].genere[j]); //CONVERSIONE DI TUTTI I CARATTERI DELLA STRINGA (GENERE) IN MAIUSCOLO
-						}
+							if(genere_errato != 0)
+								printf("\n   * GENERE NON VALIDO, RIPROVA!\n");
 
-						if(genere_errato != 0)
-							printf("\n   * GENERE NON VALIDO, RIPROVA!\n");
+						}while(genere_errato != 0); //RIPETE IL CICLO FINCHE' IL VALORE DEL FLAG "genere_errato" RISULTA DIVERSO DA '0', CIO' IMPLICA CHE IL GENERE INSERITO NON E' VALIDO
 
-					}while(genere_errato != 0); //RIPETE IL CICLO FINCHE' IL VALORE DEL FLAG "genere_errato" RISULTA DIVERSO DA '0', CIO' IMPLICA CHE IL GENERE INSERITO NON E' VALIDO
+						break;
 
-					break;
-
-				case '3': //"scelta"= '3' -> MODIFICA "NAZIONALITA'"
-					do
-					{
-						nazionalita_errata= 0; //RIPRISTINO DEL VALORE DI PARTENZA DEL FLAG "nazionalita_errata"
-
-						printf("\n\n> INSERISCI LA NUOVA NAZIONALITA':   ");
-						scanf("%s", artista[i].nazionalita); //ACQUISIZIONE DELLA NUOVA NAZIONALITA'
-
-					//VERIFICA VALIDITA' NAZIONALITA'
-						for(int j=0; j < LUNG_NAZIONALITA; j++)
+					case '3': //"scelta"= '3' -> MODIFICA "NAZIONALITA'"
+						do
 						{
-							if(isdigit(artista[i].nazionalita[j]) == 1) //CONDIZIONE CHE VERIFICA SE IL j-CARATTERE DELLA STRINGA INSERITA (NAZIONALITA') E' UN CARATTERE NUMERICO
+							nazionalita_errata= 0; //RIPRISTINO DEL VALORE DI PARTENZA DEL FLAG "nazionalita_errata"
+
+							printf("\n\n> INSERISCI LA NUOVA NAZIONALITA':   ");
+							scanf("%s", artista[i].nazionalita); //ACQUISIZIONE DELLA NUOVA NAZIONALITA'
+
+						//VERIFICA VALIDITA' NAZIONALITA'
+							for(int j=0; j < LUNG_NAZIONALITA; j++)
 							{
-								nazionalita_errata= 1; //IMPOSTA IL FLAG "nazionalita_errata" A '1' POICHE' E' STATO RILEVATO UN CARATTERE NUMERICO (non consentito!) ALL'INTERNO DELLA STRINGA INSERITA
-								j= LUNG_NAZIONALITA; //NON ABBIAMO BISOGNO DI SCORRERE TUTTI I CICLI, E' SUFFICIENTE FERMARSI ALLA PRIMA OCCORRENZA DEL CARATTERE NUMERICO
+								if(isdigit(artista[i].nazionalita[j]) == 1) //CONDIZIONE CHE VERIFICA SE IL j-CARATTERE DELLA STRINGA INSERITA (NAZIONALITA') E' UN CARATTERE NUMERICO
+								{
+									nazionalita_errata= 1; //IMPOSTA IL FLAG "nazionalita_errata" A '1' POICHE' E' STATO RILEVATO UN CARATTERE NUMERICO (non consentito!) ALL'INTERNO DELLA STRINGA INSERITA
+									j= LUNG_NAZIONALITA; //NON ABBIAMO BISOGNO DI SCORRERE TUTTI I CICLI, E' SUFFICIENTE FERMARSI ALLA PRIMA OCCORRENZA DEL CARATTERE NUMERICO
+								}
+
+								else
+									artista[i].nazionalita[j]= toupper(artista[i].nazionalita[j]); //CONVERSIONE DI TUTTI I CARATTERI DELLA STRINGA (NAZIONALITA') IN MAIUSCOLO
 							}
 
-							else
-								artista[i].nazionalita[j]= toupper(artista[i].nazionalita[j]); //CONVERSIONE DI TUTTI I CARATTERI DELLA STRINGA (NAZIONALITA') IN MAIUSCOLO
-						}
+							if(nazionalita_errata != 0)
+								printf("\n   * NAZIONALITA' NON VALIDA, RIPROVA!\n");
 
-						if(nazionalita_errata != 0)
-							printf("\n   * NAZIONALITA' NON VALIDA, RIPROVA!\n");
+						}while(nazionalita_errata != 0); //RIPETE IL CICLO FINCHE' IL VALORE DEL FLAG "nazionalita_errata" RISULTA DIVERSO DA '0', CIO' IMPLICA CHE LA NAZIONALITA' INSERITA NON E' VALIDA
 
-					}while(nazionalita_errata != 0); //RIPETE IL CICLO FINCHE' IL VALORE DEL FLAG "nazionalita_errata" RISULTA DIVERSO DA '0', CIO' IMPLICA CHE LA NAZIONALITA' INSERITA NON E' VALIDA
+						break;
 
-					break;
+					case '4': //"scelta" = '4' -> MODIFICA "ANNO INIZIO PRODUZIONE"
+						do
+						{
+							printf("\n\n> INSERISCI L'ANNO DI INIZIO CARRIERA:   ");
+							scanf("%d", &artista[i].anno_inizio); //ACQUISIZIONE DEL NUOVO ANNO DI INIZIO CARRIERA
 
-				case '4': //"scelta" = '4' -> MODIFICA "ANNO INIZIO PRODUZIONE"
-					do
-					{
-						printf("\n\n> INSERISCI L'ANNO DI INIZIO CARRIERA:   ");
-						scanf("%d", &artista[i].anno_inizio); //ACQUISIZIONE DEL NUOVO ANNO DI INIZIO CARRIERA
+							if(artista[i].anno_inizio < ANNO_MIN || artista[i].anno_inizio > ANNO_MAX)
+								printf("\n   * ANNO NON VALIDO! INSERISCI UN VALORE COMPRESO TRA %d E %d.\n", ANNO_MIN, ANNO_MAX);
 
-						if(artista[i].anno_inizio < ANNO_MIN || artista[i].anno_inizio > ANNO_MAX)
-							printf("\n   * ANNO NON VALIDO! INSERISCI UN VALORE COMPRESO TRA %d E %d.\n", ANNO_MIN, ANNO_MAX);
+						}while(artista[i].anno_inizio < ANNO_MIN || artista[i].anno_inizio > ANNO_MAX); //RIPETE IL CICLO FINCHE' L'ANNO INSERITO NON E' VALIDO: MINORE DI '1901' oppure MAGGIORE DI '2018'
 
-					}while(artista[i].anno_inizio < ANNO_MIN || artista[i].anno_inizio > ANNO_MAX); //RIPETE IL CICLO FINCHE' L'ANNO INSERITO NON E' VALIDO: MINORE DI '1901' oppure MAGGIORE DI '2018'
+						break;
 
-					break;
+					case '5': //"scelta"= '5' -> MODIFICA "CANZONE POPOLARE"
+						printf("\n\n> INSERISCI LA NUOVA CANZONE POPOLARE:   ");
+						scanf("%s", artista[i].canzone); //ACQUISIZIONE DELLA NUOVA CANZONE POPOLARE
 
-				case '5': //"scelta"= '5' -> MODIFICA "CANZONE POPOLARE"
-					printf("\n\n> INSERISCI LA NUOVA CANZONE POPOLARE:   ");
-					scanf("%s", artista[i].canzone); //ACQUISIZIONE DELLA NUOVA CANZONE POPOLARE
+						for(int j=0; j < LUNG_CANZONE; j++)
+							artista[i].canzone[j]= toupper(artista[i].canzone[j]); //CONVERSIONE DI TUTTI I CARATTERI DELLA STRINGA (CANZONE) IN MAIUSCOLO
 
-					for(int j=0; j < LUNG_CANZONE; j++)
-						artista[i].canzone[j]= toupper(artista[i].canzone[j]); //CONVERSIONE DI TUTTI I CARATTERI DELLA STRINGA (CANZONE) IN MAIUSCOLO
+						break;
+				}
 
-					break;
+			//APERTURA DEL FILE "Artisti.txt" IN MODALITA' DI SCRITTURA ("w")
+				if((file_artisti =  fopen("Artisti.txt" , "w")) == NULL)
+					printf("Errore nell'apertura!\n");
+
+				else
+				{
+				//SALVATAGGIO DELLE MODIFICHE APPORTATE
+					for(i=0; i<count_artisti; i++)
+						fprintf(file_artisti,"\n%d %s %s %s %d %s %d %d %d", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone, artista[i].count_listen, artista[i].count_like, artista[i].count_dislike); //SALVATAGGIO SUL FILE "Artisti.txt" I DATI DELL'i-ESIMO ARTISTA
+
+					printf("\n\n\n***************** ARTISTA MODIFICATO CORRETTAMENTE! *****************\n");
+				}
+				fclose(file_artisti); //CHIUSURA DEL FILE
+
+				return_menu_admin(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "return_menu_admin" CHE PERMETTE ALL'AMMINISTRATORE DI RITORNARE AL SUO MENU' AL TERMINE DELL'OPERAZIONE ESEGUITA
+				break;
 			}
-
-		//APERTURA DEL FILE "Artisti.txt" IN MODALITA' DI SCRITTURA ("w")
-			if((file_artisti =  fopen("Artisti.txt" , "w")) == NULL)
-				printf("Errore nell'apertura!\n");
-
-			else
-			{
-			//SALVATAGGIO DELLE MODIFICHE APPORTATE
-				for(i=0; i<count_artisti; i++)
-					fprintf(file_artisti,"\n%d %s %s %s %d %s %d %d %d", artista[i].id_artista, artista[i].nome_artista, artista[i].genere, artista[i].nazionalita, artista[i].anno_inizio, artista[i].canzone, artista[i].count_listen, artista[i].count_like, artista[i].count_dislike); //SALVATAGGIO SUL FILE "Artisti.txt" I DATI DELL'i-ESIMO ARTISTA
-
-				printf("\n\n\n***************** ARTISTA MODIFICATO CORRETTAMENTE! *****************\n");
-			}
-			fclose(file_artisti); //CHIUSURA DEL FILE
-
-			return_menu_admin(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "return_menu_admin" CHE PERMETTE ALL'AMMINISTRATORE DI RITORNARE AL SUO MENU' AL TERMINE DELL'OPERAZIONE ESEGUITA
-			break;
 		}
 	}
 }
