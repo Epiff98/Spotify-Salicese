@@ -1699,7 +1699,7 @@ void modifica_preferenza(FILE* file_artisti, FILE* file_utenti, FILE* file_prefe
 
 		printf("\n\n1. RIPROVA\n");
 		printf("\n2. RITORNA AL MENU'");
-		
+
 	//ACQUISIZIONE DELLA SCELTA
 		do
 		{
@@ -1718,7 +1718,7 @@ void modifica_preferenza(FILE* file_artisti, FILE* file_utenti, FILE* file_prefe
 			case '1': //"scelta"= '1' -> RIPROVA
 				system("cls"); //PULIZIA DELLO SCHERMO
 				scritta_spotify(); //CHIAMATA DELLA PROCEDURA "scritta_spotify" CHE STAMPA A VIDEO LA SCRITTA "SPOTIFY"
-				elimina_preferenza(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "elimina_preferenza" CHE PEREMETTE ALL'UTENTE DI ELIMINARE UNA SU PREFERENZA ESPRESSA PER UN DETERMINATO ARTISTA
+				modifica_preferenza(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "modifica_preferenza" CHE PEREMETTE ALL'UTENTE DI MODIFICARE UNA SUA PREFERENZA ESPRESSA PER UN DETERMINATO ARTISTA
 				break;
 
 			case '2': //"scelta"= '2' -> RITORNA AL MENU'
@@ -1739,7 +1739,7 @@ void modifica_preferenza(FILE* file_artisti, FILE* file_utenti, FILE* file_prefe
 				printf("\n\t1. LISTEN\n");
 				printf("\n\t2. LIKE\n");
 				printf("\n\t3. DISLIKE");
-			
+
 			//ACQUISIZIONE DELLA SCELTA
 				do
 				{
@@ -1842,7 +1842,7 @@ void elimina_preferenza(FILE* file_artisti, FILE* file_utenti, FILE* file_prefer
 			case '1': //"scelta"= '1' -> RIPROVA
 				system("cls"); //PULIZIA DELLO SCHERMO
 				scritta_spotify(); //CHIAMATA DELLA PROCEDURA "scritta_spotify" CHE STAMPA A VIDEO LA SCRITTA "SPOTIFY"
-				elimina_preferenza(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "elimina_preferenza" CHE PEREMETTE ALL'UTENTE DI ELIMINARE UNA SU PREFERENZA ESPRESSA PER UN DETERMINATO ARTISTA
+				elimina_preferenza(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "elimina_preferenza" CHE PEREMETTE ALL'UTENTE DI ELIMINARE UNA SUA PREFERENZA ESPRESSA PER UN DETERMINATO ARTISTA
 				break;
 
 			case '2': //"scelta"= '2' -> RITORNA AL MENU'
@@ -1922,6 +1922,8 @@ void elimina_account(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenz
 	}while(scelta < '1' || scelta > '2'); //RIPETE IL CICLO FINCHE' IL CARATTERE INSERITO NON E' VALIDO
 
 	int count_utenti= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI UTENTI SALVATI SUL FILE "Utenti.txt", CALCOLATO NELLA FUNZIONE "lettura_utenti_da_file"
+	int count_preferenze= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI PREFERENZE SALVATE SUL FILE "Preferenze.txt", CALCOLATO NELLA FUNZIONE "lettura_preferenze_da_file"
+
 	char password_ricercata[LUNG_PASSWORD]; //PASSWORD DELL'UTENTE CHE DESIDERA ELIMINARE IL PROPRIO ACCOUNT
 
 	switch(scelta)
@@ -1937,6 +1939,41 @@ void elimina_account(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenz
 					printf("\n   * PASSWORD NON VALIDA, RIPROVA!\n");
 
 			}while(strcmp(password_ricercata, utente[z].password) != 0); //RIPETE IL CICLO FINCHE' LA PASSWORD INSERITA NON E' VALIDA
+
+			count_preferenze= lettura_preferenze_da_file(file_preferenze, artista, preferenza_artista, i); //ASSEGNA A "count_preferenze" IL VALORE RESTITUITO DALLA FUNZIONE "lettura_preferenze_da_file", OSSIA IL NUMERO DELLE PREFERENZE SALVATE NEL FILE "Preferenze.txt"
+
+			//APERTURA DEL FILE "Preferenze.txt" IN MODALITA' DI SCRITTURA ("w")
+			if((file_preferenze=  fopen("Preferenze.txt" , "w")) == NULL)
+				printf("Errore nell'apertura!\n");
+
+			else
+			{
+			//SALVATAGGIO SUL FILE "Preferenze.txt" DI TUTTE LE PREFERENZE, ECCETTO LE PREFERENZE DELL'UTENTE CHE DESIDERA ELIMINARE IL PROPRIO ACCOUNT
+				for(i=0; i<count_preferenze; i++)
+				{
+					if(strcmp(preferenza_artista[i].username_utente, utente[z].username) != 0)//CONDIZIONE CHE VERIFICA SE L'USERNAME DELL'UTENTE ASSOCIATO ALL'i-ESIMA PREFERENZA SALVATA SUL FILE "Prefererenze.txt" E' DIVERSO DALL'USERNAME DELL'UTENTE LOGGATO
+						fprintf(file_preferenze,"\n%d %s %s %s", preferenza_artista[i].id_preferenza, preferenza_artista[i].username_utente, preferenza_artista[i].nome_artista, preferenza_artista[i].preferenza); //SALVATAGGIO SUL FILE "Preferenze.txt" DEI DATI DELL'i-ESIMA PREFERENZA (USERNAME, NOME ARTISTA e TIPO PREFERENZA)
+				}
+			}
+			fclose(file_preferenze); //CHIUSURA DEL FILE
+
+			count_preferenze= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI PREFERENZE SALVATE SUL FILE "Preferenze.txt", CALCOLATO NELLA FUNZIONE "lettura_preferenze_da_file"
+			count_preferenze= lettura_preferenze_da_file(file_preferenze, artista, preferenza_artista, i); //ASSEGNA A "count_preferenze" IL VALORE RESTITUITO DALLA FUNZIONE "lettura_preferenze_da_file", OSSIA IL NUMERO DELLE PREFERENZE SALVATE NEL FILE "Preferenze.txt"
+
+		//APERTURA DEL FILE "Preferenze.txt" IN MODALITA' DI SCRITTURA ("w")
+			if((file_preferenze=  fopen("Preferenze.txt" , "w")) == NULL)
+				printf("Errore nell'apertura!\n");
+
+			else
+			{
+			//RI-ASSEGNAZIONE DEGLI ID. ALLE PREFERENZE SALVATE SUL FILE "Preferenze.txt"
+				for(i=0; i<count_preferenze; i++)
+				{
+					preferenza_artista[i].id_preferenza= i+1; //RI-ASSEGNAZIONE DEL NUOVO "ID PREFERENZA" ALL'i-ESIMA PREFERENZA
+					fprintf(file_preferenze,"\n%d %s %s %s", preferenza_artista[i].id_preferenza, preferenza_artista[i].username_utente, preferenza_artista[i].nome_artista, preferenza_artista[i].preferenza); //SALVATAGGIO SUL FILE "Preferenze.txt" DEI DATI DELL' i-ESIMA PREFERENZA (USERNAME, NOME ARTISTA e TIPO PREFERENZA)
+				}
+			}
+			fclose(file_preferenze); //CHIUSURA DEL FILE
 
 			count_utenti= lettura_utenti_da_file(file_utenti, utente, i);  //ASSEGNA A "count_utenti" IL VALORE RESTITUITO DALLA FUNZIONE "lettura_utenti_da_file", OSSIA IL NUMERO DEGLI UTENTI SALVATI NEL FILE "Utenti.txt"
 
