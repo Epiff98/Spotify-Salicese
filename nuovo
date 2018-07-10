@@ -44,7 +44,6 @@ typedef struct
 	int count_listen;
 	int count_like;
 	int count_dislike;
-	preferenze_artisti preferenza_artista[N_PREFERENZE];
 }artisti;
 //----------------------------------------------------------------------------------------------------------------------------------------------------------//
 
@@ -66,25 +65,27 @@ typedef struct
 void scritta_spotify();	//PROCEDURA CHE STAMPA A VIDEO LA SCRITTA "SPOTIFY"
 void scritta_login();	//PROCEDURA CHE STAMPA A VIDEO LA SCRITTA "LOGIN"
 void scritta_signup();	//PROCEDURA CHE STAMPA A VIDEO LA SCRITTA "SIGNUP"
-void interfaccia_iniziale(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z);
+void interfaccia_iniziale(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE STAMPA A VIDEO IL MENU' INIZIALE DELLA PIATTAFORMA "SPOTIFY"
 void login_admin(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE ALL'AMMINISTRATORE DELLA PIATTAFORMA DI EFFETTUARE L'ACCESSO ALLA SUA INTERFACCIA RISERVATA, INSERENDO USERNAME E PASSWORD
 void login_utente(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE ALL'UTENTE DI EFFETTUARE L'ACCESSO ALLA PIATTAFORMA "SPOTIFY", INSERENDO IL PROPRIO USERNAME E PASSWORD
 void signup(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE ALL'UTENTE DI REGISTRARSI ALLA PIATTAFORMA "SPOTIFY", FORNENDO I PROPRI DATI ANAGRAFICI E SCEGLIENDO UN USERNAME E UNA PASSWORD PER POTER POI ACCEDERE
 void salvataggio_indice_utente_loggato(FILE* file_utenti, utenti utente[], int i, int z); //PROCEDURA CHE PERMETTE DI SALVARE SUL FILE "indice_utente_loggato.txt" L'INDICE CORRISPONDENTE ALL'UTENTE CHE HA EFFETTUATO IL LOGIN
-int lettura_indice_utente_loggato(FILE* file_utenti, utenti utente[], int i, int z); //FUNZIONE CHE LEGGE DAL FILE "indice_utente_loggato" L'INDICE DELL'UTENTE CHE HA EFFETTUATO IL LOGIN E LO RESTITUISCE COME VALORE DI RITORNO
-int lettura_artisti_da_file(FILE* file_artisti, artisti artista[], int i); //FUNZIONE CHE LEGGE IL CONTENUTO DEL FILE "Artisti.txt" E RESTITUISCE IL NUMERO DEGLI ARTISTI SALVATI
-int lettura_utenti_da_file(FILE* file_utenti, utenti utente[], int i); //FUNZIONE CHE LEGGE IL CONTENUTO DEL FILE "Utenti.txt" E RESTITUISCE IL NUMERO DEGLI UTENTI SALVATI
+int lettura_indice_utente_loggato(FILE* file_utenti, utenti utente[], int i, int z); //FUNZIONE CHE LEGGE DAL FILE "indice_utente_loggato.txt" L'INDICE DELL'UTENTE CHE HA EFFETTUATO IL LOGIN E LO RESTITUISCE COME VALORE DI RITORNO
+int lettura_artisti_da_file(FILE* file_artisti, artisti artista[], int i); //FUNZIONE CHE LEGGE IL CONTENUTO DEL FILE "Artisti.txt" E RESTITUISCE IL NUMERO DEGLI ARTISTI IN ESSO SALVATI
+int lettura_utenti_da_file(FILE* file_utenti, utenti utente[], int i); //FUNZIONE CHE LEGGE IL CONTENUTO DEL FILE "Utenti.txt" E RESTITUISCE IL NUMERO DEGLI UTENTI IN ESSO SALVATI
 void menu_utente(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE STAMPA A VIDEO IL MENU' CON LE DIVERSE OPERAZIONI CHE L'UTENTE PUO' FAR ESEGUIRE UNA VOLTA EFFETTUATO IL LOGIN
-void visualizza_artisti(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, int z); //PROCEDURA CHE STAMPA A VIDEO LA LISTA DEGLI ARTISTI SALVATI NEL FILE "Artisti.txt"
+void visualizza_artisti(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, int z); //PROCEDURA CHE STAMPA A VIDEO LA LISTA DEGLI ARTISTI SALVATI SUL FILE "Artisti.txt"
 int lettura_preferenze_da_file(FILE* file_preferenze, artisti artista[], preferenze_artisti preferenza_artista[], int i); //FUNZIONE CHE LEGGE IL CONTENUTO DEL FILE "Preferenze.txt" E RESTITUISCE IL NUMERO DELLE PREFERENZE SALVATE
 void aggiungi_preferenza(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE ALL'UTENTE DI ASSEGNARE UNA PREFERENZA (like, dislike, listen) ALL'ARTISTA DESIDERATO
-void ricerca_artisti(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE STAMPA A VIDEO I 3 PARAMETRI PER CUI E'POSSIBILE RICERCARE GLI ARTISTI. STA ALL'UTENTE INDICARE SE RICERCARE GLI ARTISTI PER GENERE, PER NAZIONALITA' oppure PER ANNO DI INIZIO CARRIERA
-void ricerca_per_genere(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE DI STAMPARE GLI ARTISTI DI UN DETERMINATO GENERE DEFINITO DALL'UTENTE
-void ricerca_per_nazionalita(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE DI STAMPARE GLI ARTISTI DI UNA DETERMINATA NAZIONALITA' DEFINITA DALL'UTENTE
-void ricerca_per_anno_inizio_produzione(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE DI STAMPARE GLI ARTISTI CON ANNO DI PRODUZIONE COMPRESO IN UN RANGE STABILITO IN INPUT DALL'UTENTE
+void modifica_preferenza(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE ALL'UTENTE DI MODIFICARE UNA SUA PREFERENZA ESPRESSA PER UN DETERMINATO ARTISTA
+void elimina_preferenza(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta,  int z); //PROCEDURA CHE PERMETTE ALL'UTENTE DI ELIMINARE UNA PREFERENZA ESPRESSA PER UN DETERMINATO ARTISTA
+void ricerca_artisti(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE STAMPA A VIDEO I PARAMETRI PER CUI E'POSSIBILE RICERCARE GLI ARTISTI. L'UTENTE DOVRA' INDICARE SE RICERCARE GLI ARTISTI PER GENERE, PER NAZIONALITA' oppure PER ANNO DI INIZIO CARRIERA
+void ricerca_per_genere(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE DI VISUALIZZARE GLI ARTISTI DI UN DETERMINATO GENERE DEFINITO DALL'UTENTE
+void ricerca_per_nazionalita(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE DI VISUALIAZZARE GLI ARTISTI DI UNA DETERMINATA NAZIONALITA' DEFINITA DALL'UTENTE
+void ricerca_per_anno_inizio_produzione(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE DI VISUALIZZARE GLI ARTISTI CON ANNO DI PRODUZIONE COMPRESO IN UN RANGE STABILITO IN INPUT DALL'UTENTE
 void classifiche_artisti(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE DI SCEGLIERE QUALE CLASSIFICA DEGLI ARTISTI VISIONARE TRA: TOP LISTEN e TOP LIKE
-void classifica_top_listen(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z);
-void classifica_top_like(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z);
+void classifica_top_listen(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE DI VISUALIZZARE LA CLASSIFICA DEI TOP 10 ARTISTI PIU' ASCOLTATI
+void classifica_top_like(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE DI VISUALIZZARE LA CLASSIFICA DEI TOP 10 ARTISTI PIU' PIACIUTI
 void profilo(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE STAMPA A VIDEO I DATI RELATIVI ALL'UTENTE LOGGATO. INOLTRE PERMETTE DI EFFETTUARE MODIFICHE AI SUOI DATI/PREFERENZE oppure ELIMINARE IL SUO ACCOUNT
 void modifica_profilo(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE ALL'UTENTE DI MODIFICARE I SUOI DATI
 void visualizza_preferenze(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, int z); //PROCEDURA CHE STAMPA A VIDEO LA LISTA DELLE PREFERENZE DELL'UTENTE LOGGATO
@@ -93,8 +94,8 @@ void return_menu_utente(FILE* file_artisti, FILE* file_utenti, FILE* file_prefer
 void menu_admin(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE STAMPA A VIDEO IL MENU' CON LE DIVERSE OPERAZIONI CHE L'AMMINISTRATORE DELLA PIATTAFORMA PUO' FAR ESEGUIRE UNA VOLTA EFFETTUATO IL LOGIN
 void visualizza_utenti(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE STAMPA A VIDEO LA LISTA DEGLI UTENTI SALVATI NEL FILE "Utenti.txt"
 void aggiungi_artista(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE ALL'AMMINISTRATORE DELLA PIATTAFORMA DI AGGIUNGERE UN NUOVO ARTISTA
-void modifica_artista(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE ALL'AMMINISTRATORE DELLA PIATTAFORMA DI MODIFICARE I DATI DI UN DETERMINATO ARTISTA INDICATO
-void elimina_artista(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE ALL'AMMINISTRATORE DELLA PIATTAFORMA DI ELIMINARE UN DETERMINATO ARTISTA INDICATO
+void modifica_artista(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE ALL'AMMINISTRATORE DELLA PIATTAFORMA DI MODIFICARE I DATI DI UN DETERMINATO ARTISTA
+void elimina_artista(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE ALL'AMMINISTRATORE DELLA PIATTAFORMA DI ELIMINARE UN DETERMINATO ARTISTA
 void return_menu_admin(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE ALL'AMMINISTRATORE DELLA PIATTAFORMA DI RITORNARE AL SUO MENU' AL TERMINE DELL'OPERAZIONE ESEGUITA
 //----------------------------------------------------------------------------------------------------------------------------------------------------------//
 
@@ -770,7 +771,6 @@ void visualizza_artisti(FILE* file_artisti, FILE* file_utenti,  FILE* file_prefe
 int lettura_preferenze_da_file(FILE* file_preferenze, artisti artista[], preferenze_artisti preferenza_artista[], int i)
 {
 	int count_preferenze= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI PREFERENZE SALVATE SUL FILE "Preferenze.txt"
-	int j= 0; //DICHIARAZIONE & INIZIALIZZAZIONE DI "j", INDICE DELLA PREFERENZA
 
 //APERTURA DEL FILE "Preferenze.txt" IN MODALITA' DI LETTURA ("r")
 	if((file_preferenze=  fopen("Preferenze.txt" , "r")) == NULL)
@@ -784,9 +784,8 @@ int lettura_preferenze_da_file(FILE* file_preferenze, artisti artista[], prefere
 	//CONTEGGIO DEL NUMERO DI PREFERENZE SALVATE SUL FILE "Preferenze.txt"
 		while(!feof(file_preferenze))
 		{
-			fscanf(file_preferenze,"%d %s %s %s", &artista[i].preferenza_artista[j].id_preferenza, artista[i].preferenza_artista[j].username_utente, artista[i].preferenza_artista[j].nome_artista, artista[i].preferenza_artista[j].preferenza); //LETTURA DAL FILE "Preferenze.txt" DELLE PREFERENZE ASSOCIATE ALL'i-ESIMO ARTISTA
-			count_preferenze++; //INCREMENTO UNITARIO DEL CONTATORE DELLE PREFERENZE SALVATI
-			j++; //INCREMENTO UNITARIO DELL'INDICE DELL'ARTISTA
+			fscanf(file_preferenze,"%d %s %s %s", &preferenza_artista[i].id_preferenza, preferenza_artista[i].username_utente, preferenza_artista[i].nome_artista, preferenza_artista[i].preferenza); //LETTURA DAL FILE "Preferenze.txt" DELLE PREFERENZE SALVATE
+			count_preferenze++; //INCREMENTO UNITARIO DEL CONTATORE DELLE PREFERENZE SALVATE
 			i++; //INCREMENTO UNITARIO DELL'INDICE DELLA PREFERENZA
 		}
 	}
@@ -805,7 +804,6 @@ void aggiungi_preferenza(FILE* file_artisti, FILE* file_utenti,  FILE* file_pref
 	visualizza_artisti(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, z); //CHIAMATA DELLA PROCEDURA "visualizza_artisti" CHE STAMPA A VIDEO LA LISTA DEGLI ARTISTI SALVATI SUL FILE "Artisti.txt"
 	z= lettura_indice_utente_loggato(file_utenti, utente, i, z); //ASSEGNA A "z" IL VALORE RESTITUITO DALLA FUNZIONE "lettura_indice_utente_loggato", L'INDICE DELL'UTENTE CHE HA EFFETTUATO IL LOGIN
 
-	int id_artista_trovato= 0; //FLAG CHE VERRA' IMPOSTATO A '1' NEL CASO IN CUI L'ID DELL'ARTISTA INSERITO DALL'UTENTE E' PRESENTE NEL FILE "Artisti.txt"
 	int count_artisti= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI ARTISTI SALVATI SUL FILE "Artisti.txt", CALCOLATO NELLA FUNZIONE "lettura_artisti_da_file"
 	count_artisti= lettura_artisti_da_file(file_artisti, artista, i); //ASSEGNA A "count_artisti" IL VALORE RESTITUITO DALLA FUNZIONE "lettura_artisti_da_file", OSSIA IL NUMERO DEGLI ARTISTI SALVATI NEL FILE "Artisti.txt"
 
@@ -818,16 +816,14 @@ void aggiungi_preferenza(FILE* file_artisti, FILE* file_utenti,  FILE* file_pref
 
 	else
 	{
-		int x= 0; //INDICE DEGLI ELEMENTI SALVATI NEL FILE "Preferenze.txt"
-		int j= 0; //INDICE DELLE PREFERENZE, ASSOCIATE A CIASCUN ARTISTA
 
-	//ACQUISIZIONE DELL' ID DELL'ARTISTA A CUI SI VUOLE METTERE LA PREFERENZA
-		int id_artista_ricercato= 0; //VARIABILE CHE CONTERRA' L'ID DELL'ARTISTA A CUI L'UTENTE VUOLE ASSEGNARE LA PREFERENZA
+	//ACQUISIZIONE DELL'ID DELL'ARTISTA A CUI SI VUOLE ASSEGNARE LA PREFERENZA
+		int id_artista_ricercato= 0; //VARIABILE CHE CONTERRA' L'ID DELL'ARTISTA, INSERITO IN INPUT DALL'UTENTE, AL QUALE SI VUOLE ASSEGNARE LA PREFERENZA
 
 		printf("\n\n\n> INSERISCI L'ID DELL'ARTISTA A CUI VUOI DARE UNA PREFERENZA:   ");
 		scanf("%d", &id_artista_ricercato); //ACQUISIZIONE DELL'ID DELL'ARTISTA
 
-		int preferenza_esistente= 0; //FLAG CHE VERRA' IMPOSTATO A '1' NEL CASO IN CUI L'UTENTE HA GIA' ESPRESSO UNA PREFERENZA PER UN DETERMINATO ARTISTA
+		int id_artista_trovato= 0; //FLAG CHE VERRA' IMPOSTATO A '1' NEL CASO IN CUI L'ID DELL'ARTISTA INSERITO DALL'UTENTE E' PRESENTE NEL FILE "Artisti.txt"
 
 		for(i=0; i<count_artisti; i++)
 		{
@@ -872,22 +868,23 @@ void aggiungi_preferenza(FILE* file_artisti, FILE* file_utenti,  FILE* file_pref
 
 		else
 		{
+			int j= 0; //INDICE DELLE PREFERENZE
+			int preferenza_esistente= 0; //FLAG CHE VERRA' IMPOSTATO A '1' NEL CASO IN CUI L'UTENTE HA GIA' ESPRESSO UNA PREFERENZA PER UN DETERMINATO ARTISTA
+
 			for(i=0; i<count_artisti; i++)
 			{
 				if(id_artista_ricercato == artista[i].id_artista) //CONDIZIONE CHE VERIFICA SE L'ID. DELL'i-ESIMO ARTISTA PRESENTE NEL FILE E' UGUALE ALL'ID. DELL'ARTISTA INSERITO (AL QUALE ASSEGNARE LA PREFERENZA)
 				{
-					for(x=0; x<count_preferenze; x++)
+					for(j=0; j<count_preferenze; j++)
 					{
-						if(strcmp(artista[x].preferenza_artista[j].username_utente, utente[z].username) == 0 && strcmp(artista[x].preferenza_artista[j].nome_artista, artista[i].nome_artista) == 0) //CONDIZIONE CHE VERIFICA SE L'UTENTE LOGGATO HA GIA' ESPRESSO UNA PREFERENZA PER L'x-ESIMO ARTISTA
+						if(strcmp(preferenza_artista[j].username_utente, utente[z].username) == 0 && strcmp(preferenza_artista[j].nome_artista, artista[i].nome_artista) == 0) //CONDIZIONE CHE VERIFICA SE L'UTENTE LOGGATO HA GIA' ESPRESSO UNA PREFERENZA PER L'i-ESIMO ARTISTA
 						{
 							preferenza_esistente= 1; //IMPOSTA IL FLAG "preferenza_esistente" a '1' POICHE' L'UTENTE LOGGATO HA GIA' ESPRESSO IN PRECEDENZA UNA PREFERENZA PER L'ARTISTA INDICATO
 							break;
 						}
-
-						j++; //INCREMENTO UNITARIO DELL'INDICE DELLE PREFERENZE
 					}
 
-					if(preferenza_esistente == 1) //SE IL VALORE DEL FLAG "preferenza_esistente" E' PARI A '1', SIGNIFICA CHE L'UTENTE LOGGATO HA GIA' ESPRESSO UNA PREFERENZA PER L'ARTISTA INDICATO
+					if(preferenza_esistente == 1) //SE IL VALORE DEL FLAG "preferenza_esistente" E' UGUALE A '1', SIGNIFICA CHE L'UTENTE LOGGATO HA GIA' ESPRESSO UNA PREFERENZA PER L'ARTISTA INDICATO
 					{
 						printf("\n   * HAI GIA' ESPRESSO UNA PREFERENZA PER QUESTO ARTISTA!");
 						return_menu_utente(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "return_menu_utente" CHE PERMETTE ALL'UTENTE DI RITORNARE AL SUO MENU'
@@ -919,7 +916,7 @@ void aggiungi_preferenza(FILE* file_artisti, FILE* file_utenti,  FILE* file_pref
 								preferenza_artista[count_preferenze].id_preferenza= count_preferenze+1; //ASSEGNAZIONE DELL'"ID PREFERENZA" ALLA NUOVA PREFERENZA
 								strcpy(preferenza_artista[count_preferenze].username_utente, utente[z].username); //COPIA L'USERNAME DELL'UTENTE, CHE HA ESPRESSO LA NUOVA PREFERENZA, NELL'ARRAY "preferenza_artista" NEL CAMPO "username_utente"
 								strcpy(preferenza_artista[count_preferenze].nome_artista, artista[i].nome_artista); //COPIA IL NOME DELL'ARTISTA, A CUI E' STATA ASSEGNATA LA NUOVA PREFERENZA, NELL'ARRAY "preferenza_artista" NEL CAMPO "nome_artista"
-								strcpy(artista[count_preferenze].preferenza_artista[j].preferenza, "LISTEN"); //ASSEGNA LA PREFERENZA "LISTEN" ALL'ARTISTA INDICATO
+								strcpy(preferenza_artista[count_preferenze].preferenza, "LISTEN"); //ASSEGNA LA PREFERENZA "LISTEN" ALL'ARTISTA INDICATO DALL'UTENTE
 								artista[i].count_listen++; //INCREMENTO UNITARIO DEL NUMERO DI "LISTEN" DELL'i-ESIMO ARTISTA
 								break;
 
@@ -927,7 +924,7 @@ void aggiungi_preferenza(FILE* file_artisti, FILE* file_utenti,  FILE* file_pref
 								preferenza_artista[count_preferenze].id_preferenza= count_preferenze+1; //ASSEGNAZIONE DELL'"ID PREFERENZA" ALLA NUOVA PREFERENZA
 								strcpy(preferenza_artista[count_preferenze].username_utente, utente[z].username);  //COPIA L'USERNAME DELL'UTENTE, CHE HA ESPRESSO LA NUOVA PREFERENZA, NELL'ARRAY "preferenza_artista" NEL CAMPO "username_utente"
 								strcpy(preferenza_artista[count_preferenze].nome_artista, artista[i].nome_artista); //COPIA IL NOME DELL'ARTISTA, A CUI E' STATA ASSEGNATA LA NUOVA PREFERENZA, NELL'ARRAY "preferenza_artista" NEL CAMPO "nome_artista"
-								strcpy(artista[count_preferenze].preferenza_artista[j].preferenza, "LIKE"); //ASSEGNA LA PREFERENZA "LIKE" ALL'ARTISTA INDICATO
+								strcpy(preferenza_artista[count_preferenze].preferenza, "LIKE"); //ASSEGNA LA PREFERENZA "LIKE" ALL'ARTISTA INDICATO DALL'UTENTE
 								artista[i].count_like++;  //INCREMENTO UNITARIO DEL NUMERO DI "LIKE" DELL'i-ESIMO ARTISTA
 								break;
 
@@ -935,12 +932,12 @@ void aggiungi_preferenza(FILE* file_artisti, FILE* file_utenti,  FILE* file_pref
 								preferenza_artista[count_preferenze].id_preferenza= count_preferenze+1; //ASSEGNAZIONE DELL'"ID PREFERENZA" ALLA NUOVA PREFERENZA
 								strcpy(preferenza_artista[count_preferenze].username_utente, utente[z].username); //COPIA L'USERNAME DELL'UTENTE, CHE HA ESPRESSO LA NUOVA PREFERENZA, NELL'ARRAY "preferenza_artista" NEL CAMPO "username_utente"
 								strcpy(preferenza_artista[count_preferenze].nome_artista, artista[i].nome_artista); //COPIA IL NOME DELL'ARTISTA, A CUI E' STATA ASSEGNATA LA NUOVA PREFERENZA, NELL'ARRAY "preferenza_artista" NEL CAMPO "nome_artista"
-								strcpy(artista[count_preferenze].preferenza_artista[j].preferenza, "DISLIKE"); //ASSEGNA LA PREFERENZA "DISLIKE" ALL'ARTISTA INDICATO
+								strcpy(preferenza_artista[count_preferenze].preferenza, "DISLIKE"); //ASSEGNA LA PREFERENZA "DISLIKE" ALL'ARTISTA INDICATO DALL'UTENTE
 								artista[i].count_dislike++;  //INCREMENTO UNITARIO DEL NUMERO DI "DISLIKE" DELL'i-ESIMO ARTISTA
 								break;
 						}
 					}
-					fprintf(file_preferenze,"\n%d %s %s %s", preferenza_artista[count_preferenze].id_preferenza, preferenza_artista[count_preferenze].username_utente, preferenza_artista[count_preferenze].nome_artista, artista[count_preferenze].preferenza_artista[j].preferenza); //SALVATAGGIO SUL FILE "Preferenze.txt" DEI DATI DELLA NUOVA PREFERENZA AGGIUNTA (USERNAME, NOME ARTISTA e TIPO PREFERENZA)
+					fprintf(file_preferenze,"\n%d %s %s %s", preferenza_artista[count_preferenze].id_preferenza, preferenza_artista[count_preferenze].username_utente, preferenza_artista[count_preferenze].nome_artista, preferenza_artista[count_preferenze].preferenza); //SALVATAGGIO SUL FILE "Preferenze.txt" DEI DATI DELLA NUOVA PREFERENZA AGGIUNTA (USERNAME, NOME ARTISTA e TIPO PREFERENZA)
 
 					fclose(file_preferenze); //CHIUSURA DEL FILE
 
@@ -1230,6 +1227,7 @@ void classifiche_artisti(FILE* file_artisti, FILE* file_utenti,  FILE* file_pref
 	printf("\n\t\t\t\t\t\t\t\t\t  |                3. EXIT                |");
 	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
 
+//ACQUISIZIONE DELLA SCELTA
 	do
 	{
 		fflush(stdin); //PULIZIA DEL BUFFER DELLA TASTIERA PRIMA...
@@ -1247,14 +1245,14 @@ void classifiche_artisti(FILE* file_artisti, FILE* file_utenti,  FILE* file_pref
 		case '1': //"scelta"= '1' -> TOP ARTISTI PIU' ASCOLTATI
 			system("cls"); //PULIZIA DELLO SCHERMO
 			scritta_spotify(); //CHIAMATA DELLA PROCEDURA "scritta_spotify" CHE STAMPA A VIDEO LA SCRITTA "SPOTIFY"
-			classifica_top_listen(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z);
+			classifica_top_listen(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "classifica_top_listen" CHE PERMETTE DI STAMPARE A VIDEO LA CLASSIFICA DEI TOP 10 ARTISTI PIU' ASCOLTATI
 			return_menu_utente(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "return_menu_utente" CHE PERMETTE ALL'UTENTE DI RITORNARE AL SUO MENU' AL TERMINE DELL'OPERAZIONE ESEGUITA
 			break;
 
 		case '2': //"scelta"= '2' -> TOP ARTISTI PIU' PIACIUTI
 			system("cls"); //PULIZIA DELLO SCHERMO
 			scritta_spotify(); //CHIAMATA DELLA PROCEDURA "scritta_spotify" CHE STAMPA A VIDEO LA SCRITTA "SPOTIFY"
-			classifica_top_like(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z);
+			classifica_top_like(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "classifica_top_like" CHE PERMETTE DI STAMPARE A VIDEO LA CLASSIFICA DEI TOP 10 ARTISTI PIU' PIACIUTI
 			return_menu_utente(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "return_menu_utente" CHE PERMETTE ALL'UTENTE DI RITORNARE AL SUO MENU' AL TERMINE DELL'OPERAZIONE ESEGUITA
 			break;
 
@@ -1274,7 +1272,7 @@ void classifica_top_listen(FILE* file_artisti, FILE* file_utenti,  FILE* file_pr
 	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
 
 	int count_artisti= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI ARTISTI SALVATI SUL FILE "Artisti.txt", CALCOLATO NELLA FUNZIONE "lettura_artisti_da_file"
-	count_artisti= lettura_artisti_da_file(file_artisti, artista, i); //ASSEGNA A "count_artisit" IL VALORE RESTITUITO DALLA FUNZIONE "lettura_artisti_da_file", OSSIA IL NUMERO DEGLI ARTISTI SALVATI NEL FILE "Artisti.txt"
+	count_artisti= lettura_artisti_da_file(file_artisti, artista, i); //ASSEGNA A "count_artisiti" IL VALORE RESTITUITO DALLA FUNZIONE "lettura_artisti_da_file", OSSIA IL NUMERO DEGLI ARTISTI SALVATI NEL FILE "Artisti.txt"
 
 	artisti temp; //VARIABILE TEMPORANEA D'APPOGGIO UTILIZZATA PER EFFETTUARE L'ORDINAMENTO
 
@@ -1292,7 +1290,7 @@ void classifica_top_listen(FILE* file_artisti, FILE* file_utenti,  FILE* file_pr
 		}
 	}
 
-//STAMPA DEI DATI DEI TOP ARTISTI PIU' ASCOLTATI
+//STAMPA DEI DATI DEI TOP 10 ARTISTI PIU' ASCOLTATI
 	printf("\n\n\n\n\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\t N.ASCOLTI|    N.LIKE|    N.DISLIKE|\n\n");
 
 	for(i=0; i<N_TOP; i++)
@@ -1307,7 +1305,7 @@ void classifica_top_like(FILE* file_artisti, FILE* file_utenti,  FILE* file_pref
 	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
 
 	int count_artisti= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI ARTISTI SALVATI SUL FILE "Artisti.txt", CALCOLATO NELLA FUNZIONE "lettura_artisti_da_file"
-	count_artisti= lettura_artisti_da_file(file_artisti, artista, i); //ASSEGNA A "count_artisit" IL VALORE RESTITUITO DALLA FUNZIONE "lettura_artisti_da_file", OSSIA IL NUMERO DEGLI ARTISTI SALVATI NEL FILE "Artisti.txt"
+	count_artisti= lettura_artisti_da_file(file_artisti, artista, i); //ASSEGNA A "count_artisiti" IL VALORE RESTITUITO DALLA FUNZIONE "lettura_artisti_da_file", OSSIA IL NUMERO DEGLI ARTISTI SALVATI NEL FILE "Artisti.txt"
 
 	artisti temp; //VARIABILE TEMPORANEA D'APPOGGIO UTILIZZATA PER EFFETTUARE L'ORDINAMENTO
 
@@ -1325,7 +1323,7 @@ void classifica_top_like(FILE* file_artisti, FILE* file_utenti,  FILE* file_pref
 		}
 	}
 
-//STAMPA DEI DATI DEI TOP ARTISTI PIU' PIACIUTI
+//STAMPA DEI DATI DEI TOP 10 ARTISTI PIU' PIACIUTI
 	printf("\n\n\n\n\t\t   ID. ARTISTA|       NOME ARTISTA|\tGENERE MUSICALE|\tNAZIONALITA'|\t  ANNO INIZIO CARRIERA|\t     CANZONE POPOLARE|\t N.ASCOLTI|    N.LIKE|    N.DISLIKE|\n\n");
 
 	for(i=0; i<N_TOP; i++)
@@ -1408,11 +1406,13 @@ void profilo(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utent
 		case '3': //"scelta"= '3' -> MODIFICA UNA PREFERENZA
 			system("cls"); //PULIZIA DELLO SCHERMO
 			scritta_spotify(); //CHIAMATA DELLA PROCEDURA "scritta_spotify" CHE STAMPA A VIDEO LA SCRITTA "SPOTIFY"
+			modifica_preferenza(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "modifica_preferenza" CHE PERMETTE ALL'UTENTE DI MODIFICARE UNA SUA PREFERENZA ESPRESSA PER UN DETERMINATO ARTISTA
 			break;
 
 		case '4': //"scelta"= '4' -> ELIMINA UNA PREFERENZA
 			system("cls"); //PULIZIA DELLO SCHERMO
 			scritta_spotify(); //CHIAMATA DELLA PROCEDURA "scritta_spotify" CHE STAMPA A VIDEO LA SCRITTA "SPOTIFY"
+			elimina_preferenza(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "eliminaa_preferenza" CHE PERMETTE ALL'UTENTE DI ELIMINARE UNA SUA PREFERENZA ESPRESSA PER UN DETERMINATO ARTISTA
 			return_menu_utente(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "return_menu_admin" CHE PERMETTE ALL'AMMINISTRATORE DI RITORNARE AL SUO MENU' AL TERMINE DELL'OPERAZIONE ESEGUITA
 			break;
 
@@ -1527,6 +1527,7 @@ void modifica_profilo(FILE* file_artisti, FILE* file_utenti, FILE* file_preferen
 			break;
 
 		case '3':  //"scelta"= '3' -> MODIFICA DATA DI NASCITA
+		//ACQUISIZIONE NUOVA DATA DI NASCITA
 			printf("\n\n\nDATA DI NASCITA: ");
 			do
 			{
@@ -1652,7 +1653,6 @@ void visualizza_preferenze(FILE* file_artisti, FILE* file_utenti, FILE* file_pre
 {
 	z= lettura_indice_utente_loggato(file_utenti, utente, i, z); //ASSEGNA A "z" IL VALORE RESTITUITO DALLA FUNZIONE "lettura_indice_utente_loggato", L'INDICE DELL'UTENTE CHE HA EFFETTUATO IL LOGIN
 
-	int j= 0; //INDICE DELLE PREFERENZE, ASSOCIATE A CIASCUN ARTISTA
 	int count_preferenze= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI PREFERENZE SALVATE SUL FILE "Preferenze.txt", CALCOLATO NELLA FUNZIONE "lettura_preferenze_da_file"
 	count_preferenze= lettura_preferenze_da_file(file_preferenze, artista, preferenza_artista, i); //ASSEGNA A "count_preferenze" IL VALORE RESTITUITO DALLA FUNZIONE "lettura_preferenze_da_file", OSSIA IL NUMERO DELLE PREFERENZE SALVATE NEL FILE "Preferenze.txt"
 
@@ -1660,10 +1660,235 @@ void visualizza_preferenze(FILE* file_artisti, FILE* file_utenti, FILE* file_pre
 	printf("\n\n\n\n\t\t\t\t\t\t\t     ID. PREFERENZA|       USERNAME|\t      NOME ARTISTA|\t  PREFERENZA|\n\n");
 	for(i=0; i<count_preferenze; i++)
 	{
-		if(strcmp(artista[i].preferenza_artista[j].username_utente, utente[z].username) == 0) //CONDIZIONE CHE VERIFICA SE L'USERNAME DELL'UTENTE, SALVATO SUL FILE "Preferenze.txt", CHE HA ESPRESSO UNA PREFERENZA PER L'i-ESIMO ARTISTA,  E' UGUALE ALL'USERNAME DELL'UTENTE LOGGATO
-			printf("\t\t\t\t\t\t       %20d|%15s|%22s|%17s|\n", artista[i].preferenza_artista[j].id_preferenza, artista[i].preferenza_artista[j].username_utente, artista[i].preferenza_artista[j].nome_artista, artista[i].preferenza_artista[j].preferenza); //STAMPA DELLA PREFERENZA ESPRESSA DALL'UTENTE LOGGATO
+		if(strcmp(preferenza_artista[i].username_utente, utente[z].username) == 0) //CONDIZIONE CHE VERIFICA SE L'USERNAME DELL'UTENTE, SALVATO SUL FILE "Preferenze.txt", E' UGUALE ALL'USERNAME DELL'UTENTE LOGGATO
+			printf("\t\t\t\t\t\t       %20d|%15s|%22s|%17s|\n", preferenza_artista[i].id_preferenza, preferenza_artista[i].username_utente, preferenza_artista[i].nome_artista, preferenza_artista[i].preferenza); //STAMPA DELL'i-ESIMAPREFERENZA ESPRESSA DALL'UTENTE LOGGATO
+	}
+}
 
-		j++; //INCREMENTO UNITARIO DELL'INDICE DELLE PREFERENZE
+void modifica_preferenza(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta,  int z)
+{
+	printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
+	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
+	printf("\n\t\t\t\t\t\t\t\t\t  |        MODIFICA UNA PREFERENZA        |");
+	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
+
+	z= lettura_indice_utente_loggato(file_utenti, utente, i, z); //ASSEGNA A "z" IL VALORE RESTITUITO DALLA FUNZIONE "lettura_indice_utente_loggato", L'INDICE DELL'UTENTE CHE HA EFFETTUATO IL LOGIN
+	visualizza_preferenze(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, z); //CHIAMATA DELLA PROCEDURA "visualizza_preferenze" CHE STAMPA A VIDEO LA LISTA DELLE PREFERENZE DELL'UTENTE LOGGATO
+
+	int count_preferenze= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI PREFERENZE SALVATE SUL FILE "Preferenze.txt", CALCOLATO NELLA FUNZIONE "lettura_preferenze_da_file"
+	count_preferenze= lettura_preferenze_da_file(file_preferenze, artista, preferenza_artista, i); //ASSEGNA A "count_preferenze" IL VALORE RESTITUITO DALLA FUNZIONE "lettura_preferenze_da_file", OSSIA IL NUMERO DELLE PREFERENZE SALVATE NEL FILE "Preferenze.txt"
+
+//ACQUISIZIONE DELL'ID DELLA PREFERENZA DA MODIFICARE
+	int id_preferenza_ricercata= 0; //VARIABILE CHE CONTERRA' L'ID. DELLA PREFERENZA, ESPRESSA DALL'UTENTE, DA MODIFICARE
+
+	printf("\n\n\n> INSERISCI L'ID DELLA PREFERENZA CHE VUOI MODIFICARE:   ");
+	scanf("%d", &id_preferenza_ricercata); //ACQUISIZIONE ID. DELLA PREFERENZA
+
+	int id_preferenza_trovata= 0; //FLAG CHE VERRA' IMPOSTATO A '1' NEL CASO IN CUI L'ID DELLA PREFERENZA INSERITA DALL'UTENTE E' PRESENTE NEL FILE "Preferenze.txt"
+
+//VERIFICA ESISTENZA PREFERENZA
+	for(i=0; i<count_preferenze; i++)
+	{
+		if(strcmp(preferenza_artista[i].username_utente, utente[z].username) == 0 && preferenza_artista[i].id_preferenza == id_preferenza_ricercata) //CONDIZIONE CHE VERIFICA SE L'i-ESIMA PREFERENZA SALVATA SUL FILE "Preferenze.txt" E' STATA ESPRESSA DALL'UTENTE LOGGATO
+			id_preferenza_trovata= 1; //IMPOSTA IL FLAG "id_preferenza_trovata" A '1' POICHE' L'ID DELLA PREFERENZA DA MODIFICARE, INSERITO DALL'UTENTE, E' STATA TROVATA NEL FILE Preferenze.txt"
+	}
+
+	if(id_preferenza_trovata == 0) //SE AL TERMINE DI TUTTI I CICLI, IL VALORE DEL FLAG "id_preferenza_trovata" RISULTA ANCORA '0', SIGNIFICA CHE L'ID DELLA PREFERENZA INDICATA DALL'UTENTE NON E'PRESENTE NEL FILE "Preferenze.txt"
+	{
+		printf("\n\n   * PREFERENZA NON TROVATA!\n\n");
+
+		printf("\n\n1. RIPROVA\n");
+		printf("\n2. RITORNA AL MENU'");
+		
+	//ACQUISIZIONE DELLA SCELTA
+		do
+		{
+			fflush(stdin); //PULIZIA DEL BUFFER DELLA TASTIERA PRIMA...
+			printf("\n\n\n> QUALE OPERAZIONE DESIDERI EFFETTUARE?   ");
+			scanf("%c", &scelta); //ACQUISIZIONE DELLA SCELTA
+			fflush(stdin); //...E DOPO L'UTILIZZO
+
+			if(scelta < '1' || scelta > '2')
+				printf("\n   * INPUT NON VALIDO, RIPROVA!");
+
+		}while(scelta < '1' || scelta > '2'); //RIPETE IL CICLO FINCHE' IL CARATTERE INSERITO NON E' VALIDO
+
+		switch(scelta)
+		{
+			case '1': //"scelta"= '1' -> RIPROVA
+				system("cls"); //PULIZIA DELLO SCHERMO
+				scritta_spotify(); //CHIAMATA DELLA PROCEDURA "scritta_spotify" CHE STAMPA A VIDEO LA SCRITTA "SPOTIFY"
+				elimina_preferenza(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "elimina_preferenza" CHE PEREMETTE ALL'UTENTE DI ELIMINARE UNA SU PREFERENZA ESPRESSA PER UN DETERMINATO ARTISTA
+				break;
+
+			case '2': //"scelta"= '2' -> RITORNA AL MENU'
+				system("cls"); //PULIZIA DELLO SCHERMO
+				scritta_spotify(); //CHIAMATA DELLA PROCEDURA "scritta_spotify" CHE STAMPA A VIDEO LA SCRITTA "SPOTIFY"
+				menu_utente(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "menu_utente" CHE PEREMETTE ALL'UTENTE DI RITORNARE AL SUO MENU'
+				break;
+		}
+	}
+
+	else
+	{
+		for(i=0; i<count_preferenze; i++)
+		{
+			if(preferenza_artista[i].id_preferenza == id_preferenza_ricercata) //CONDIZIONE CHE VERIFICA SE L'ID. DELL'i-ESIMA  PREFERENZA PRESENTE NEL FILE E' UGUALE ALL'ID DELLA PREFERENZA INSERITA (DA MODIFICARE)
+			{
+				printf("\n\nPREFERENZA: \n");
+				printf("\n\t1. LISTEN\n");
+				printf("\n\t2. LIKE\n");
+				printf("\n\t3. DISLIKE");
+			
+			//ACQUISIZIONE DELLA SCELTA
+				do
+				{
+					fflush(stdin); //PULIZIA DEL BUFFER DELLA TASTIERA PRIMA...
+					printf("\n\n\n> QUALE PREFERENZA VUOI ASSEGNARE A '%s'?   ", preferenza_artista[i].nome_artista);
+					scanf("%c", &scelta); //ACQUISIZIONE DELLA SCELTA
+					fflush(stdin); //...E DOPO L'UTILIZZO
+
+					if(scelta < '1' || scelta > '3')
+						printf("\n   * INPUT NON VALIDO, RIPROVA!");
+
+				}while(scelta < '1' || scelta > '3'); //RIPETE IL CICLO FINCHE' IL CARATTERE INSERITO NON E' VALIDO
+
+				switch(scelta)
+				{
+					case '1'://"scelta"= 1 -> PREFERENZA: LISTEN
+						strcpy(preferenza_artista[i].preferenza, "LISTEN"); //ASSEGNA LA PREFERENZA "LISTEN" ALL'ARTISTA INDICATO
+						break;
+
+					case '2'://"scelta"= '2' -> PREFERENZA: LIKE
+						strcpy(preferenza_artista[i].preferenza, "LIKE"); //ASSEGNA LA PREFERENZA "LIKE" ALL'ARTISTA INDICATO
+						break;
+
+					case '3'://"scelta"= '3' -> PREFERENZA: DISLIKE
+						strcpy(preferenza_artista[i].preferenza, "DISLIKE"); //ASSEGNA LA PREFERENZA "DISLIKE" ALL'ARTISTA INDICATO
+						break;
+				}
+
+			//APERTURA DEL FILE "Preferenze.txt" IN MODALITA' DI SCRITTURA ("w")
+				if((file_preferenze=  fopen("Preferenze.txt" , "w")) == NULL)
+					printf("Errore nell'apertura!\n");
+
+				else
+				{
+				//SALVATAGGIO SUL FILE "Preferenze.txt" DELLE MODIFICHE APPORTATE
+					for(i=0; i<count_preferenze; i++)
+						fprintf(file_preferenze,"\n%d %s %s %s", preferenza_artista[i].id_preferenza, preferenza_artista[i].username_utente, preferenza_artista[i].nome_artista, preferenza_artista[i].preferenza); //SALVATAGGIO SUL FILE "Preferenze.txt" DEI DATI DELLA PREFERENZA MODIFICATA (USERNAME, NOME ARTISTA e TIPO PREFERENZA)
+
+					printf("\n\n\n***************** PREFERENZA MODIFICATA CORRETTAMENTE! *****************\n");
+				}
+				fclose(file_preferenze); //CHIUSURA DEL FILE
+
+				return_menu_utente(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "return_menu_menu" CHE PERMETTE ALL'UTENTE DI RITORNARE AL SUO MENU' AL TERMINE DELL'OPERAZIONE ESEGUITA
+				break;
+			}
+		}
+	}
+}
+
+void elimina_preferenza(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta,  int z)
+{
+	printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
+	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
+	printf("\n\t\t\t\t\t\t\t\t\t  |         ELIMINA UNA PREFERENZA        |");
+	printf("\n\t\t\t\t\t\t\t\t\t  |_______________________________________|");
+
+	z= lettura_indice_utente_loggato(file_utenti, utente, i, z); //ASSEGNA A "z" IL VALORE RESTITUITO DALLA FUNZIONE "lettura_indice_utente_loggato", L'INDICE DELL'UTENTE CHE HA EFFETTUATO IL LOGIN
+	visualizza_preferenze(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, z); //CHIAMATA DELLA PROCEDURA "visualizza_preferenze" CHE STAMPA A VIDEO LA LISTA DELLE PREFERENZE DELL'UTENTE LOGGATO
+
+	int count_preferenze= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI PREFERENZE SALVATE SUL FILE "Preferenze.txt", CALCOLATO NELLA FUNZIONE "lettura_preferenze_da_file"
+	count_preferenze= lettura_preferenze_da_file(file_preferenze, artista, preferenza_artista, i); //ASSEGNA A "count_preferenze" IL VALORE RESTITUITO DALLA FUNZIONE "lettura_preferenze_da_file", OSSIA IL NUMERO DELLE PREFERENZE SALVATE NEL FILE "Preferenze.txt"
+
+//ACQUISIZIONE DELL'ID DELLA PREFERENZA DA ELIMINARE
+	int id_preferenza_ricercata= 0; //VARIABILE CHE CONTERRA' L'ID. DELLA PREFERENZA, ESPRESSA DALL'UTENTE, DA ELIMINARE
+
+	printf("\n\n\n> INSERISCI L'ID DELLA PREFERENZA CHE VUOI ELIMINARE:   ");
+	scanf("%d", &id_preferenza_ricercata); //ACQUISIZIONE ID. DELLA PREFERENZA
+
+	int id_preferenza_trovata= 0; //FLAG CHE VERRA' IMPOSTATO A '1' NEL CASO IN CUI L'ID DELLA PREFERENZA INSERITA DALL'UTENTE E' PRESENTE NEL FILE "Preferenze.txt"
+
+//VERIFICA ESISTENZA PREFERENZA
+	for(i=0; i<count_preferenze; i++)
+	{
+		if(strcmp(preferenza_artista[i].username_utente, utente[z].username) == 0 && preferenza_artista[i].id_preferenza == id_preferenza_ricercata) //CONDIZIONE CHE VERIFICA SE L'i-ESIMA PREFERENZA SALVATA SUL FILE "Preferenze.txt" E' STATA ESPRESSA DALL'UTENTE LOGGATO
+			id_preferenza_trovata= 1; //IMPOSTA IL FLAG "id_preferenza_trovata" A '1' POICHE' L'ID DELLA PREFERENZA DA MODIFICARE, INSERITO DALL'UTENTE, E' STATA TROVATA NEL FILE Preferenze.txt"
+	}
+
+	if(id_preferenza_trovata == 0) //SE AL TERMINE DI TUTTI I CICLI, IL VALORE DEL FLAG "id_preferenza_trovata" RISULTA ANCORA '0', SIGNIFICA CHE L'ID DELLA PREFERENZA INDICATA DALL'UTENTE NON E'PRESENTE NEL FILE "Preferenze.txt"
+	{
+		printf("\n\n   * PREFERENZA NON TROVATA!\n\n");
+
+		printf("\n\n1. RIPROVA\n");
+		printf("\n2. RITORNA AL MENU'");
+
+	//ACQUISIZIONE DELLA SCELTA
+		do
+		{
+			fflush(stdin); //PULIZIA DEL BUFFER DELLA TASTIERA PRIMA...
+			printf("\n\n\n> QUALE OPERAZIONE DESIDERI EFFETTUARE?   ");
+			scanf("%c", &scelta); //ACQUISIZIONE DELLA SCELTA
+			fflush(stdin); //...E DOPO L'UTILIZZO
+
+			if(scelta < '1' || scelta > '2')
+				printf("\n   * INPUT NON VALIDO, RIPROVA!");
+
+		}while(scelta < '1' || scelta > '2'); //RIPETE IL CICLO FINCHE' IL CARATTERE INSERITO NON E' VALIDO
+
+		switch(scelta)
+		{
+			case '1': //"scelta"= '1' -> RIPROVA
+				system("cls"); //PULIZIA DELLO SCHERMO
+				scritta_spotify(); //CHIAMATA DELLA PROCEDURA "scritta_spotify" CHE STAMPA A VIDEO LA SCRITTA "SPOTIFY"
+				elimina_preferenza(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "elimina_preferenza" CHE PEREMETTE ALL'UTENTE DI ELIMINARE UNA SU PREFERENZA ESPRESSA PER UN DETERMINATO ARTISTA
+				break;
+
+			case '2': //"scelta"= '2' -> RITORNA AL MENU'
+				system("cls"); //PULIZIA DELLO SCHERMO
+				scritta_spotify(); //CHIAMATA DELLA PROCEDURA "scritta_spotify" CHE STAMPA A VIDEO LA SCRITTA "SPOTIFY"
+				menu_utente(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "menu_utente" CHE PEREMETTE ALL'UTENTE DI RITORNARE AL SUO MENU'
+				break;
+		}
+	}
+
+	else
+	{
+	//APERTURA DEL FILE "Preferenze.txt" IN MODALITA' DI SCRITTURA ("w")
+		if((file_preferenze=  fopen("Preferenze.txt" , "w")) == NULL)
+			printf("Errore nell'apertura!\n");
+
+		else
+		{
+		//SALVATAGGIO SUL FILE "Preferenze.txt" DI TUTTE LE PREFERENZE, ECCETTO LA PREFERENZA CHE L'UTENTE HA DECISO DI ELIMINARE
+			for(i=0; i<count_preferenze; i++)
+			{
+				if(preferenza_artista[i].id_preferenza != id_preferenza_ricercata) //CONDIZIONE CHE VERIFICA SE L'ID DELL'i-ESIMA PREFERENZA SALVATA SUL FILE "Prefererenze.txt" E' DIVERSO DALL'ID. DELLA PREFERENZA INDICATO DALL'UTENTE (DA ELIMINARE)
+					fprintf(file_preferenze,"\n%d %s %s %s", preferenza_artista[i].id_preferenza, preferenza_artista[i].username_utente, preferenza_artista[i].nome_artista, preferenza_artista[i].preferenza); //SALVATAGGIO SUL FILE "Preferenze.txt" DEI DATI DELL' iESIMA PREFERENZA (USERNAME, NOME ARTISTA e TIPO PREFERENZA)
+			}
+		}
+		fclose(file_preferenze); //CHIUSURA DEL FILE
+
+		count_preferenze= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI PREFERENZE SALVATE SUL FILE "Preferenze.txt", CALCOLATO NELLA FUNZIONE "lettura_preferenze_da_file"
+		count_preferenze= lettura_preferenze_da_file(file_preferenze, artista, preferenza_artista, i); //ASSEGNA A "count_preferenze" IL VALORE RESTITUITO DALLA FUNZIONE "lettura_preferenze_da_file", OSSIA IL NUMERO DELLE PREFERENZE SALVATE NEL FILE "Preferenze.txt"
+
+	//APERTURA DEL FILE "Preferenze.txt" IN MODALITA' DI SCRITTURA ("w")
+		if((file_preferenze=  fopen("Preferenze.txt" , "w")) == NULL)
+			printf("Errore nell'apertura!\n");
+
+		else
+		{
+		//RI-ASSEGNAZIONE DEGLI ID. ALLE PREFERENZE SALVATE SUL FILE "Preferenze.txt"
+			for(i=0; i<count_preferenze; i++)
+			{
+				preferenza_artista[i].id_preferenza= i+1; //RI-ASSEGNAZIONE DEL NUOVO "ID PREFERENZA" ALL'i-ESIMA PREFERENZA
+				fprintf(file_preferenze,"\n%d %s %s %s", preferenza_artista[i].id_preferenza, preferenza_artista[i].username_utente, preferenza_artista[i].nome_artista, preferenza_artista[i].preferenza); //SALVATAGGIO SUL FILE "Preferenze.txt" DEI DATI DELL' i-ESIMA PREFERENZA (USERNAME, NOME ARTISTA e TIPO PREFERENZA)
+			}
+
+			printf("\n\n\n***************** PREFERENZA ELIMINATA CORRETTAMENTE! *****************\n");
+		}
+		fclose(file_preferenze); //CHIUSURA DEL FILE
 	}
 }
 
@@ -2213,6 +2438,7 @@ void modifica_artista(FILE* file_artisti, FILE* file_utenti,  FILE* file_prefere
 }
 
 void elimina_artista(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z)
+
 {
 	printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
 	printf("\n\t\t\t\t\t\t\t\t\t  |                                       |");
