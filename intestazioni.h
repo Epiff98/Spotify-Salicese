@@ -1,0 +1,8 @@
+#ifndef INTESTAZIONI_H_
+#define INTESTAZIONI_H_
+
+void scritta_spotify();	//PROCEDURA CHE STAMPA A VIDEO LA SCRITTA "SPOTIFY"
+void scritta_login();	//PROCEDURA CHE STAMPA A VIDEO LA SCRITTA "LOGIN"
+void scritta_signup();	//PROCEDURA CHE STAMPA A VIDEO LA SCRITTA "SIGNUP"
+
+#endif /* INTESTAZIONI_H_ */
