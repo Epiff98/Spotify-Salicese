@@ -61,8 +61,8 @@ void classifica_top_listen(FILE* file_artisti, FILE* file_utenti,  FILE* file_pr
 ///La procedura "classifica_top_like" permette all'utente di visionare la classifica dei top 10 artisti più piaciuti
 void classifica_top_like(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE PERMETTE DI VISUALIZZARE LA CLASSIFICA DEI TOP 10 ARTISTI PIU' PIACIUTI
 
-///La procedura "suggerimento_artista" permette all'utente di visionare gli artisti graditi dagli utenti a lui simili
-void suggerimento_artista(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z);
+///La procedura "suggerimento_artisti" permette all'utente di visionare gli artisti graditi dagli utenti a lui simili
+void suggerimento_artisti(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z);
 
 ///La procedura "profilo" permette di stampare a video i dati dell'utente loggato, il quale potra' scegliere se modificare i propri dati, modificare/eliminare una preferenza o eliminare il proprio account
 void profilo(FILE* file_artisti, FILE* file_utenti, FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z); //PROCEDURA CHE STAMPA A VIDEO I DATI RELATIVI ALL'UTENTE LOGGATO. INOLTRE PERMETTE DI EFFETTUARE MODIFICHE AI SUOI DATI/PREFERENZE oppure ELIMINARE IL SUO ACCOUNT
