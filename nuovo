@@ -1360,7 +1360,7 @@ void suggerimento_artista(FILE* file_artisti, FILE* file_utenti,  FILE* file_pre
 						{
 							if(strcmp(preferenza_artista[j].username_utente, preferenza_artista[x].username_utente) == 0)
 							{
-								if(strcmp(preferenza_artista[x].preferenza, "LIKE") == 0 && strcmp(preferenza_artista[x].nome_artista, preferenza_artista[i].nome_artista) != 0 && strcmp(preferenza_artista[j].preferenza, preferenza_artista[i].preferenza) != 0)
+								if(strcmp(preferenza_artista[x].preferenza, "LIKE") == 0 && strcmp(preferenza_artista[x].nome_artista, preferenza_artista[i].nome_artista) != 0 && strcmp(preferenza_artista[x].preferenza, preferenza_artista[i].preferenza) != 0)
 									printf("\n\n%s --> %s %s", preferenza_artista[j].username_utente, preferenza_artista[x].nome_artista, preferenza_artista[x].preferenza);
 							}
 						}
