@@ -12,6 +12,27 @@
 #include "funzioni_utente.h"
 
 //----------------------------------------------------------- FUNZIONI DELL'INTERFACCIA ADMIN --------------------------------------------------------------//
+
+/**
+ * Procedura login_admin(): permette all'amministratore di accedere alla piattaforma spotify.
+ *
+ * Si acquisisce l'username dell'amministratore che intende accedere e, se corrisponde con quello predefinito ("admin"),
+ * si acquisisce la password dell'utente, finche' non risulta corretta (= "Admin123")
+ *
+ * Eseguito l'accesso, l'utente sarà indirizzato nella sua interfaccia e qui potrà visualizzare il menù con le relative operazioni
+ * che potrà eseguire.
+ *
+ * @param file_artisti
+ * @param file_utenti
+ * @param file_preferenze
+ * @param utente
+ * @param artista
+ * @param preferenza_artista
+ * @param i
+ * @param scelta
+ * @param z
+ */
+
 void login_admin(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z)
 {
 	char username_ricercato[LUNG_USERNAME]; //USERNAME DELL'AMMINISTRATORE CHE DESIDERA ACCEDERE NELLA SUA AREA RISERVATA DELLA PIATTAFORMA "SPOTIFY"
@@ -45,6 +66,25 @@ void login_admin(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, 
 		menu_admin(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "menu_utente" CHE STAMPA A VIDEO IL MENU' CON LE DIVERSE OPERAZIONI CHE L'UTENTE PUO' FAR ESEGUIRE UNA VOLTA EFFETTUATO IL LOGIN
 	}
 }
+
+/**
+ * Procedura menu_admin():
+ *
+ * Viene stampato il menù con le 5 operazioni a disposizione dell'amministratore della piattaforma,
+ * quest'ultimo sceglierà una voce tra quelle elencate inserendo un valore di scelta. Il valore della scelta
+ * è un carattere numerico, si richiede, quindi, di inserire un valore compreso nel range indicato.
+ * Se si inserisce una stringa o un carattere non valido verra' richiesto di reinserire il valore.
+ *
+ * @param file_artisti
+ * @param file_utenti
+ * @param file_preferenze
+ * @param utente
+ * @param artista
+ * @param preferenza_artista
+ * @param i
+ * @param scelta
+ * @param z
+ */
 
 void menu_admin(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z)
 {
@@ -119,6 +159,31 @@ void menu_admin(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, u
 	}
 }
 
+/**
+ * Procedura visualizza_utenti():
+ *
+ * Viene stampato a video, in formato tabellare, l'elenco degli utenti iscritti alla piattaforma.
+ * Per ogni utente l'amministratore visualizza:
+ *
+ * - ID. dell'utente
+ * - Nome dell'utente
+ * - Cognome dell'utente
+ * - Data di nascita dell'utente (GG//MM/AA)
+ * - Username dell'utente
+ * - Password dell'utente
+ *
+ * @param file_artisti
+ * @param file_utenti
+ * @param file_preferenze
+ * @param utente
+ * @param artista
+ * @param preferenza_artista
+ * @param i
+ * @param scelta
+ * @param z
+ */
+
+
 void visualizza_utenti(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z)
 {
 	printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
@@ -135,6 +200,32 @@ void visualizza_utenti(FILE* file_artisti, FILE* file_utenti,  FILE* file_prefer
 	for(i=0; i<count_utenti; i++)
 		printf("\t\t\t\t  %16d|%15s|%17s|%12d / %2d / %d|%18s|%18s|  \n", utente[i].id_utente, utente[i].nome_utente, utente[i].cognome_utente, utente[i].giorno_nascita, utente[i].mese_nascita, utente[i].anno_nascita, utente[i].username, utente[i].password); //STAMPA DEI DATI DELL'i-ESIMO UTENTE
 }
+
+
+/**
+ * Procedura aggiungi_artista(): Permette all'amministratore di aggiungere un nuovo artista.
+ *
+ * Si assegna un ID. all'artista che verra' aggiunto (identificativo numerico);
+ * Si acquisisce la stringa del nome d'arte dell'artista, verificandone la correttezza (no caratteri numerici!) e se è
+ * già presente nel file;
+ * si acquisisce la stringa del genere dell'artista, verificandone la correttezza (no caratteri numerici!);
+ * si acquisisce la nazionalità dell'artista, verificandone la correttezza (no caratteri numerici!);
+ * si acquisisce l'anno di inizio di produzione dell'artista, verificando che il valore sia compreso nel range predefinito (1901 - 2018)
+ * si acquisisce la stringa della canzone popolare dell'artista, verificandone la correttezza (no caratteri numerici!);
+ * si associano i contatori delle preferenze espresse per l'artista: listen, like e dislike inizializzati a 0
+ *
+ * Una volta aggiunto, i dati dell'artista saranno memorizzati nel file
+ *
+ * @param file_artisti
+ * @param file_utenti
+ * @param file_preferenze
+ * @param utente
+ * @param artista
+ * @param preferenza_artista
+ * @param i
+ * @param scelta
+ * @param z
+ */
 
 void aggiungi_artista(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z)
 {
@@ -262,6 +353,30 @@ void aggiungi_artista(FILE* file_artisti, FILE* file_utenti,  FILE* file_prefere
 	}
 	fclose(file_artisti); //CHIUSURA DEL FILE
 }
+
+
+/**
+ * Procedura modifica_artista(): Permette all'amministratore di modificare i campi di un artista.
+ *
+ * Verrà stampata la lista degli artisti salvati. L'utente sceglierà l'artista che intende modificare
+ * inserendo l'id associato ad esso, verificandone la presenza di tale id. nella lista.
+ * L'amministratore potrà poi scegliere quale campo modificare tra quelli indicati, inserendo un valore di scelta.
+ * Il valore della scelta è un carattere numerico, si richiede, quindi, di inserire un valore compreso nel range indicato.
+ * Se si inserisce una stringa o un carattere non valido verra' richiesto di reinserire il valore.
+ * Si verifica la correttezza di ogni campo modificato.
+ *
+ * Verranno poi salvati su file i dati dell'artista con le varie modifiche apportate.
+ *
+ * @param file_artisti
+ * @param file_utenti
+ * @param file_preferenze
+ * @param utente
+ * @param artista
+ * @param preferenza_artista
+ * @param i
+ * @param scelta
+ * @param z
+ */
 
 void modifica_artista(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z)
 {
@@ -481,6 +596,27 @@ void modifica_artista(FILE* file_artisti, FILE* file_utenti,  FILE* file_prefere
 	}
 }
 
+
+/**
+ * Procedura elimina_artista(): Permette all'amministratore di eliminare un artista.
+ *
+ * Verrà stampata la lista degli artisti salvati. L'utente sceglierà l'artista che intende eliminare
+ * inserendo l'id associato ad esso, verificandone la presenza di tale id. nella lista.
+ *
+ * Verranno salvati nuovamente tutti fli artisti su file, eccetto l'artista che l'amministratore ha deciso di eliminare
+ * di eliminare
+ *
+ * @param file_artisti
+ * @param file_utenti
+ * @param file_preferenze
+ * @param utente
+ * @param artista
+ * @param preferenza_artista
+ * @param i
+ * @param scelta
+ * @param z
+ */
+
 void elimina_artista(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z)
 {
 	printf("\n\n\t\t\t\t\t\t\t\t\t   _______________________________________");
@@ -583,6 +719,25 @@ void elimina_artista(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferen
 		return_menu_admin(file_artisti, file_utenti, file_preferenze, utente, artista, preferenza_artista, i, scelta, z); //CHIAMATA DELLA PROCEDURA "return_menu_admin" CHE PERMETTE ALL'AMMINISTRATORE DI RITORNARE AL SUO MENU' AL TERMINE DELL'OPERAZIONE ESEGUITA
 	}
 }
+
+
+/**
+ * Procedura return_menu_admin():
+ *
+ * Al termine di ogni operazione eseguita, verrà richiesto all'admin se desidera ritornare al suo menu' iniziale
+ * inserendo un valore di scelta.  Il valore della scelta è un carattere numerico, si richiede, quindi, di inserire un valore
+ * uguale a quello impostato "0". Se si inserisce una stringa o un carattere non valido verra' richiesto di reinserire il valore.
+ *
+ * @param file_artisti
+ * @param file_utenti
+ * @param file_preferenze
+ * @param utente
+ * @param artista
+ * @param preferenza_artista
+ * @param i
+ * @param scelta
+ * @param z
+ */
 
 void return_menu_admin(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z)
 {
