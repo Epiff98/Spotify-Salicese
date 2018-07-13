@@ -1,3 +1,14 @@
+/**
+ * @file costanti.h
+ *
+ * @brief Definizione delle costanti simboliche.
+ *
+ * La libreria costanti.h è stata implementata per definire le costanti simboliche:
+ * Si stabiliscono i limiti e i valori di alcuni elementi utilizzati nel programma
+ *
+ * @authors Andrea De Matteis, Marco Epifani, Giorgio Calcagnile
+ */
+
 #ifndef COSTANTI_H_
 #define COSTANTI_H_
 
