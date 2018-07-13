@@ -8,6 +8,8 @@
  * utilizzate nel programma (valori di determinati elementi) e le struct per memorizzare le informazioni relative agli utenti,
  * agli artisti e alle preferenze; le restanti 5 implementano le funzionalita' vere e proprie che l'utente o l'amministratore
  * della piattaforma possono far eseguire.
+ *
+ * @authors Andrea De Matteis, Marco Epifani, Giorgio Calcagnile
  */
 
 #include <ctype.h>
