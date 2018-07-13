@@ -1,3 +1,14 @@
+/**
+ * @file struct.h
+ *
+ * @brief Definizione delle struct.
+ *
+ * La libreria struct.h è stata implementata per definire le struct utilizzate nel programma,
+ * destinate a contenere le informazioni relative agli utenti, agli artisti e alle preferenze.
+ *
+ * @authors Andrea De Matteis, Marco Epifani, Giorgio Calcagnile
+ */
+
 #ifndef STRUCT_H_
 #define STRUCT_H_
 
