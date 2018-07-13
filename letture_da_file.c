@@ -4,6 +4,21 @@
 #include "costanti.h"
 #include "struct.h"
 
+/**
+ * Funzione lettura_indice_loggato():
+ *
+ * Tale funzione permette di leggere l'indice "z" dell'utente che ha effettuato l'accesso alla piattaforma,
+ * in tal modo da poter essere utilizzato in altre funzionalita' relative al profilo (visualizzazione/modifica/eliminazione)
+ * e alle preferenze (modifica/aggiunta/eliminazione).
+ * Tale indice sara' letto dal file "indice_utente_loggato.txt"
+ *
+ * @param file_utenti
+ * @param utente
+ * @param i
+ * @param z
+ * @return "z" l' indice dell'utente che ha effettuato l'accesso
+ */
+
 int lettura_indice_utente_loggato(FILE* file_utenti, utenti utente[], int i, int z)
 {
 	FILE* file_indice= NULL; //DICHIARAZIONE & INIZIALIZZAZIONE DELLA VARIABILE "file_indice" PUNTATORE A FILE
@@ -21,6 +36,18 @@ int lettura_indice_utente_loggato(FILE* file_utenti, utenti utente[], int i, int
 
 	return z; //RESTITUISCE IL VALORE DI "z", L'INDICE DELL'UTENTE CHE HA EFFETTUATO IL LOGIN
 }
+
+/**
+ * Funzione lettura_utenti_da_file():
+ *
+ * Tale funzione permette di leggere i dati degli utenti memorizzati nel file "Utenti.txt"
+ * e di restituire il numero di utenti salvati in esso.
+ *
+ * @param file_utenti
+ * @param utente
+ * @param i
+ * @return "count_utenti" il numero degli utenti salvati nel file
+ */
 
 int lettura_utenti_da_file(FILE* file_utenti, utenti utente[], int i)
 {
@@ -48,6 +75,18 @@ int lettura_utenti_da_file(FILE* file_utenti, utenti utente[], int i)
 	return count_utenti; //RESTITUISCE IL NUMERO DEGLI UTENTI SALVATI SUL FILE "Utenti.txt"
 }
 
+/**
+ * Funzione lettura_artisti_da_file():
+ *
+ * Tale funzione permette di leggere i dati degli artisti memorizzati nel file "Artisti.txt"
+ * e di restituire il numero di artisti salvati in esso.
+ *
+ * @param file_artisti
+ * @param artista
+ * @param i
+ * @return "count_artisti" il numero degli artisti salvati nel file
+ */
+
 int lettura_artisti_da_file(FILE* file_artisti, artisti artista[], int i)
 {
 	int count_artisti= 0; //VARIABILE CONTATORE CHE CONTERRA' IL NUMERO DI ARTISTI SALVATI SUL FILE "Artisti.txt"
@@ -73,6 +112,19 @@ int lettura_artisti_da_file(FILE* file_artisti, artisti artista[], int i)
 
 	return count_artisti; //RESTITUISCE IL NUMERO DI ARTISTI SALVATI SUL FILE "Artisti.txt"
 }
+
+/**
+ * Funzione lettura_preferenze_da_file():
+ *
+ * Tale funzione permette di leggere i dati delle preferenze memorizzate nel file "Preferenze.txt"
+ * e di restituire il numero di preferenze salvate in esso.
+ *
+ * @param file_preferenze
+ * @param artista
+ * @param preferenza_artista
+ * @param i
+ * @return "count_preferenze" il numero delle preferenze salvate sul file
+ */
 
 int lettura_preferenze_da_file(FILE* file_preferenze, artisti artista[], preferenze_artisti preferenza_artista[], int i)
 {
