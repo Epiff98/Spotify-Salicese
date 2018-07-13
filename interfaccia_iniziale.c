@@ -7,6 +7,25 @@
 #include "funzioni_admin.h"
 #include "funzioni_utente.h"
 
+/**
+ * Procedura "interfaccia_iniziale":
+ * Verra' stampato a video il menu' iniziale del programma con l'elenco delle operazioni
+ * attraverso le quali l'utente o amministratore potranno accedere o iscriversi alla piattaforma.
+ * L'utente o l'amministratore potranno sceglire una delle voci elencate inserendo un valore di scelta.
+ * Il valore della scelta è un carattere numerico, si richiede, quindi, di inserire un valore
+ * compreso nel range indicato. Se si inserisce una stringa o un carattere non valido verra' richiesto di reinserire il valore.
+ *
+ * @param file_artisti
+ * @param file_utenti
+ * @param file_preferenze
+ * @param utente
+ * @param artista
+ * @param preferenza_artista
+ * @param i
+ * @param scelta
+ * @param z
+ */
+
 void interfaccia_iniziale(FILE* file_artisti, FILE* file_utenti,  FILE* file_preferenze, utenti utente[], artisti artista[], preferenze_artisti preferenza_artista[], int i, char scelta, int z)
 {
 	system("cls"); //PULIZIA DELLO SCHERMO
